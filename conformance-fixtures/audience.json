@@ -1,0 +1,808 @@
+{
+ "rules": [
+  {
+   "rule": {
+    "attribute": "storefront",
+    "op": "one_of",
+    "value": [
+     "us",
+     "GB"
+    ]
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "storefront",
+    "op": "not_one_of",
+    "value": [
+     "US"
+    ]
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "storefront",
+    "op": "one_of",
+    "value": [
+     "DE"
+    ]
+   },
+   "user": {},
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "language",
+    "op": "one_of",
+    "value": [
+     " EN "
+    ]
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "device",
+    "op": "is",
+    "value": "iphone"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "device",
+    "op": "is_not",
+    "value": "ipad"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "device",
+    "op": "is",
+    "value": "ipad"
+   },
+   "user": {},
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "device",
+    "op": "is_not",
+    "value": "ipad"
+   },
+   "user": {},
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "os_version",
+    "op": "gte",
+    "value": "17.4"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "os_version",
+    "op": "gte",
+    "value": "17.5"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "os_version",
+    "op": "lte",
+    "value": "17"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "os_version",
+    "op": "eq",
+    "value": "17.4.1.0"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "app_version",
+    "op": "eq",
+    "value": "2.4"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "app_version",
+    "op": "gte",
+    "value": "2.10"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "app_version",
+    "op": "lte",
+    "value": "2.4.0"
+   },
+   "user": {
+    "app_version": "2.4.x"
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "days_since_install",
+    "op": "gt",
+    "value": 2
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "days_since_install",
+    "op": "lte",
+    "value": 2
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "sessions",
+    "op": "eq",
+    "value": 12
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "sessions",
+    "op": "ne",
+    "value": 12
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "sessions",
+    "op": "gte",
+    "value": 10
+   },
+   "user": {
+    "sessions": "10"
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "sessions",
+    "op": "gt",
+    "value": 1
+   },
+   "user": {
+    "sessions": "many"
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "subscription",
+    "op": "is",
+    "value": "NEVER"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "paywall_declined",
+    "op": "eq",
+    "value": 0
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "apple_ads_keyword",
+    "op": "contains",
+    "value": "Plan"
+   },
+   "user": {
+    "apple_ads_keyword": "budget planner"
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "apple_ads_campaign",
+    "op": "is",
+    "value": "Spring"
+   },
+   "user": {},
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "custom.level",
+    "op": "gte",
+    "value": 5
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "custom.level",
+    "op": "is",
+    "value": "7"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "custom.plan",
+    "op": "contains",
+    "value": "old"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "custom.plan",
+    "op": "is_not",
+    "value": "gold"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "rule": {
+    "attribute": "custom.ratio",
+    "op": "lt",
+    "value": 3
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "custom.ratio",
+    "op": "is",
+    "value": "2.5"
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "rule": {
+    "attribute": "custom.missing",
+    "op": "ne",
+    "value": 1
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  }
+ ],
+ "groups": [
+  {
+   "audience": {
+    "match": "all",
+    "rules": [],
+    "groups": []
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "audience": {
+    "match": "all",
+    "rules": [
+     {
+      "attribute": "storefront",
+      "op": "one_of",
+      "value": [
+       "US"
+      ]
+     },
+     {
+      "attribute": "sessions",
+      "op": "gte",
+      "value": 20
+     }
+    ],
+    "groups": []
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  },
+  {
+   "audience": {
+    "match": "any",
+    "rules": [
+     {
+      "attribute": "storefront",
+      "op": "one_of",
+      "value": [
+       "US"
+      ]
+     },
+     {
+      "attribute": "sessions",
+      "op": "gte",
+      "value": 20
+     }
+    ],
+    "groups": []
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "audience": {
+    "match": "all",
+    "rules": [
+     {
+      "attribute": "device",
+      "op": "is",
+      "value": "iphone"
+     }
+    ],
+    "groups": [
+     {
+      "match": "any",
+      "rules": [
+       {
+        "attribute": "storefront",
+        "op": "one_of",
+        "value": [
+         "DE"
+        ]
+       },
+       {
+        "attribute": "custom.level",
+        "op": "gt",
+        "value": 5
+       }
+      ]
+     }
+    ]
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": true
+  },
+  {
+   "audience": {
+    "match": "any",
+    "rules": [],
+    "groups": [
+     {
+      "match": "all",
+      "rules": [
+       {
+        "attribute": "storefront",
+        "op": "one_of",
+        "value": [
+         "DE"
+        ]
+       }
+      ]
+     },
+     {
+      "match": "all",
+      "rules": [
+       {
+        "attribute": "language",
+        "op": "one_of",
+        "value": [
+         "de"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "user": {
+    "storefront": "US",
+    "language": "en",
+    "device": "iphone",
+    "os_version": "17.4.1",
+    "app_version": "2.4.0",
+    "days_since_install": 3,
+    "sessions": 12,
+    "subscription": "never",
+    "paywall_declined": 0,
+    "custom.level": 7,
+    "custom.plan": "Gold",
+    "custom.ratio": 2.5
+   },
+   "expected": false
+  }
+ ]
+}

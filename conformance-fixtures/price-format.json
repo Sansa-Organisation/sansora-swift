@@ -1,0 +1,110 @@
+[
+ {
+  "displayPrice": "$59.99",
+  "priceMicros": 59990000,
+  "currency": "USD",
+  "num": 1,
+  "den": 12,
+  "minor": 500,
+  "expected": "$5.00"
+ },
+ {
+  "displayPrice": "$2.99",
+  "priceMicros": 2990000,
+  "currency": "USD",
+  "num": 52,
+  "den": 12,
+  "minor": 1296,
+  "expected": "$12.96"
+ },
+ {
+  "displayPrice": "59,99 €",
+  "priceMicros": 59990000,
+  "currency": "EUR",
+  "num": 1,
+  "den": 12,
+  "minor": 500,
+  "expected": "5,00 €"
+ },
+ {
+  "displayPrice": "¥6,000",
+  "priceMicros": 6000000000,
+  "currency": "JPY",
+  "num": 1,
+  "den": 12,
+  "minor": 500,
+  "expected": "¥500"
+ },
+ {
+  "displayPrice": "$19,999.99",
+  "priceMicros": 19999990000,
+  "currency": "USD",
+  "num": 1,
+  "den": 12,
+  "minor": 166667,
+  "expected": "$1,666.67"
+ },
+ {
+  "displayPrice": "1 299,99 kr",
+  "priceMicros": 1299990000,
+  "currency": "SEK",
+  "num": 1,
+  "den": 12,
+  "minor": 10833,
+  "expected": "108,33 kr"
+ },
+ {
+  "displayPrice": "US$ 4.99",
+  "priceMicros": 4990000,
+  "currency": "USD",
+  "num": 52,
+  "den": 12,
+  "minor": 2162,
+  "expected": "US$ 21.62"
+ },
+ {
+  "displayPrice": "₹4,999.00",
+  "priceMicros": 4999000000,
+  "currency": "INR",
+  "num": 1,
+  "den": 12,
+  "minor": 41658,
+  "expected": "₹416.58"
+ },
+ {
+  "displayPrice": "KWD 12.500",
+  "priceMicros": 12500000,
+  "currency": "KWD",
+  "num": 1,
+  "den": 12,
+  "minor": 1042,
+  "expected": "KWD 1.042"
+ },
+ {
+  "displayPrice": "2990 Ft",
+  "priceMicros": 2990000000,
+  "currency": "HUF",
+  "num": 1,
+  "den": 12,
+  "minor": 24917,
+  "expected": "249 Ft"
+ },
+ {
+  "displayPrice": "Free",
+  "priceMicros": 0,
+  "currency": "USD",
+  "num": 1,
+  "den": 12,
+  "minor": 0,
+  "expected": null
+ },
+ {
+  "displayPrice": "$0.99",
+  "priceMicros": 990000,
+  "currency": "USD",
+  "num": 1,
+  "den": 12,
+  "minor": 8,
+  "expected": "$0.08"
+ }
+]

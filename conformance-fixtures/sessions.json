@@ -1,0 +1,2417 @@
+[
+ {
+  "name": "Shown, browse plans, buy yearly with trial",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {
+   "level": 7,
+   "beta": true
+  },
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "advance",
+    "ms": 2500
+   },
+   {
+    "op": "select",
+    "productId": "monthly"
+   },
+   {
+    "op": "advance",
+    "ms": 1000
+   },
+   {
+    "op": "select",
+    "productId": "yearly"
+   },
+   {
+    "op": "purchase",
+    "outcome": "trial"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "attributes": {
+      "level": 7,
+      "beta": true
+     }
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "plan_selected",
+     "occurredAt": 1793000002500,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.monthly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "plan_selected",
+     "occurredAt": 1793000003500,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-1",
+     "event": "purchase_started",
+     "occurredAt": 1793000003500,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-1",
+     "event": "trial_started",
+     "occurredAt": 1793000003500,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000007",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000003500,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 3500,
+     "reason": "purchased"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "monthly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "monthly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Shown, buy monthly",
+  "device": {
+   "platform": "android",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "select",
+    "productId": "monthly"
+   },
+   {
+    "op": "advance",
+    "ms": 4000
+   },
+   {
+    "op": "purchase",
+    "outcome": "purchased"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "plan_selected",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.monthly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "purchase_started",
+     "occurredAt": 1793000004000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.monthly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-1",
+     "event": "purchase_completed",
+     "occurredAt": 1793000004000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.monthly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000004000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 4000,
+     "reason": "purchased"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "monthly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "monthly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Cancelled, then failed, then closed",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "purchase",
+    "outcome": "cancelled"
+   },
+   {
+    "op": "advance",
+    "ms": 3000
+   },
+   {
+    "op": "purchase",
+    "outcome": "failed",
+    "reason": "network"
+   },
+   {
+    "op": "purchase",
+    "outcome": "pending"
+   },
+   {
+    "op": "advance",
+    "ms": 12000
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "purchase_started",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "purchase_failed",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly",
+     "reason": "cancelled"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-1",
+     "event": "purchase_started",
+     "occurredAt": 1793000003000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-1",
+     "event": "purchase_failed",
+     "occurredAt": 1793000003000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly",
+     "reason": "network"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000007",
+     "appUserId": "user-1",
+     "event": "purchase_started",
+     "occurredAt": 1793000003000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000008",
+     "appUserId": "user-1",
+     "event": "purchase_failed",
+     "occurredAt": 1793000003000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "productId": "com.example.pro.yearly",
+     "reason": "pending"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000009",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000015000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 15000,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Prices fail: shown without a working purchase button, then closed",
+  "device": {
+   "platform": "android",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "pricesError": "billing_unavailable"
+   },
+   {
+    "op": "purchase",
+    "outcome": "purchased"
+   },
+   {
+    "op": "advance",
+    "ms": 5000
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "prices_load_failed",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "reason": "billing_unavailable"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000005000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 5000,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": false
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": false
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": false
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Restore from the paywall",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "advance",
+    "ms": 700
+   },
+   {
+    "op": "restore",
+    "outcome": "nothing"
+   },
+   {
+    "op": "restore",
+    "outcome": "failed"
+   },
+   {
+    "op": "restore",
+    "outcome": "restored"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "restore_started",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "restore_completed",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "reason": "nothing_to_restore"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-1",
+     "event": "restore_started",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-1",
+     "event": "restore_completed",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "reason": "failed"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000007",
+     "appUserId": "user-1",
+     "event": "restore_started",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000008",
+     "appUserId": "user-1",
+     "event": "restore_completed",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "reason": "restored"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000009",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000700,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 700,
+     "reason": "restored"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Restore outside a paywall",
+  "device": {
+   "platform": "android",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "restore",
+    "outcome": "restored"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "restore_started",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "restore_completed",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "reason": "restored"
+    }
+   ],
+   "results": [
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Once ever: second placement in the same session shows priority 2",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   },
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "advance",
+    "ms": 100
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000100,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+     "variant": "A",
+     "durationMs": 100,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    },
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111112",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Once per session resets in a new session",
+  "device": {
+   "platform": "android",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-3",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "feature_gate",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   },
+   {
+    "op": "register",
+    "placement": "feature_gate",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "new_session"
+   },
+   {
+    "op": "advance",
+    "ms": 60000
+   },
+   {
+    "op": "register",
+    "placement": "feature_gate",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-3",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-3",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-3",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000004",
+     "appUserId": "user-3",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000005",
+     "appUserId": "user-3",
+     "event": "placement_fired",
+     "occurredAt": 1793000060000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000006",
+     "appUserId": "user-3",
+     "event": "paywall_shown",
+     "occurredAt": 1793000060000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000007",
+     "appUserId": "user-3",
+     "event": "paywall_closed",
+     "occurredAt": 1793000060000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "feature_gate",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111113",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": "22222222-2222-4222-8222-222222222222",
+      "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    },
+    {
+     "resolution": {
+      "kind": "no_campaign",
+      "reason": "frequency_capped"
+     },
+     "showing": null
+    },
+    {
+     "resolution": null,
+     "showing": null
+    },
+    {
+     "resolution": null,
+     "showing": null
+    },
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111113",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": "22222222-2222-4222-8222-222222222222",
+      "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Holdout: placement fires, nothing shows",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-10",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "feature_gate",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-10",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "feature_gate"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "holdout",
+      "campaignId": "11111111-1111-4111-8111-111111111113",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "No config yet and nothing bundled",
+  "device": {
+   "platform": "android",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": null,
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_load_failed",
+     "occurredAt": 1793000000000,
+     "platform": "android",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "reason": "no_config"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "no_config"
+     },
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Unknown placement",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "settings_open"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "settings_open"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "no_campaign",
+      "reason": "no_campaign_for_placement"
+     },
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "A second register while a paywall shows is ignored",
+  "device": {
+   "platform": "ios",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": "USA",
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "register",
+    "placement": "app_launch",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000000,
+     "platform": "ios",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "storefront": "USA",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "Flutter on Android: explicit store",
+  "device": {
+   "platform": "flutter",
+   "sdkVersion": "0.1.0",
+   "osVersion": "15",
+   "device": "Pixel 9",
+   "storefront": "USA",
+   "store": "google_play"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "flutter",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "flutter",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000000,
+     "platform": "flutter",
+     "sdkVersion": "0.1.0",
+     "osVersion": "15",
+     "device": "Pixel 9",
+     "storefront": "USA",
+     "store": "google_play",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ },
+ {
+  "name": "React Native on iOS without a storefront",
+  "device": {
+   "platform": "react_native",
+   "sdkVersion": "0.1.0",
+   "osVersion": "18.2",
+   "device": "iPhone16,1",
+   "storefront": null,
+   "store": "app_store"
+  },
+  "appUserId": "user-1",
+  "attributes": {
+   "storefront": "US"
+  },
+  "custom": {},
+  "now": 1793000000000,
+  "config": "resolution",
+  "steps": [
+   {
+    "op": "register",
+    "placement": "onboarding_end",
+    "prices": {
+     "com.example.pro.yearly": {
+      "displayPrice": "$59.99",
+      "priceMicros": 59990000,
+      "currency": "USD",
+      "trialDays": 7
+     },
+     "com.example.pro.monthly": {
+      "displayPrice": "$9.99",
+      "priceMicros": 9990000,
+      "currency": "USD",
+      "trialDays": 0
+     },
+     "com.example.pro.weekly": {
+      "displayPrice": "$2.99",
+      "priceMicros": 2990000,
+      "currency": "USD",
+      "trialDays": 3
+     },
+     "com.example.pro.lifetime": {
+      "displayPrice": "$149.99",
+      "priceMicros": 149990000,
+      "currency": "USD",
+      "trialDays": 0
+     }
+    }
+   },
+   {
+    "op": "close"
+   }
+  ],
+  "expected": {
+   "events": [
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000001",
+     "appUserId": "user-1",
+     "event": "placement_fired",
+     "occurredAt": 1793000000000,
+     "platform": "react_native",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "store": "app_store",
+     "placement": "onboarding_end"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000002",
+     "appUserId": "user-1",
+     "event": "paywall_shown",
+     "occurredAt": 1793000000000,
+     "platform": "react_native",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A"
+    },
+    {
+     "schema": "sansora.event/1",
+     "eventId": "00000000-0000-4000-8000-000000000003",
+     "appUserId": "user-1",
+     "event": "paywall_closed",
+     "occurredAt": 1793000000000,
+     "platform": "react_native",
+     "sdkVersion": "0.1.0",
+     "osVersion": "18.2",
+     "device": "iPhone16,1",
+     "store": "app_store",
+     "placement": "onboarding_end",
+     "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+     "variant": "A",
+     "durationMs": 0,
+     "reason": "closed"
+    }
+   ],
+   "results": [
+    {
+     "resolution": {
+      "kind": "paywall",
+      "campaignId": "11111111-1111-4111-8111-111111111111",
+      "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "experimentId": null,
+      "experimentVariantId": null
+     },
+     "showing": {
+      "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+      "variant": "A",
+      "selectedProductId": "yearly",
+      "purchasable": true
+     }
+    },
+    {
+     "resolution": null,
+     "showing": null
+    }
+   ]
+  }
+ }
+]

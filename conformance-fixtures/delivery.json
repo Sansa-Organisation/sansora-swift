@@ -1,0 +1,551 @@
+[
+ {
+  "name": "One batch accepted",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 3
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      3
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Batches of 100 in order",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 250
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      100,
+      100,
+      50
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Network error then success",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 5
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "network": true
+     }
+    ]
+   },
+   {
+    "op": "restart"
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      5
+     ],
+     "dropped": 0,
+     "queued": 5,
+     "failures": 1,
+     "retryAfterMs": 2000
+    },
+    {
+     "sent": [
+      5
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Backoff doubles to the cap",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 1
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 503
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 1,
+     "retryAfterMs": 2000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 2,
+     "retryAfterMs": 4000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 3,
+     "retryAfterMs": 8000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 4,
+     "retryAfterMs": 16000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 5,
+     "retryAfterMs": 32000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 6,
+     "retryAfterMs": 64000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 7,
+     "retryAfterMs": 128000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 8,
+     "retryAfterMs": 256000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 9,
+     "retryAfterMs": 300000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 10,
+     "retryAfterMs": 300000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Partial progress: second batch fails",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 150
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     },
+     {
+      "status": 500
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      100,
+      50
+     ],
+     "dropped": 0,
+     "queued": 50,
+     "failures": 1,
+     "retryAfterMs": 2000
+    },
+    {
+     "sent": [
+      50
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Malformed batch is dropped, the rest delivered",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 120
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 400
+     },
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      100,
+      20
+     ],
+     "dropped": 100,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Unknown key keeps events",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 2
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 401
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 429
+     }
+    ]
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      2
+     ],
+     "dropped": 0,
+     "queued": 2,
+     "failures": 1,
+     "retryAfterMs": 2000
+    },
+    {
+     "sent": [
+      2
+     ],
+     "dropped": 0,
+     "queued": 2,
+     "failures": 2,
+     "retryAfterMs": 4000
+    },
+    {
+     "sent": [
+      2
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 0,
+   "firstQueuedEvent": null
+  }
+ },
+ {
+  "name": "Queue keeps the newest 1000",
+  "steps": [
+   {
+    "op": "enqueue",
+    "count": 1200
+   },
+   {
+    "op": "flush",
+    "responses": [
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     },
+     {
+      "status": 200
+     }
+    ]
+   }
+  ],
+  "expected": {
+   "outcomes": [
+    {
+     "sent": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ],
+   "overflow": 200,
+   "firstQueuedEvent": null
+  }
+ }
+]

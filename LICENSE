@@ -1,0 +1,64 @@
+Sansora SDK License, version 1.0 (8 November 2026)
+https://sansora.my/legal/sdk-license
+
+Copyright (c) 2026 Sansa Group AB. All rights reserved, except as granted below.
+
+1. WHAT THIS COVERS
+
+This licence covers the Sansora SDKs: SansoraKit for iOS, sansora-android,
+sansora_flutter and @sansavision/sansora-react-native, with their source code,
+documentation and examples (the SDK). The SDK is provided by Sansavision, a
+division of Sansa Group AB, organisation number 559111-9507, Soldathemsgatan 20,
+415 28 Göteborg, Sweden (we, us).
+
+2. WHAT YOU MAY DO
+
+If you have a Sansora account or licence and follow the Sansora Terms of
+Service, you may use, copy and modify the SDK, build it into your own apps, and
+distribute it as part of those apps, in order to use Sansora services such as
+paywalls, placements, campaigns, experiments and events. This permission is
+non-exclusive, worldwide and free of charge. You may transfer it only together
+with an app you hand over to someone else.
+
+3. WHAT YOU MAY NOT DO
+
+You may not:
+
+- use the SDK, or any part or modified version of it, with a service other than
+  Sansora;
+- distribute the SDK on its own, as a library, package or source repository for
+  others, other than as an unchanged copy of an official release;
+- use the SDK to build a product or service that competes with Sansora;
+- remove or change this licence or the copyright notices in the SDK.
+
+4. WHEN PERMISSION ENDS
+
+This permission ends automatically if you break these terms or your Sansora
+account or licence ends. If we tell you about a breach you can fix, you have 30
+days to fix it, and the permission continues if you do. When permission ends,
+stop releasing new versions of your apps that include the SDK. Versions you have
+already released may stay in use by their users.
+
+5. OWNERSHIP AND CONTRIBUTIONS
+
+We keep every right in the SDK that this licence does not grant. If you send us
+changes or suggestions, you allow us to use them without restriction or payment.
+
+6. THIRD-PARTY SOFTWARE
+
+The SDK uses platform and third-party software, such as StoreKit, Google Play
+Billing and open-source libraries, under their own licences and terms.
+
+7. NO WARRANTY AND LIMITED LIABILITY
+
+The SDK is provided as is, without warranties of any kind, to the extent the law
+allows. We are not liable for indirect or consequential loss, or for lost
+revenue, arising from the SDK. Nothing here excludes or limits liability that
+cannot lawfully be excluded or limited.
+
+8. LAW AND CONTACT
+
+Swedish law governs this licence. Disputes may be brought before the courts of
+Sweden, with Göteborgs tingsrätt as the first instance. We may publish new
+versions of this licence at https://sansora.my/legal/sdk-license; each SDK
+release keeps the version it shipped with. Questions: support@sansavision.com.

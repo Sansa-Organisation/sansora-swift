@@ -1,0 +1,103 @@
+{
+ "usd-trial-eligible": {
+  "com.example.pro.yearly": {
+   "displayPrice": "$59.99",
+   "priceMicros": 59990000,
+   "currency": "USD",
+   "trialDays": 7
+  },
+  "com.example.pro.monthly": {
+   "displayPrice": "$9.99",
+   "priceMicros": 9990000,
+   "currency": "USD",
+   "trialDays": 0
+  },
+  "com.example.pro.weekly": {
+   "displayPrice": "$2.99",
+   "priceMicros": 2990000,
+   "currency": "USD",
+   "trialDays": 3
+  },
+  "com.example.pro.lifetime": {
+   "displayPrice": "$149.99",
+   "priceMicros": 149990000,
+   "currency": "USD",
+   "trialDays": 0
+  }
+ },
+ "usd-not-eligible": {
+  "com.example.pro.yearly": {
+   "displayPrice": "$59.99",
+   "priceMicros": 59990000,
+   "currency": "USD",
+   "trialDays": 0
+  },
+  "com.example.pro.monthly": {
+   "displayPrice": "$9.99",
+   "priceMicros": 9990000,
+   "currency": "USD",
+   "trialDays": 0
+  },
+  "com.example.pro.weekly": {
+   "displayPrice": "$2.99",
+   "priceMicros": 2990000,
+   "currency": "USD",
+   "trialDays": 0
+  },
+  "com.example.pro.lifetime": {
+   "displayPrice": "$149.99",
+   "priceMicros": 149990000,
+   "currency": "USD",
+   "trialDays": 0
+  }
+ },
+ "eur-de": {
+  "com.example.pro.yearly": {
+   "displayPrice": "59,99 €",
+   "priceMicros": 59990000,
+   "currency": "EUR",
+   "trialDays": 7
+  },
+  "com.example.pro.monthly": {
+   "displayPrice": "9,99 €",
+   "priceMicros": 9990000,
+   "currency": "EUR",
+   "trialDays": 0
+  },
+  "com.example.pro.weekly": {
+   "displayPrice": "2,99 €",
+   "priceMicros": 2990000,
+   "currency": "EUR",
+   "trialDays": 0
+  },
+  "com.example.pro.lifetime": {
+   "displayPrice": "149,99 €",
+   "priceMicros": 149990000,
+   "currency": "EUR",
+   "trialDays": 0
+  }
+ },
+ "jpy": {
+  "com.example.pro.yearly": {
+   "displayPrice": "¥6,000",
+   "priceMicros": 6000000000,
+   "currency": "JPY",
+   "trialDays": 14
+  },
+  "com.example.pro.monthly": {
+   "displayPrice": "¥800",
+   "priceMicros": 800000000,
+   "currency": "JPY",
+   "trialDays": 0
+  }
+ },
+ "partial": {
+  "com.example.pro.monthly": {
+   "displayPrice": "$9.99",
+   "priceMicros": 9990000,
+   "currency": "USD",
+   "trialDays": 0
+  }
+ },
+ "none": {}
+}

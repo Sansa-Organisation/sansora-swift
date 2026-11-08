@@ -1,0 +1,1398 @@
+{
+ "config": {
+  "schema": "sansora.config/1",
+  "appId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+  "generatedAt": 1793000000000,
+  "paywalls": [
+   {
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "version": 1,
+    "variant": "A",
+    "definition": {
+     "schema": "sansora.paywall/1",
+     "name": "Every block",
+     "locale": "en",
+     "theme": "light",
+     "palette": {
+      "background": "#FBFBFD",
+      "surface": "#FFFFFF",
+      "text": "#111318",
+      "muted": "#5B6170",
+      "accent": "#3451D1",
+      "hero": "#C9D3F5"
+     },
+     "products": [
+      {
+       "id": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "label": "Yearly",
+       "period": "year",
+       "trialDays": 7,
+       "previewPrice": null,
+       "currency": "USD"
+      },
+      {
+       "id": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "label": "Monthly",
+       "period": "month",
+       "trialDays": 0,
+       "previewPrice": null,
+       "currency": "USD"
+      },
+      {
+       "id": "weekly",
+       "storeProductId": "com.example.pro.weekly",
+       "label": "Weekly",
+       "period": "week",
+       "trialDays": 3,
+       "previewPrice": null,
+       "currency": "USD"
+      },
+      {
+       "id": "lifetime",
+       "storeProductId": "com.example.pro.lifetime",
+       "label": "Lifetime",
+       "period": "lifetime",
+       "trialDays": 0,
+       "previewPrice": null,
+       "currency": "USD"
+      }
+     ],
+     "blocks": [
+      {
+       "type": "close",
+       "position": "left",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 120,
+       "imageUrl": "https://example.com/hero.png"
+      },
+      {
+       "type": "headline",
+       "text": "Fixture Pro",
+       "subtext": "Everything in one place."
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Unlimited projects",
+        "No ads",
+        "Sync across devices"
+       ]
+      },
+      {
+       "type": "plans",
+       "productIds": [
+        "yearly",
+        "monthly",
+        "weekly",
+        "lifetime"
+       ],
+       "selected": "yearly",
+       "badge": {
+        "productId": "yearly",
+        "text": "Best value"
+       },
+       "showPerMonth": true
+      },
+      {
+       "type": "trial_timeline",
+       "reminderDay": 5
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "A sample quote for tests.",
+         "author": "Test reviewer"
+        }
+       ]
+      },
+      {
+       "type": "faq",
+       "items": [
+        {
+         "question": "Can I cancel any time?",
+         "answer": "Yes, in your store account settings."
+        }
+       ]
+      },
+      {
+       "type": "comparison",
+       "rows": [
+        {
+         "feature": "Core features",
+         "free": true,
+         "pro": true
+        },
+        {
+         "feature": "Unlimited use",
+         "free": false,
+         "pro": true
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial"
+      },
+      {
+       "type": "legal",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true,
+       "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+      }
+     ]
+    }
+   },
+   {
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "version": 2,
+    "variant": "B",
+    "definition": {
+     "schema": "sansora.paywall/1",
+     "name": "Trial timeline",
+     "locale": "en",
+     "theme": "light",
+     "palette": {
+      "background": "#FBFBFD",
+      "surface": "#FFFFFF",
+      "text": "#111318",
+      "muted": "#5B6170",
+      "accent": "#6D28D9",
+      "hero": "#E5D4F2"
+     },
+     "products": [
+      {
+       "id": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "label": "Yearly",
+       "period": "year",
+       "trialDays": 7,
+       "previewPrice": null,
+       "currency": "USD"
+      },
+      {
+       "id": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "label": "Monthly",
+       "period": "month",
+       "trialDays": 0,
+       "previewPrice": null,
+       "currency": "USD"
+      }
+     ],
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 40,
+       "imageUrl": ""
+      },
+      {
+       "type": "headline",
+       "text": "How your free trial works",
+       "subtext": "We remind you before it ends."
+      },
+      {
+       "type": "trial_timeline",
+       "reminderDay": 5
+      },
+      {
+       "type": "plans",
+       "productIds": [
+        "yearly",
+        "monthly"
+       ],
+       "selected": "yearly",
+       "badge": null,
+       "showPerMonth": true
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial"
+      },
+      {
+       "type": "legal",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true,
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+      }
+     ]
+    }
+   },
+   {
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "version": 1,
+    "variant": "A",
+    "definition": {
+     "schema": "sansora.paywall/1",
+     "name": "Minimal",
+     "locale": "en",
+     "theme": "light",
+     "palette": {
+      "background": "#FBFBFD",
+      "surface": "#FFFFFF",
+      "text": "#111318",
+      "muted": "#5B6170",
+      "accent": "#111318",
+      "hero": "#ECEEF3"
+     },
+     "products": [
+      {
+       "id": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "label": "Yearly",
+       "period": "year",
+       "trialDays": 0,
+       "previewPrice": null,
+       "currency": "USD"
+      },
+      {
+       "id": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "label": "Monthly",
+       "period": "month",
+       "trialDays": 0,
+       "previewPrice": null,
+       "currency": "USD"
+      }
+     ],
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "headline",
+       "text": "Fixture Pro",
+       "subtext": ""
+      },
+      {
+       "type": "plans",
+       "productIds": [
+        "yearly",
+        "monthly"
+       ],
+       "selected": "yearly",
+       "badge": null,
+       "showPerMonth": true
+      },
+      {
+       "type": "cta",
+       "label": "Continue"
+      },
+      {
+       "type": "legal",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true,
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+      }
+     ]
+    }
+   }
+  ],
+  "campaigns": [
+   {
+    "id": "11111111-1111-4111-8111-111111111111",
+    "placement": "onboarding_end",
+    "audience": {
+     "match": "all",
+     "rules": [
+      {
+       "attribute": "storefront",
+       "op": "one_of",
+       "value": [
+        "US"
+       ]
+      }
+     ],
+     "groups": []
+    },
+    "frequency": "once_ever",
+    "priority": 1,
+    "holdoutBps": 0,
+    "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "experiment": null
+   },
+   {
+    "id": "11111111-1111-4111-8111-111111111112",
+    "placement": "onboarding_end",
+    "audience": {
+     "match": "all",
+     "rules": [],
+     "groups": []
+    },
+    "frequency": "every_time",
+    "priority": 2,
+    "holdoutBps": 0,
+    "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "experiment": null
+   },
+   {
+    "id": "11111111-1111-4111-8111-111111111113",
+    "placement": "feature_gate",
+    "audience": {
+     "match": "all",
+     "rules": [],
+     "groups": []
+    },
+    "frequency": "once_per_session",
+    "priority": 1,
+    "holdoutBps": 1000,
+    "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "experiment": {
+     "id": "22222222-2222-4222-8222-222222222222",
+     "variants": [
+      {
+       "id": "33333333-3333-4333-8333-333333333331",
+       "name": "A",
+       "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+       "allocationBps": 5000
+      },
+      {
+       "id": "33333333-3333-4333-8333-333333333332",
+       "name": "B",
+       "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+       "allocationBps": 5000
+      }
+     ]
+    }
+   },
+   {
+    "id": "11111111-1111-4111-8111-111111111114",
+    "placement": "paywall_decline",
+    "audience": {
+     "match": "all",
+     "rules": [
+      {
+       "attribute": "paywall_declined",
+       "op": "gte",
+       "value": 1
+      }
+     ],
+     "groups": []
+    },
+    "frequency": "once_per_day",
+    "priority": 1,
+    "holdoutBps": 0,
+    "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "experiment": {
+     "id": "22222222-2222-4222-8222-222222222223",
+     "variants": [
+      {
+       "id": "33333333-3333-4333-8333-333333333333",
+       "name": "A",
+       "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+       "allocationBps": 8000
+      },
+      {
+       "id": "33333333-3333-4333-8333-333333333334",
+       "name": "holdout",
+       "paywallVersionId": null,
+       "allocationBps": 2000
+      }
+     ]
+    }
+   },
+   {
+    "id": "11111111-1111-4111-8111-111111111115",
+    "placement": "app_launch",
+    "audience": {
+     "match": "all",
+     "rules": [],
+     "groups": []
+    },
+    "frequency": "once_per_week",
+    "priority": 5,
+    "holdoutBps": 0,
+    "paywallVersionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "experiment": null
+   }
+  ]
+ },
+ "cases": [
+  {
+   "name": "US user, never shown: priority 1",
+   "placement": "onboarding_end",
+   "appUserId": "user-1",
+   "user": {
+    "storefront": "US"
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111111",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "US user, already shown once: falls through to priority 2",
+   "placement": "onboarding_end",
+   "appUserId": "user-1",
+   "user": {
+    "storefront": "US"
+   },
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111111": [
+      1790408000000
+     ]
+    },
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111112",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "A",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "German user: priority 2",
+   "placement": "onboarding_end",
+   "appUserId": "user-1",
+   "user": {
+    "storefront": "DE"
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111112",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "A",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "No storefront: missing attribute never matches",
+   "placement": "onboarding_end",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111112",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "A",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "Unknown placement",
+   "placement": "settings_open",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "no_campaign",
+    "reason": "no_campaign_for_placement"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-0",
+   "placement": "feature_gate",
+   "appUserId": "user-0",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-1",
+   "placement": "feature_gate",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-2",
+   "placement": "feature_gate",
+   "appUserId": "user-2",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-3",
+   "placement": "feature_gate",
+   "appUserId": "user-3",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-4",
+   "placement": "feature_gate",
+   "appUserId": "user-4",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-5",
+   "placement": "feature_gate",
+   "appUserId": "user-5",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-6",
+   "placement": "feature_gate",
+   "appUserId": "user-6",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-7",
+   "placement": "feature_gate",
+   "appUserId": "user-7",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-8",
+   "placement": "feature_gate",
+   "appUserId": "user-8",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-9",
+   "placement": "feature_gate",
+   "appUserId": "user-9",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-10",
+   "placement": "feature_gate",
+   "appUserId": "user-10",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "holdout",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "feature_gate assignment user-11",
+   "placement": "feature_gate",
+   "appUserId": "user-11",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-12",
+   "placement": "feature_gate",
+   "appUserId": "user-12",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-13",
+   "placement": "feature_gate",
+   "appUserId": "user-13",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-14",
+   "placement": "feature_gate",
+   "appUserId": "user-14",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-15",
+   "placement": "feature_gate",
+   "appUserId": "user-15",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-16",
+   "placement": "feature_gate",
+   "appUserId": "user-16",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-17",
+   "placement": "feature_gate",
+   "appUserId": "user-17",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-18",
+   "placement": "feature_gate",
+   "appUserId": "user-18",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-19",
+   "placement": "feature_gate",
+   "appUserId": "user-19",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "holdout",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  },
+  {
+   "name": "feature_gate assignment user-20",
+   "placement": "feature_gate",
+   "appUserId": "user-20",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-21",
+   "placement": "feature_gate",
+   "appUserId": "user-21",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333331"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-22",
+   "placement": "feature_gate",
+   "appUserId": "user-22",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate assignment user-23",
+   "placement": "feature_gate",
+   "appUserId": "user-23",
+   "user": {},
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111113",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc3",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2",
+    "variant": "B",
+    "experimentId": "22222222-2222-4222-8222-222222222222",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333332"
+   }
+  },
+  {
+   "name": "feature_gate shown this session",
+   "placement": "feature_gate",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111113": [
+      1792999999000
+     ]
+    },
+    "session": [
+     "11111111-1111-4111-8111-111111111113"
+    ]
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "no_campaign",
+    "reason": "frequency_capped"
+   }
+  },
+  {
+   "name": "paywall_decline: never declined",
+   "placement": "paywall_decline",
+   "appUserId": "user-1",
+   "user": {
+    "paywall_declined": 0
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "no_campaign",
+    "reason": "no_audience_match"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-0",
+   "placement": "paywall_decline",
+   "appUserId": "user-0",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-1",
+   "placement": "paywall_decline",
+   "appUserId": "user-1",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-2",
+   "placement": "paywall_decline",
+   "appUserId": "user-2",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-3",
+   "placement": "paywall_decline",
+   "appUserId": "user-3",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-4",
+   "placement": "paywall_decline",
+   "appUserId": "user-4",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "holdout",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333334"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-5",
+   "placement": "paywall_decline",
+   "appUserId": "user-5",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-6",
+   "placement": "paywall_decline",
+   "appUserId": "user-6",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-7",
+   "placement": "paywall_decline",
+   "appUserId": "user-7",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-8",
+   "placement": "paywall_decline",
+   "appUserId": "user-8",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-9",
+   "placement": "paywall_decline",
+   "appUserId": "user-9",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-10",
+   "placement": "paywall_decline",
+   "appUserId": "user-10",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline assignment user-11",
+   "placement": "paywall_decline",
+   "appUserId": "user-11",
+   "user": {
+    "paywall_declined": 1
+   },
+   "history": {
+    "shown": {},
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "paywall_decline within a day: capped",
+   "placement": "paywall_decline",
+   "appUserId": "user-2",
+   "user": {
+    "paywall_declined": 2
+   },
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111114": [
+      1792913600001
+     ]
+    },
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "no_campaign",
+    "reason": "frequency_capped"
+   }
+  },
+  {
+   "name": "paywall_decline after exactly a day",
+   "placement": "paywall_decline",
+   "appUserId": "user-2",
+   "user": {
+    "paywall_declined": 2
+   },
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111114": [
+      1792913600000
+     ]
+    },
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111114",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "A",
+    "experimentId": "22222222-2222-4222-8222-222222222223",
+    "experimentVariantId": "33333333-3333-4333-8333-333333333333"
+   }
+  },
+  {
+   "name": "app_launch within a week: capped",
+   "placement": "app_launch",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111115": [
+      1792481600000
+     ]
+    },
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "no_campaign",
+    "reason": "frequency_capped"
+   }
+  },
+  {
+   "name": "app_launch after a week",
+   "placement": "app_launch",
+   "appUserId": "user-1",
+   "user": {},
+   "history": {
+    "shown": {
+     "11111111-1111-4111-8111-111111111115": [
+      1792395200000
+     ]
+    },
+    "session": []
+   },
+   "now": 1793000000000,
+   "expected": {
+    "kind": "paywall",
+    "campaignId": "11111111-1111-4111-8111-111111111115",
+    "versionId": "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+    "paywallId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1",
+    "variant": "B",
+    "experimentId": null,
+    "experimentVariantId": null
+   }
+  }
+ ]
+}
