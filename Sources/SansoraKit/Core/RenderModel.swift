@@ -23,6 +23,27 @@ public struct RenderModel: Equatable, Sendable {
     /// The selected plan has a store price, so the purchase button works.
     public var purchasable: Bool
     public var blocks: [Block]
+    /// Only for a paged definition. Each page holds its share of `blocks`.
+    public var pages: [Page]?
+    /// `rtl` only for a translated right-to-left view.
+    public var direction: String?
+    /// Only for a translated view: the words the views draw themselves.
+    public var labels: Labels?
+
+    public struct Page: Equatable, Sendable {
+        public var id: String
+        /// nil on the last page.
+        public var nextLabel: String?
+        public var blocks: [Block]
+    }
+
+    public struct Labels: Equatable, Sendable {
+        public var terms: String
+        public var privacy: String
+        public var restore: String
+        public var close: String
+        public var unavailablePrice: String
+    }
 
     public struct Plan: Equatable, Sendable {
         public var productId: String
@@ -54,7 +75,7 @@ public struct RenderModel: Equatable, Sendable {
 
     public var json: JSONValue {
         let s: (String?) -> JSONValue = { $0.map(JSONValue.string) ?? .null }
-        let blocks: [JSONValue] = self.blocks.map { b in
+        let encode: (Block) -> JSONValue = { b in
             switch b {
             case let .close(p, d): return .object(["type": "close", "position": .string(p.rawValue), "delaySeconds": .number(Double(d))])
             case let .hero(h, u): return .object(["type": "hero", "height": .number(Double(h)), "imageUrl": s(u)])
@@ -80,12 +101,21 @@ public struct RenderModel: Equatable, Sendable {
             }
         }
         let p = palette
-        return .object([
+        var out: [String: JSONValue] = [
             "schema": .string(Self.schemaId), "name": .string(name), "locale": .string(locale), "theme": .string(theme.rawValue),
             "palette": .object(["background": .string(p.background), "surface": .string(p.surface), "text": .string(p.text),
                                 "muted": .string(p.muted), "accent": .string(p.accent), "hero": .string(p.hero)]),
-            "selectedProductId": s(selectedProductId), "purchasable": .bool(purchasable), "blocks": .array(blocks),
-        ])
+            "selectedProductId": s(selectedProductId), "purchasable": .bool(purchasable), "blocks": .array(blocks.map(encode)),
+        ]
+        if let pages {
+            out["pages"] = .array(pages.map { .object(["id": .string($0.id), "nextLabel": s($0.nextLabel), "blocks": .array($0.blocks.map(encode))]) })
+        }
+        if let direction { out["direction"] = .string(direction) }
+        if let l = labels {
+            out["labels"] = .object(["terms": .string(l.terms), "privacy": .string(l.privacy), "restore": .string(l.restore),
+                                     "close": .string(l.close), "unavailablePrice": .string(l.unavailablePrice)])
+        }
+        return .object(out)
     }
 }
 
@@ -174,16 +204,23 @@ public enum Render {
         switch p { case .week: return (52, 12); case .year: return (1, 12); default: return nil }
     }
 
-    public static func priceMain(_ p: PaywallDefinition.Product, _ price: StorePrice?) -> String? {
+    typealias Translate = (String) -> String
+    static let asIs: Translate = { $0 }
+
+    public static func priceMain(_ p: PaywallDefinition.Product, _ price: StorePrice?) -> String? { priceMain(p, price, asIs) }
+
+    static func priceMain(_ p: PaywallDefinition.Product, _ price: StorePrice?, _ t: Translate) -> String? {
         guard let price else { return nil }
-        return price.displayPrice + (p.period == .lifetime ? " once" : "/\(p.period.rawValue)")
+        return price.displayPrice + (p.period == .lifetime ? " \(t("once"))" : t("/\(p.period.rawValue)"))
     }
 
-    public static func priceLine(_ p: PaywallDefinition.Product, _ price: StorePrice?, showPerMonth: Bool) -> String? {
-        guard let main = priceMain(p, price), let price, showPerMonth, let f = perMonthFactor(p.period) else { return priceMain(p, price) }
+    public static func priceLine(_ p: PaywallDefinition.Product, _ price: StorePrice?, showPerMonth: Bool) -> String? { priceLine(p, price, showPerMonth: showPerMonth, asIs) }
+
+    static func priceLine(_ p: PaywallDefinition.Product, _ price: StorePrice?, showPerMonth: Bool, _ t: Translate) -> String? {
+        guard let main = priceMain(p, price, t), let price, showPerMonth, let f = perMonthFactor(p.period) else { return priceMain(p, price, t) }
         let minor = perMonthMinor(priceMicros: price.priceMicros, num: f.0, den: f.1, digits: currencyDigits(price.currency))
         guard let per = formatLike(price.displayPrice, minor: minor, currency: price.currency) else { return main }
-        return "\(main) · \(per)/month"
+        return "\(main) · \(per)\(t("/month"))"
     }
 
     /// `products_not_found` when the store answered but a product of the definition
@@ -192,10 +229,34 @@ public enum Render {
         def.products.contains { !$0.storeProductId.isEmpty && prices[$0.storeProductId] == nil } ? "products_not_found" : nil
     }
 
-    static func days(_ n: Int) -> String { "\(n) \(n == 1 ? "day" : "days")" }
+    private static func language(_ locale: String) -> String {
+        String(locale.split(whereSeparator: { $0 == "-" || $0 == "_" }).first ?? "").lowercased()
+    }
+
+    /// The language to show for a requested one: exact, then the same language; otherwise the source.
+    public static func resolveLocale(_ def: PaywallDefinition, requested: String?) -> String {
+        guard let requested, let list = def.translations, !list.isEmpty else { return def.locale }
+        let wanted = requested.lowercased()
+        if let exact = list.first(where: { $0.locale.lowercased() == wanted }) { return exact.locale }
+        if language(def.locale) == language(wanted) { return def.locale }
+        return list.first(where: { $0.locale.lowercased() == language(wanted) })?.locale
+            ?? list.first(where: { language($0.locale) == language(wanted) })?.locale ?? def.locale
+    }
+
+    static func direction(_ locale: String) -> String? {
+        locale.range(of: "^(ar|he|iw|fa|ur)(-|$)", options: .regularExpression) != nil ? "rtl" : nil
+    }
+
+    static func fill(_ template: String, _ values: [String: String]) -> String {
+        values.reduce(template) { $0.replacingOccurrences(of: "{\($1.key)}", with: $1.value) }
+    }
+
+    /// The device's preferred language, for choosing a translation.
+    public static var deviceLocale: String? { Locale.preferredLanguages.first }
 
     /// Exactly `renderModel` in sdk-render.ts. `prices` are keyed by store product ID.
-    public static func model(_ def: PaywallDefinition, prices: [String: StorePrice], selectedProductId: String? = nil) -> RenderModel {
+    /// `locale` is the device's language; text with no translation stays in the source language.
+    public static func model(_ def: PaywallDefinition, prices: [String: StorePrice], selectedProductId: String? = nil, locale: String? = nil) -> RenderModel {
         var plansBlock: (ids: [String], selected: String)? = nil
         for b in def.blocks { if case let .plans(ids, sel, _, _) = b { plansBlock = (ids, sel); break } }
         let product: (String) -> PaywallDefinition.Product? = { id in def.products.first { $0.id == id } }
@@ -207,42 +268,61 @@ public enum Render {
             return max(0, pr.trialDays)
         }
         let purchasable = selected.map { price($0) != nil && !$0.storeProductId.isEmpty } ?? false
-        var blocks: [RenderModel.Block] = []
-        for b in def.blocks {
+        let active = resolveLocale(def, requested: locale), translated = active != def.locale
+        let map: [String: String] = translated
+            ? Dictionary((def.translations?.first { $0.locale == active }?.strings ?? []).map { ($0.source, $0.text) }, uniquingKeysWith: { _, last in last })
+            : [:]
+        let t: Translate = { map[$0] ?? $0 }
+        let free: (Int) -> String = { n in n == 1 ? t("1 day free") : fill(t("{n} days free"), ["n": String(n)]) }
+        let byIndex: [RenderModel.Block?] = def.blocks.map { b in
             switch b {
-            case let .close(position, delay): blocks.append(.close(position: position, delaySeconds: delay))
-            case let .hero(height, url): blocks.append(.hero(height: height, imageUrl: url.isEmpty ? nil : url))
-            case let .headline(text, sub): blocks.append(.headline(text: text, subtext: sub.isEmpty ? nil : sub))
-            case let .benefits(items): blocks.append(.benefits(items: items))
+            case let .close(position, delay): return .close(position: position, delaySeconds: delay)
+            case let .hero(height, url): return .hero(height: height, imageUrl: url.isEmpty ? nil : url)
+            case let .headline(text, sub): return .headline(text: t(text), subtext: sub.isEmpty ? nil : t(sub))
+            case let .benefits(items): return .benefits(items: items.map(t))
             case let .plans(ids, _, badge, perMonth):
-                blocks.append(.plans(ids.compactMap(product).map { p in
-                    let t = trial(p)
+                return .plans(ids.compactMap(product).map { p in
+                    let days = trial(p)
                     return RenderModel.Plan(productId: p.id, storeProductId: p.storeProductId, period: p.period,
-                                            title: p.label + (t > 0 ? " · \(days(t)) free" : ""),
-                                            priceLine: priceLine(p, price(p), showPerMonth: perMonth),
-                                            badge: badge?.productId == p.id ? badge?.text : nil, selected: p.id == selected?.id)
-                }))
+                                            title: t(p.label) + (days > 0 ? " · \(free(days))" : ""),
+                                            priceLine: priceLine(p, price(p), showPerMonth: perMonth, t),
+                                            badge: badge?.productId == p.id ? t(badge!.text) : nil, selected: p.id == selected?.id)
+                })
             case let .trialTimeline(reminderDay):
-                let t = trial(selected)
-                guard let selected, t > 0 else { break }
-                blocks.append(.trialTimeline(steps: [
-                    .init(label: "Today", text: "full access"),
-                    .init(label: "Day \(min(reminderDay, t))", text: "we remind you"),
-                    .init(label: "Day \(t)", text: "\(priceMain(selected, price(selected)) ?? "the store price") unless you cancel"),
-                ]))
+                let n = trial(selected)
+                guard let selected, n > 0 else { return nil }
+                return .trialTimeline(steps: [
+                    .init(label: t("Today"), text: t("full access")),
+                    .init(label: fill(t("Day {n}"), ["n": String(min(reminderDay, n))]), text: t("we remind you")),
+                    .init(label: fill(t("Day {n}"), ["n": String(n)]), text: fill(t("{price} unless you cancel"), ["price": priceMain(selected, price(selected), t) ?? t("the store price")])),
+                ])
             case let .testimonials(items):
-                blocks.append(.testimonials(items: items.map { .init(quote: "“\($0.quote)”", author: "— \($0.author)") }))
-            case let .faq(items): blocks.append(.faq(items: items))
-            case let .comparison(rows): blocks.append(.comparison(columns: ["Free", "Pro"], rows: rows))
+                return .testimonials(items: items.map { .init(quote: "“\(t($0.quote))”", author: "— \($0.author)") })
+            case let .faq(items): return .faq(items: items.map { .init(question: t($0.question), answer: t($0.answer)) })
+            case let .comparison(rows):
+                return .comparison(columns: [t("Free"), t("Pro")], rows: rows.map { .init(feature: t($0.feature), free: $0.free, pro: $0.pro) })
             case let .cta(label):
                 let saysFree = label.range(of: "free", options: .caseInsensitive) != nil
-                blocks.append(.cta(label: saysFree && trial(selected) == 0 ? "Continue" : label, enabled: purchasable))
+                return .cta(label: t(saysFree && trial(selected) == 0 ? "Continue" : label), enabled: purchasable)
             case let .legal(terms, privacy, restore, text):
-                blocks.append(.legal(text: text, termsUrl: terms.isEmpty ? nil : terms, privacyUrl: privacy.isEmpty ? nil : privacy, restore: restore))
-            case .unknown: break
+                return .legal(text: t(text), termsUrl: terms.isEmpty ? nil : terms, privacyUrl: privacy.isEmpty ? nil : privacy, restore: restore)
+            case .unknown: return nil
             }
         }
-        return RenderModel(name: def.name, locale: def.locale, theme: def.theme, palette: def.palette, selectedProductId: selected?.id,
-                           purchasable: purchasable, blocks: blocks)
+        var model = RenderModel(name: def.name, locale: active, theme: def.theme, palette: def.palette, selectedProductId: selected?.id,
+                                purchasable: purchasable, blocks: byIndex.compactMap { $0 })
+        if let pages = def.pages, pages.count > 1 {
+            var start = 0
+            model.pages = pages.enumerated().map { i, page in
+                let end = min(start + page.blockCount, byIndex.count)
+                defer { start = end }
+                return RenderModel.Page(id: page.id, nextLabel: i < pages.count - 1 ? t(page.nextLabel) : nil, blocks: byIndex[start..<end].compactMap { $0 })
+            }
+        }
+        if translated {
+            model.direction = direction(active)
+            model.labels = .init(terms: t("Terms"), privacy: t("Privacy"), restore: t("Restore purchases"), close: t("Close"), unavailablePrice: t(RenderModel.unavailablePrice))
+        }
+        return model
     }
 }

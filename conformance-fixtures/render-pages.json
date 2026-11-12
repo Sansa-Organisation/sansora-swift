@@ -1,0 +1,3295 @@
+[
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": null,
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year unless you cancel"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "Welcome to Fixture",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year unless you cancel"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "ar",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "ar",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "مرحبا بك",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "سنوي · 7 أيام مجانًا",
+       "priceLine": "$59.99/سنة · $5.00/شهر",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/شهر",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "اليوم",
+       "text": "full access"
+      },
+      {
+       "label": "اليوم 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "اليوم 7",
+       "text": "$59.99/سنة unless you cancel"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "ابدأ التجربة المجانية",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "متابعة",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "مرحبا بك",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "متابعة",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "سنوي · 7 أيام مجانًا",
+         "priceLine": "$59.99/سنة · $5.00/شهر",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/شهر",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "اليوم",
+         "text": "full access"
+        },
+        {
+         "label": "اليوم 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "اليوم 7",
+         "text": "$59.99/سنة unless you cancel"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "ابدأ التجربة المجانية",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ],
+   "direction": "rtl",
+   "labels": {
+    "terms": "الشروط",
+    "privacy": "الخصوصية",
+    "restore": "استعادة المشتريات",
+    "close": "إغلاق",
+    "unavailablePrice": "Price unavailable"
+   }
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "ar",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "ar",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "مرحبا بك",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "سنوي",
+       "priceLine": "$59.99/سنة · $5.00/شهر",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/شهر",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "متابعة",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "متابعة",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "مرحبا بك",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "متابعة",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "سنوي",
+         "priceLine": "$59.99/سنة · $5.00/شهر",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/شهر",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "متابعة",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ],
+   "direction": "rtl",
+   "labels": {
+    "terms": "الشروط",
+    "privacy": "الخصوصية",
+    "restore": "استعادة المشتريات",
+    "close": "إغلاق",
+    "unavailablePrice": "Price unavailable"
+   }
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "de-DE",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "de",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "Willkommen",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year, sofern du nicht kündigst"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "Weiter",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "Willkommen",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "Weiter",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year, sofern du nicht kündigst"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ],
+   "labels": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "restore": "Restore purchases",
+    "close": "Close",
+    "unavailablePrice": "Price unavailable"
+   }
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "59,99 €",
+    "priceMicros": 59990000,
+    "currency": "EUR",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "9,99 €",
+    "priceMicros": 9990000,
+    "currency": "EUR",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "2,99 €",
+    "priceMicros": 2990000,
+    "currency": "EUR",
+    "trialDays": 0
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "149,99 €",
+    "priceMicros": 149990000,
+    "currency": "EUR",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "de",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "de",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "Willkommen",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "59,99 €/year · 5,00 €/month",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "9,99 €/month",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "59,99 €/year, sofern du nicht kündigst"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "Weiter",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "Willkommen",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "Weiter",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "59,99 €/year · 5,00 €/month",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "9,99 €/month",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "59,99 €/year, sofern du nicht kündigst"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ],
+   "labels": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "restore": "Restore purchases",
+    "close": "Close",
+    "unavailablePrice": "Price unavailable"
+   }
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "fr",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year unless you cancel"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "Welcome to Fixture",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year unless you cancel"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": ""
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "Add a real review here.",
+       "author": "A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly"
+     ],
+     "selected": "yearly",
+     "badge": null,
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "name": "Value",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "reviews",
+     "name": "Reviews",
+     "blockCount": 2,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 5,
+     "nextLabel": "Continue"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "ar",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "مرحبا بك",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "متابعة",
+       "origin": "person"
+      },
+      {
+       "source": "Start free trial",
+       "text": "ابدأ التجربة المجانية",
+       "origin": "person"
+      },
+      {
+       "source": "Yearly",
+       "text": "سنوي",
+       "origin": "person"
+      },
+      {
+       "source": "/year",
+       "text": "/سنة",
+       "origin": "person"
+      },
+      {
+       "source": "/month",
+       "text": "/شهر",
+       "origin": "person"
+      },
+      {
+       "source": "{n} days free",
+       "text": "{n} أيام مجانًا",
+       "origin": "person"
+      },
+      {
+       "source": "Day {n}",
+       "text": "اليوم {n}",
+       "origin": "person"
+      },
+      {
+       "source": "Today",
+       "text": "اليوم",
+       "origin": "person"
+      },
+      {
+       "source": "Terms",
+       "text": "الشروط",
+       "origin": "person"
+      },
+      {
+       "source": "Privacy",
+       "text": "الخصوصية",
+       "origin": "person"
+      },
+      {
+       "source": "Restore purchases",
+       "text": "استعادة المشتريات",
+       "origin": "person"
+      },
+      {
+       "source": "Close",
+       "text": "إغلاق",
+       "origin": "person"
+      }
+     ]
+    },
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Welcome to Fixture",
+       "text": "Willkommen",
+       "origin": "ai"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "ai"
+      },
+      {
+       "source": "{price} unless you cancel",
+       "text": "{price}, sofern du nicht kündigst",
+       "origin": "ai"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "en-GB",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Onboarding",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#0E7490",
+    "hero": "#BFD9EE"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "hero",
+     "height": 60,
+     "imageUrl": null
+    },
+    {
+     "type": "headline",
+     "text": "Welcome to Fixture",
+     "subtext": null
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Feature one",
+      "Feature two",
+      "Feature three"
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "testimonials",
+     "items": [
+      {
+       "quote": "“Add a real review here.”",
+       "author": "— A real reviewer"
+      }
+     ]
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": null,
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      }
+     ]
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year unless you cancel"
+      }
+     ]
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true
+    },
+    {
+     "type": "legal",
+     "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true
+    }
+   ],
+   "pages": [
+    {
+     "id": "value",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "hero",
+       "height": 60,
+       "imageUrl": null
+      },
+      {
+       "type": "headline",
+       "text": "Welcome to Fixture",
+       "subtext": null
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Feature one",
+        "Feature two",
+        "Feature three"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reviews",
+     "nextLabel": "Continue",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "testimonials",
+       "items": [
+        {
+         "quote": "“Add a real review here.”",
+         "author": "— A real reviewer"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": null,
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": null,
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        }
+       ]
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year unless you cancel"
+        }
+       ]
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true
+      },
+      {
+       "type": "legal",
+       "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true
+      }
+     ]
+    }
+   ]
+  }
+ }
+]

@@ -1,0 +1,308 @@
+{
+ "path": "/v1/sdk/purchases/confirm",
+ "bodies": {
+  "app_store": {
+   "store": "app_store",
+   "key": "pk_test_abcdefghijklmnopqrstuvwx",
+   "appUserId": "user-1",
+   "signedTransaction": "fixture.signed-transaction.not-real"
+  },
+  "google_play": {
+   "store": "google_play",
+   "key": "pk_test_abcdefghijklmnopqrstuvwx",
+   "appUserId": "user-1",
+   "purchaseToken": "fixture-purchase-token-not-real",
+   "productId": "com.example.pro.monthly"
+  }
+ },
+ "responses": [
+  {
+   "status": 200,
+   "action": "remove"
+  },
+  {
+   "status": 204,
+   "action": "remove"
+  },
+  {
+   "status": 400,
+   "action": "drop"
+  },
+  {
+   "status": 401,
+   "action": "drop"
+  },
+  {
+   "status": 404,
+   "action": "drop"
+  },
+  {
+   "status": 409,
+   "action": "drop"
+  },
+  {
+   "status": 413,
+   "action": "drop"
+  },
+  {
+   "status": 422,
+   "action": "drop"
+  },
+  {
+   "status": 429,
+   "action": "retry"
+  },
+  {
+   "status": 500,
+   "action": "retry"
+  },
+  {
+   "status": 502,
+   "action": "retry"
+  },
+  {
+   "status": 503,
+   "action": "retry"
+  },
+  {
+   "network": true,
+   "action": "retry"
+  }
+ ],
+ "scenarios": [
+  {
+   "name": "A transient failure keeps the purchase across a restart",
+   "steps": [
+    {
+     "op": "setUser",
+     "user": "user-1"
+    },
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 503
+      }
+     ]
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "network": true
+      }
+     ]
+    },
+    {
+     "op": "restart"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 200
+      }
+     ]
+    }
+   ],
+   "expected": [
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 1,
+     "retryAfterMs": 2000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 2,
+     "retryAfterMs": 4000
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ]
+  },
+  {
+   "name": "A permanent refusal is dropped and the next is sent",
+   "steps": [
+    {
+     "op": "setUser",
+     "user": "user-1"
+    },
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "enqueue",
+     "id": "b"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 409
+      },
+      {
+       "status": 200
+      }
+     ]
+    }
+   ],
+   "expected": [
+    {
+     "sent": [
+      1,
+      1
+     ],
+     "dropped": 1,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ]
+  },
+  {
+   "name": "429 stops the flush and backs off",
+   "steps": [
+    {
+     "op": "setUser",
+     "user": "user-1"
+    },
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "enqueue",
+     "id": "b"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 429
+      },
+      {
+       "status": 200
+      }
+     ]
+    }
+   ],
+   "expected": [
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 2,
+     "failures": 1,
+     "retryAfterMs": 2000
+    }
+   ]
+  },
+  {
+   "name": "A purchase already waiting is not queued twice",
+   "steps": [
+    {
+     "op": "setUser",
+     "user": "user-1"
+    },
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 200
+      },
+      {
+       "status": 200
+      }
+     ]
+    }
+   ],
+   "expected": [
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ]
+  },
+  {
+   "name": "A purchase waits until the user is known",
+   "steps": [
+    {
+     "op": "enqueue",
+     "id": "a"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 200
+      }
+     ]
+    },
+    {
+     "op": "setUser",
+     "user": "user-1"
+    },
+    {
+     "op": "flush",
+     "responses": [
+      {
+       "status": 200
+      }
+     ]
+    }
+   ],
+   "expected": [
+    {
+     "sent": [],
+     "dropped": 0,
+     "queued": 1,
+     "failures": 0,
+     "retryAfterMs": null
+    },
+    {
+     "sent": [
+      1
+     ],
+     "dropped": 0,
+     "queued": 0,
+     "failures": 0,
+     "retryAfterMs": null
+    }
+   ]
+  }
+ ]
+}

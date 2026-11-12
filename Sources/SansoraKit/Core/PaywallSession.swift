@@ -41,6 +41,8 @@ public final class PaywallSession {
     public var appUserId: String
     public var config: SdkConfig?
     public var history: DisplayHistory
+    /// The device's language, for choosing a translation.
+    public var locale: String?
     public private(set) var presented: Presented?
     private let clock: () -> Int64
     private let makeEventId: () -> String
@@ -108,7 +110,7 @@ public final class PaywallSession {
 
     /// What the open paywall draws.
     public var renderModel: RenderModel? {
-        presented.map { Render.model($0.definition, prices: $0.prices, selectedProductId: $0.selected) }
+        presented.map { Render.model($0.definition, prices: $0.prices, selectedProductId: $0.selected, locale: locale) }
     }
 
     private func product(_ id: String) -> PaywallDefinition.Product? { presented?.definition.products.first { $0.id == id } }

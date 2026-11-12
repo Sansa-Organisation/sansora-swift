@@ -8,7 +8,7 @@ import StoreKit
 
 /// Device facts for events and audiences (CONTRACT §3 and §5).
 public enum DeviceInfo {
-    public static let sdkVersion = "0.1.0"
+    public static let sdkVersion = "0.2.0"
 
     /// Model identifier (`utsname.machine`, or `SIMULATOR_MODEL_IDENTIFIER` in the Simulator), ≤ 40 characters.
     public static var modelIdentifier: String {

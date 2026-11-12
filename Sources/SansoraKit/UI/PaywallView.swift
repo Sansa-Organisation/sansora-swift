@@ -11,6 +11,8 @@ public final class PaywallViewModel: ObservableObject, Identifiable {
     @Published public private(set) var model: RenderModel
     @Published public internal(set) var purchasing = false
     @Published public internal(set) var restoring = false
+    /// A private preview: purchases and restores are off and nothing is recorded.
+    @Published public internal(set) var isPreview = false
 
     var onSelect: (String) -> Void = { _ in }
     var onPurchase: () -> Void = {}
@@ -59,7 +61,9 @@ public struct SansoraPaywallView: View {
     @ObservedObject var vm: PaywallViewModel
     @State private var closeVisible = false
     @State private var browserURL: IdentifiedURL?
+    @State private var page = 0
     @Environment(\.openURL) private var openURL
+    @Environment(\.layoutDirection) private var layoutDirection
 
     public init(model: PaywallViewModel) { self.vm = model }
 
@@ -70,13 +74,23 @@ public struct SansoraPaywallView: View {
     private var text: Color { Color(hex: palette.text) }
     private var muted: Color { Color(hex: palette.muted) }
     private var accent: Color { Color(hex: palette.accent) }
+    /// The page on screen, or nil for a one-page paywall.
+    private var currentPage: RenderModel.Page? {
+        guard let pages = m.pages, !pages.isEmpty else { return nil }
+        return pages[min(page, pages.count - 1)]
+    }
+    private var shownBlocks: [RenderModel.Block] { currentPage?.blocks ?? m.blocks }
 
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                ForEach(Array(m.blocks.enumerated()), id: \.offset) { _, block in
+                if vm.isPreview {
+                    Text("Preview · purchases are off").sf(11, .bold).foregroundColor(muted).frame(maxWidth: .infinity)
+                }
+                ForEach(Array(shownBlocks.enumerated()), id: \.offset) { _, block in
                     blockView(block)
                 }
+                if let next = currentPage?.nextLabel { nextView(next) }
             }
             .padding(.top, 22)
             .padding(.horizontal, 20)
@@ -86,6 +100,7 @@ public struct SansoraPaywallView: View {
         .foregroundColor(text)
         .background(bg.ignoresSafeArea())
         .preferredColorScheme(m.theme == .dark ? .dark : .light)
+        .environment(\.layoutDirection, m.direction == "rtl" ? .rightToLeft : layoutDirection)
         .task(id: closeDelay) {
             guard let delay = closeDelay else { return }
             if delay > 0 { try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000) }
@@ -97,7 +112,7 @@ public struct SansoraPaywallView: View {
     }
 
     private var closeDelay: Int? {
-        for b in m.blocks { if case let .close(_, d) = b { return d } }
+        for b in shownBlocks { if case let .close(_, d) = b { return d } }
         return nil
     }
 
@@ -130,7 +145,7 @@ public struct SansoraPaywallView: View {
                     .contentShape(Rectangle().inset(by: -8))
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(Text("Close"))
+            .accessibilityLabel(Text(m.labels?.close ?? "Close"))
             .opacity(closeVisible ? 1 : 0)
             .disabled(!closeVisible)
             .accessibilityHidden(!closeVisible)
@@ -184,7 +199,7 @@ public struct SansoraPaywallView: View {
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 0) {
                             Text(plan.title).sf(14, .bold)
-                            Text(plan.priceLine ?? RenderModel.unavailablePrice).sf(12).foregroundColor(muted)
+                            Text(plan.priceLine ?? m.labels?.unavailablePrice ?? RenderModel.unavailablePrice).sf(12).foregroundColor(muted)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         if let badge = plan.badge {
@@ -266,6 +281,18 @@ public struct SansoraPaywallView: View {
         }
     }
 
+    private func nextView(_ label: String) -> some View {
+        Button(action: { withAnimation(.easeOut(duration: 0.2)) { page += 1 } }) {
+            Text(label).sf(14, .bold)
+                .foregroundColor(bg)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(accent))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(label))
+    }
+
     private func ctaView(_ label: String, enabled: Bool) -> some View {
         Button(action: { vm.purchase() }) {
             ZStack {
@@ -292,13 +319,13 @@ public struct SansoraPaywallView: View {
                 Text(t).sf(11).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
             }
             HStack(spacing: 4) {
-                link("Terms", url: terms)
+                link(m.labels?.terms ?? "Terms", url: terms)
                 Text("·").sf(11).accessibilityHidden(true)
-                link("Privacy", url: privacy)
+                link(m.labels?.privacy ?? "Privacy", url: privacy)
                 if restore {
                     Text("·").sf(11).accessibilityHidden(true)
                     Button(action: { vm.restore() }) {
-                        if vm.restoring { ProgressView().scaleEffect(0.6) } else { Text("Restore purchases").underline().sf(11) }
+                        if vm.restoring { ProgressView().scaleEffect(0.6) } else { Text(m.labels?.restore ?? "Restore purchases").underline().sf(11) }
                     }
                     .buttonStyle(.plain)
                     .disabled(vm.purchasing || vm.restoring)

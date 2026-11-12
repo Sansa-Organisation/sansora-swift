@@ -147,6 +147,27 @@ final class RenderConformanceTests: XCTestCase {
         }
     }
 
+    struct PageCase: Decodable {
+        let definition: PaywallDefinition; let prices: [String: StorePrice]; let selectedProductId: String?; let locale: String?
+        let expected: JSONValue
+    }
+
+    func testRenderPagesAndLanguages() throws {
+        let cases = try Fixtures.decode([PageCase].self, "render-pages.json")
+        XCTAssertGreaterThanOrEqual(cases.count, 7)
+        for c in cases {
+            let m = Render.model(c.definition, prices: c.prices, selectedProductId: c.selectedProductId, locale: c.locale)
+            assertJSONEqual(m.json, c.expected, "\(c.definition.name) / \(c.locale ?? "source")")
+        }
+    }
+
+    func testPreviewCodes() {
+        XCTAssertEqual(Preview.normalize("abcd-efgh-jkmn"), "ABCDEFGHJKMN")
+        XCTAssertEqual(Preview.normalize(" 0o1i l234 5678 "), "001112345678")
+        XCTAssertNil(Preview.normalize("too-short"))
+        XCTAssertNil(Preview.normalize("UUUU-UUUU-UUUU"))
+    }
+
     struct PriceCase: Decodable {
         let displayPrice: String; let priceMicros: Int64; let currency: String; let num: Int64; let den: Int64
         let minor: Int64; let expected: String?
@@ -244,6 +265,102 @@ final class SessionConformanceTests: XCTestCase {
             }
             assertJSONEqual(.array(events), .array(s.expected.events), "\(s.name) events")
             assertJSONEqual(.array(results), .array(s.expected.results), "\(s.name) results")
+        }
+    }
+}
+
+final class PurchaseConfirmationConformanceTests: XCTestCase {
+    struct Response: Decodable { let status: Int?; let network: Bool?; let action: String? }
+    struct Step: Decodable { let op: String; let id: String?; let user: String?; let responses: [Response]? }
+    struct Outcome: Decodable, Equatable { let sent: [Int]; let dropped: Int; let queued: Int; let failures: Int; let retryAfterMs: Int64? }
+    struct Scenario: Decodable { let name: String; let steps: [Step]; let expected: [Outcome] }
+    struct Body: Decodable, Equatable { let key: String; let appUserId: String; let store: String; let signedTransaction: String? }
+    struct Bodies: Decodable { let app_store: Body }
+    struct Fixture: Decodable { let path: String; let bodies: Bodies; let responses: [Response]; let scenarios: [Scenario] }
+
+    final class ScriptedTransport: PurchaseConfirmationTransport, @unchecked Sendable {
+        private let lock = NSLock()
+        private var responses: [FlushResponse] = []
+        func load(_ r: [FlushResponse]) { lock.lock(); responses = r; lock.unlock() }
+        private func next() -> FlushResponse { lock.lock(); defer { lock.unlock() }; return responses.isEmpty ? .network : responses.removeFirst() }
+        func send(appUserId: String, signedTransaction: String) async -> FlushResponse { next() }
+    }
+
+    private func response(_ r: Response) -> FlushResponse { r.network == true ? .network : .status(r.status ?? 0) }
+
+    func testClassification() throws {
+        let f = try Fixtures.decode(Fixture.self, "purchase-confirmation.json")
+        XCTAssertFalse(f.responses.isEmpty)
+        for r in f.responses {
+            let expected: FlushResponse.Action = r.action == "remove" ? .remove : r.action == "drop" ? .drop : .retry
+            XCTAssertEqual(response(r).confirmationAction, expected, "\(r)")
+        }
+    }
+
+    /// Answers 200 and keeps the request it saw.
+    final class Capture: URLProtocol {
+        nonisolated(unsafe) static var path: String?
+        nonisolated(unsafe) static var body = Data()
+        override class func canInit(with request: URLRequest) -> Bool { true }
+        override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+        override func startLoading() {
+            Self.path = request.url?.path
+            var d = request.httpBody ?? Data()
+            if d.isEmpty, let s = request.httpBodyStream {
+                s.open(); defer { s.close() }
+                var buf = [UInt8](repeating: 0, count: 4096)
+                while s.hasBytesAvailable { let n = s.read(&buf, maxLength: buf.count); if n <= 0 { break }; d.append(buf, count: n) }
+            }
+            Self.body = d
+            client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: [:])!, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didLoad: Data("{}".utf8))
+            client?.urlProtocolDidFinishLoading(self)
+        }
+        override func stopLoading() {}
+    }
+
+    func testBody() async throws {
+        let f = try Fixtures.decode(Fixture.self, "purchase-confirmation.json")
+        let want = f.bodies.app_store
+        let c = URLSessionConfiguration.ephemeral
+        c.protocolClasses = [Capture.self]
+        let t = HTTPPurchaseConfirmationTransport(baseURL: URL(string: "http://127.0.0.1:9")!, publicKey: want.key, session: URLSession(configuration: c))
+        let r = await t.send(appUserId: want.appUserId, signedTransaction: try XCTUnwrap(want.signedTransaction))
+        XCTAssertEqual(r, FlushResponse.status(200))
+        XCTAssertEqual(Capture.path, f.path)
+        XCTAssertEqual(try JSONDecoder().decode(Body.self, from: Capture.body), want)
+        // The route is strict: only these keys are accepted.
+        let keys = try XCTUnwrap(JSONSerialization.jsonObject(with: Capture.body) as? [String: Any]).keys
+        XCTAssertEqual(Set(keys), ["key", "appUserId", "store", "signedTransaction"])
+    }
+
+    func testScenarios() async throws {
+        let f = try Fixtures.decode(Fixture.self, "purchase-confirmation.json")
+        XCTAssertFalse(f.scenarios.isEmpty)
+        for s in f.scenarios {
+            let file = FileManager.default.temporaryDirectory.appendingPathComponent("sansora-confirm-\(UUID().uuidString).json")
+            defer { try? FileManager.default.removeItem(at: file) }
+            let transport = ScriptedTransport()
+            func open() -> PurchaseConfirmationQueue { PurchaseConfirmationQueue(fileURL: file, transport: transport, jitter: { 0 }, autoFlush: false) }
+            var queue = open()
+            var outcomes: [Outcome] = []
+            for step in s.steps {
+                switch step.op {
+                case "setUser": await queue.setAppUserId(step.user)
+                case "enqueue": await queue.enqueue(id: step.id ?? "", signedTransaction: "jws-\(step.id ?? "")")
+                case "restart":
+                    let user = step.user
+                    queue = open()
+                    await queue.setAppUserId(user)
+                case "flush":
+                    let responses = (step.responses ?? []).map(response)
+                    transport.load(responses)
+                    let o = await queue.flush(maxSends: responses.count)
+                    outcomes.append(Outcome(sent: o.sent, dropped: o.dropped, queued: o.queued, failures: o.failures, retryAfterMs: o.retryAfterMs))
+                default: XCTFail("Unknown step \(step.op)")
+                }
+            }
+            XCTAssertEqual(outcomes, s.expected, s.name)
         }
     }
 }

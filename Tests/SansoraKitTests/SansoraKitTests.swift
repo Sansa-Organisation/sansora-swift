@@ -58,7 +58,7 @@ final class JSTests: XCTestCase {
 }
 
 final class EventTests: XCTestCase {
-    let ctx = EventContext(platform: "ios", sdkVersion: "0.1.0", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
+    let ctx = EventContext(platform: "ios", sdkVersion: "0.2.0", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
 
     func testAbsentOptionalsAreOmitted() throws {
         let e = SdkEvent(eventId: "00000000-0000-4000-8000-000000000001", appUserId: "u", event: "restore_started", occurredAt: 1, context: ctx)
@@ -197,6 +197,153 @@ final class EventQueueTests: XCTestCase {
         XCTAssertEqual(r.action, .remove)
         XCTAssertEqual(FlushResponse.status(413).action, .drop)
         XCTAssertEqual(FlushResponse.status(401).action, .retry)
+    }
+}
+
+final class PurchaseConfirmationQueueTests: XCTestCase {
+    private func tempFile() -> URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent("sansora-confirm-\(UUID().uuidString).json")
+    }
+
+    /// Records every send and answers from a script (network failure once it runs out).
+    final class Recorder: PurchaseConfirmationTransport, @unchecked Sendable {
+        private let lock = NSLock()
+        private var answers: [FlushResponse]
+        private var _sent: [(user: String, jws: String)] = []
+        init(_ answers: [FlushResponse]) { self.answers = answers }
+        private func record(_ user: String, _ jws: String) -> FlushResponse {
+            lock.lock(); defer { lock.unlock() }
+            _sent.append((user, jws))
+            return answers.isEmpty ? .network : answers.removeFirst()
+        }
+        var sent: [(user: String, jws: String)] { lock.lock(); defer { lock.unlock() }; return _sent }
+        func send(appUserId: String, signedTransaction: String) async -> FlushResponse { record(appUserId, signedTransaction) }
+    }
+
+    /// A send that never answers until released.
+    actor Gate { var open = false; func release() { open = true }; func wait() async { while !open { try? await Task.sleep(nanoseconds: 1_000_000) } } }
+    struct BlockedTransport: PurchaseConfirmationTransport {
+        let gate: Gate
+        func send(appUserId: String, signedTransaction: String) async -> FlushResponse { await gate.wait(); return .status(200) }
+    }
+
+    func testKeepsThePurchaseAcrossRestartsUntilConfirmed() async throws {
+        let file = tempFile()
+        defer { try? FileManager.default.removeItem(at: file) }
+        let failing = Recorder([.status(503)])
+        let q = PurchaseConfirmationQueue(fileURL: file, transport: failing, appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1000", signedTransaction: "jws-a")
+        let first = await q.flush()
+        XCTAssertEqual(first.queued, 1)
+        XCTAssertEqual(first.retryAfterMs, 2000)
+
+        let ok = Recorder([.status(200)])
+        let reopened = PurchaseConfirmationQueue(fileURL: file, transport: ok, jitter: { 0 }, autoFlush: false)
+        let failures = await reopened.failures
+        XCTAssertEqual(failures, 1)
+        let second = await reopened.flush()
+        XCTAssertEqual(second.queued, 0)
+        XCTAssertEqual(second.failures, 0)
+        XCTAssertEqual(ok.sent.map(\.user), ["user-1"])
+        XCTAssertEqual(ok.sent.map(\.jws), ["jws-a"])
+    }
+
+    func testPermanentRefusalIsDroppedAndTheNextIsSent() async {
+        let t = Recorder([.status(409), .status(200)])
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: t, appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "a")
+        await q.enqueue(id: "2", signedTransaction: "b")
+        let o = await q.flush()
+        XCTAssertEqual(o.sent, [1, 1])
+        XCTAssertEqual(o.dropped, 1)
+        XCTAssertEqual(o.queued, 0)
+        XCTAssertEqual(o.failures, 0)
+    }
+
+    func testBackoffUsesTheEventQueueDelays() async {
+        let t = Recorder([.status(429), .network])
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: t, appUserId: "user-1", jitter: { 0.2 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "a")
+        let first = await q.flush()
+        XCTAssertEqual(first.retryAfterMs, 2400)
+        let second = await q.flush()
+        XCTAssertEqual(second.retryAfterMs, 4800)
+    }
+
+    func testRenewalReplacesAWaitingConfirmationOfTheSameSubscription() async {
+        let t = Recorder([.status(200)])
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: t, appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1000", signedTransaction: "old")
+        await q.enqueue(id: "1000", signedTransaction: "new")
+        let waiting = await q.count
+        XCTAssertEqual(waiting, 1)
+        _ = await q.flush()
+        XCTAssertEqual(t.sent.map(\.jws), ["new"])
+    }
+
+    func testThePurchaseKeepsTheUserWhoMadeIt() async {
+        let t = Recorder([.status(200), .status(200)])
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: t, appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "a")
+        await q.setAppUserId("user-2")
+        await q.enqueue(id: "2", signedTransaction: "b")
+        _ = await q.flush()
+        XCTAssertEqual(t.sent.map(\.user), ["user-1", "user-2"])
+    }
+
+    func testAPurchaseBeforeTheUserIsKnownWaitsForIt() async {
+        let t = Recorder([.status(200)])
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: t, jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "a")
+        let early = await q.flush()
+        XCTAssertEqual(early.sent, [])
+        XCTAssertEqual(early.queued, 1)
+        XCTAssertTrue(t.sent.isEmpty)
+        await q.setAppUserId("anon-1")
+        let users = await q.pendingUsers
+        XCTAssertEqual(users, ["anon-1"])
+        let late = await q.flush()
+        XCTAssertEqual(late.queued, 0)
+        XCTAssertEqual(t.sent.map(\.user), ["anon-1"])
+    }
+
+    func testEnqueueNeverWaitsForASlowSend() async {
+        let gate = Gate()
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: BlockedTransport(gate: gate), appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "a")
+        let flushing = Task { await q.flush() }
+        try? await Task.sleep(nanoseconds: 20_000_000)
+        // The first send is still in flight; a new purchase must queue without waiting for it.
+        await q.enqueue(id: "2", signedTransaction: "b")
+        let waiting = await q.count
+        XCTAssertEqual(waiting, 2)
+        await gate.release()
+        let o = await flushing.value
+        XCTAssertEqual(o.queued, 0)
+    }
+
+    func testAReplacedEntrySurvivesTheSendOfItsOldCopy() async {
+        let gate = Gate()
+        struct OneGated: PurchaseConfirmationTransport {
+            let gate: Gate
+            func send(appUserId: String, signedTransaction: String) async -> FlushResponse { await gate.wait(); return .status(200) }
+        }
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: OneGated(gate: gate), appUserId: "user-1", jitter: { 0 }, autoFlush: false)
+        await q.enqueue(id: "1", signedTransaction: "old")
+        let flushing = Task { await q.flush(maxSends: 1) }
+        try? await Task.sleep(nanoseconds: 20_000_000)
+        await q.enqueue(id: "1", signedTransaction: "new")
+        await gate.release()
+        _ = await flushing.value
+        let waiting = await q.count
+        XCTAssertEqual(waiting, 1)
+    }
+
+    func testQueueKeepsTheNewestAtTheLimit() async {
+        let q = PurchaseConfirmationQueue(fileURL: nil, transport: nil, appUserId: "user-1", autoFlush: false)
+        for i in 0..<(PurchaseConfirmationQueue.queueLimit + 5) { await q.enqueue(id: "\(i)", signedTransaction: "jws") }
+        let waiting = await q.count
+        XCTAssertEqual(waiting, PurchaseConfirmationQueue.queueLimit)
     }
 }
 

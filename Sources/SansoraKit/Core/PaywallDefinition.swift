@@ -10,6 +10,27 @@ public struct PaywallDefinition: Codable, Equatable, Sendable {
     public var palette: Palette
     public var products: [Product]
     public var blocks: [Block]
+    /// Consecutive runs of `blocks`, adding up to all of them. nil means one page.
+    public var pages: [Page]?
+    /// Translated text, keyed by source text.
+    public var translations: [Translation]?
+
+    public struct Page: Codable, Equatable, Sendable {
+        public var id: String
+        public var name: String
+        public var blockCount: Int
+        public var nextLabel: String
+    }
+
+    public struct Translation: Codable, Equatable, Sendable {
+        public struct Entry: Codable, Equatable, Sendable {
+            public var source: String
+            public var text: String
+            public var origin: String
+        }
+        public var locale: String
+        public var strings: [Entry]
+    }
 
     public enum Theme: String, Codable, Sendable { case light, dark }
 

@@ -84,6 +84,7 @@ public final class Sansora {
 
     public private(set) var configStore: ConfigStore?
     public private(set) var eventQueue: EventQueue?
+    private var confirmations: PurchaseConfirmationQueue?
     #if canImport(StoreKit)
     public let store = StoreKitStore()
     #endif
@@ -130,8 +131,12 @@ public final class Sansora {
         let dir = storageDirectory ?? SansoraStorage.directory()
         let configStore = ConfigStore(publicKey: publicKey, baseURL: options.baseURL, directory: dir, bundledConfig: options.bundledConfig?.data)
         let queue = EventQueue(fileURL: dir.appendingPathComponent("events.json"), transport: HTTPEventTransport(baseURL: options.baseURL, publicKey: publicKey))
+        let confirmations = PurchaseConfirmationQueue(fileURL: dir.appendingPathComponent("purchase-confirmations.json"),
+                                                      transport: HTTPPurchaseConfirmationTransport(baseURL: options.baseURL, publicKey: publicKey),
+                                                      appUserId: state.appUserId)
         self.configStore = configStore
         self.eventQueue = queue
+        self.confirmations = confirmations
 
         let session = PaywallSession(context: eventContext(), appUserId: state.appUserId,
                                      config: configStore.config, history: state.history,
@@ -140,6 +145,7 @@ public final class Sansora {
             Task { await queue.enqueue(e) }
             self?.onEvent?(e)
         }
+        session.locale = Render.deviceLocale
         session.onHistoryChange = { [weak self] h in self?.state.history = h }
         session.onDismiss = { [weak self] reason in
             if reason == "closed" { self?.state.recordDecline() }
@@ -151,6 +157,7 @@ public final class Sansora {
         isConfigured = true
 
         #if canImport(StoreKit)
+        store.setConfirmationQueue(confirmations)
         store.startTransactionListener { _ in
             Task { @MainActor in _ = await Sansora.shared.refreshSubscription() }
         }
@@ -167,6 +174,7 @@ public final class Sansora {
             await configStore.refresh(force: true)
             self.session?.config = configStore.config
             await queue.flush()
+            await confirmations.flush()
         }
     }
 
@@ -185,15 +193,20 @@ public final class Sansora {
     func didEnterBackground() {
         state.didEnterBackground()
         guard let queue = eventQueue else { return }
+        let confirmations = confirmations
         #if canImport(UIKit) && !os(watchOS)
         var bg: UIBackgroundTaskIdentifier = .invalid
         bg = UIApplication.shared.beginBackgroundTask(withName: "Sansora flush") { UIApplication.shared.endBackgroundTask(bg); bg = .invalid }
         Task {
             await queue.flush()
+            await confirmations?.flush()
             await MainActor.run { if bg != .invalid { UIApplication.shared.endBackgroundTask(bg) } }
         }
         #else
-        Task { await queue.flush() }
+        Task {
+            await queue.flush()
+            await confirmations?.flush()
+        }
         #endif
     }
 
@@ -217,6 +230,7 @@ public final class Sansora {
         guard Self.validUserId(appUserId) else { throw SansoraError.invalidAppUserId }
         state.identify(appUserId)
         session?.appUserId = appUserId
+        updateConfirmationUser()
     }
 
     /// Forgets the user: a new anonymous ID and no custom attributes.
@@ -224,6 +238,13 @@ public final class Sansora {
         state.resetUser()
         custom = [:]
         session?.appUserId = state.appUserId
+        updateConfirmationUser()
+    }
+
+    private func updateConfirmationUser() {
+        guard let confirmations else { return }
+        let id = state.appUserId
+        Task { await confirmations.setAppUserId(id) }
     }
 
     /// Custom attributes (keys `^[a-z][a-z0-9_]{0,39}$`, at most 20), used in
@@ -282,6 +303,48 @@ public final class Sansora {
         })
         #else
         return await run(placement: placement, canPresent: { false }, present: { _ in }, dismiss: {})
+        #endif
+    }
+
+    /// Opens a private preview with the code from Paywall editor › Preview on my iPhone (test
+    /// keys only). Call it from a debug screen or deep link in your app: it sends no events,
+    /// records no history, and buying and restoring are off. Prices come from the store.
+    ///
+    /// Returns `.closed` when dismissed, or `.noCampaign` with `preview_not_found`,
+    /// `preview_test_key_required`, `preview_unavailable` or `no_window`.
+    public func openPreview(code: String) async -> SansoraResult {
+        guard let configStore, session != nil else { return .noConfig }
+        guard let normalized = Preview.normalize(code) else { return .noCampaign(reason: "preview_not_found") }
+        guard !busy, session?.presented == nil else { return .ignored }
+        busy = true
+        defer { busy = false }
+        let definition: PaywallDefinition
+        switch await Preview.fetch(baseURL: configStore.baseURL, publicKey: configStore.publicKey, code: normalized) {
+        case .success(let def): definition = def
+        case .failure(let reason): return .noCampaign(reason: reason.rawValue)
+        }
+        var prices: [String: StorePrice] = [:]
+        #if canImport(StoreKit)
+        prices = (try? await store.prices(for: definition.products.map(\.storeProductId))) ?? [:]
+        #endif
+        let locale = Render.deviceLocale
+        let vm = PaywallViewModel(model: Render.model(definition, prices: prices, locale: locale))
+        vm.isPreview = true
+        vm.onSelect = { [weak vm] id in vm?.update(Render.model(definition, prices: prices, selectedProductId: id, locale: locale)) }
+        #if canImport(UIKit) && !os(watchOS)
+        guard let top = Self.topViewController() else { return .noCampaign(reason: "no_window") }
+        let vc = PaywallHostingController(rootView: SansoraPaywallView(model: vm))
+        vc.dark = vm.model.theme == .dark
+        vc.modalPresentationStyle = .fullScreen
+        return await withCheckedContinuation { (cont: CheckedContinuation<SansoraResult, Never>) in
+            vm.onClose = { [weak vc] in
+                vc?.presentingViewController?.dismiss(animated: true)
+                cont.resume(returning: .closed)
+            }
+            top.present(vc, animated: true)
+        }
+        #else
+        return .noCampaign(reason: "no_window")
         #endif
     }
 
@@ -419,6 +482,7 @@ public final class Sansora {
     /// Sends queued events now.
     public func flush() async {
         await eventQueue?.flush()
+        await confirmations?.flush()
     }
 
     // MARK: Presentation helpers

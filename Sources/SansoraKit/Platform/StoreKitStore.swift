@@ -13,10 +13,24 @@ public final class StoreKitStore: @unchecked Sendable {
     private let lock = NSLock()
     private var products: [String: Product] = [:]
     private var updatesTask: Task<Void, Never>?
+    private var confirmations: PurchaseConfirmationQueue?
 
     public init() {}
 
     deinit { updatesTask?.cancel() }
+
+    /// Where verified purchases go to be confirmed (CONTRACT §7). nil (the default)
+    /// confirms nothing. Set it before `startTransactionListener`.
+    public func setConfirmationQueue(_ queue: PurchaseConfirmationQueue?) {
+        lock.sync { confirmations = queue }
+    }
+
+    /// Hands a verified purchase to the local queue, so it is on disk before the
+    /// transaction is finished and StoreKit stops offering it. Never waits on the network.
+    private func confirm(_ t: Transaction, signedTransaction: String) async {
+        guard t.revocationDate == nil, let queue = lock.sync({ confirmations }) else { return }
+        await queue.enqueue(id: String(t.originalID), signedTransaction: signedTransaction)
+    }
 
     /// Store prices by store product ID. Free trial days are given only when the
     /// intro offer is a free trial **and** this user is eligible for it.
@@ -89,6 +103,7 @@ public final class StoreKitStore: @unchecked Sendable {
             switch result {
             case .success(let verification):
                 guard case .verified(let t) = verification else { return .failed("unverified") }
+                await confirm(t, signedTransaction: verification.jwsRepresentation)
                 await t.finish()
                 let freeTrial = t.offerType == .introductory && product.subscription?.introductoryOffer?.paymentMode == .freeTrial
                 return freeTrial ? .trial : .purchased
@@ -149,9 +164,10 @@ public final class StoreKitStore: @unchecked Sendable {
     public func startTransactionListener(onTransaction: (@Sendable (_ productId: String) -> Void)? = nil) {
         lock.sync {
             guard updatesTask == nil else { return }
-            updatesTask = Task.detached(priority: .background) {
+            updatesTask = Task.detached(priority: .background) { [weak self] in
                 for await update in Transaction.updates {
                     if case .verified(let t) = update {
+                        await self?.confirm(t, signedTransaction: update.jwsRepresentation)
                         await t.finish()
                         onTransaction?(t.productID)
                     }

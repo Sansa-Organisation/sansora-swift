@@ -1,6 +1,6 @@
 # SansoraKit (iOS)
 
-The Sansora iOS SDK, version `0.1.0`: downloads `sansora.config/1`, resolves
+The Sansora iOS SDK, version `0.2.0`: downloads `sansora.config/1`, resolves
 placements, draws paywalls natively (SwiftUI), buys with StoreKit 2 and delivers
 `sansora.event/1` events. It implements [`CONTRACT.md`](CONTRACT.md) and
 replays every shared fixture in `conformance-fixtures/`.
@@ -11,11 +11,11 @@ table is compiled in as Swift source).
 ## Install
 
 - **Swift Package Manager:**
-  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.1.0")`
+  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.2.0")`
   and the product `.product(name: "SansoraKit", package: "sansora-swift")`. In Xcode:
   File › Add Package Dependencies, then paste the URL.
 - **CocoaPods** (Flutter and React Native apps, whose plugins depend on the pod): add
-  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.1.0'`
+  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.2.0'`
   to the Podfile. SansoraKit is not on CocoaPods trunk, which becomes read-only in
   December 2026.
 
@@ -55,7 +55,8 @@ Button("Go Pro") { showPaywall = true }
 | `func closePaywall()` | Closes the open paywall (reason `closed`). |
 | `func restorePurchases() async -> RestoreOutcome` | `.restored`, `.nothing`, `.failed`; emits restore events. |
 | `func subscriptionStatus() async -> SubscriptionStatus` | `.never`, `.trial`, `.active`, `.lapsed`. |
-| `func flush() async` | Sends queued events now. |
+| `func flush() async` | Sends queued events and waiting purchase confirmations now. |
+| `func openPreview(code: String) async -> SansoraResult` | Test keys only: draws the private preview a person made in the desktop app (code `XXXX-XXXX-XXXX`) with store prices. No events, no history, purchase and restore do nothing; `.closed` when dismissed, `.noCampaign(reason: "preview_not_found" \| "preview_test_key_required" \| "preview_unavailable")` otherwise. |
 | `func currentAttributes() -> UserAttributes` | What audiences see. |
 | `var onEvent: ((SdkEvent) -> Void)?` | Every emitted event (also queued). |
 | `var appUserId: String`, `configStore`, `eventQueue`, `store`, `state` | The building blocks below. |
@@ -138,7 +139,7 @@ public final class ConfigStore: @unchecked Sendable {
 
 ```swift
 public enum DeviceInfo {
-    public static let sdkVersion: String                      // "0.1.0"
+    public static let sdkVersion: String                      // "0.2.0"
     public static var modelIdentifier: String { get }         // utsname / SIMULATOR_MODEL_IDENTIFIER
     public static var osVersion: String { get }
     @MainActor public static var deviceKind: String { get }   // iphone | ipad
@@ -183,3 +184,27 @@ xcodebuild test -scheme SansoraKit \
 audience, resolution, definitions (round trip), countries, render, price-format,
 sessions (events and step results as JSON objects) and delivery.
 
+
+## Changes
+
+### 0.2.0 (2026-11-12)
+
+- **Purchase confirmation.** Every verified StoreKit purchase the SDK handles for the first
+  time (from the paywall or `Transaction.updates`: renewals, Ask to Buy, other devices) is
+  written to a small queue on the device before it is finished, then sent to Sansora
+  (`POST /v1/sdk/purchases/confirm`) with the app user at that moment, so the server can tie
+  the purchase to the user. The queue survives restarts, retries with backoff and never
+  delays or changes the purchase. `identify` and `reset` change the user for later purchases.
+  Signed transactions are never logged.
+- **Multi-page paywalls.** A definition with pages shows one page at a time with a next
+  button.
+- **Translations and right-to-left.** The paywall uses the translation for the device
+  language when the definition has one; right-to-left languages lay out right to left, and
+  Terms, Privacy, Restore, Close and “Price unavailable” come from the translation.
+- **Preview.** `openPreview(code:)` shows a paywall a person is still working on, from a code
+  made in the Sansora desktop app (test keys only). Nothing is recorded and purchases are off.
+- Events report `sdkVersion` `0.2.0`.
+
+### 0.1.0 (2026-11-08)
+
+First release.
