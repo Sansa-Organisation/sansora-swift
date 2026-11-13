@@ -58,7 +58,7 @@ final class JSTests: XCTestCase {
 }
 
 final class EventTests: XCTestCase {
-    let ctx = EventContext(platform: "ios", sdkVersion: "0.2.0", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
+    let ctx = EventContext(platform: "ios", sdkVersion: "0.2.1", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
 
     func testAbsentOptionalsAreOmitted() throws {
         let e = SdkEvent(eventId: "00000000-0000-4000-8000-000000000001", appUserId: "u", event: "restore_started", occurredAt: 1, context: ctx)
@@ -532,5 +532,176 @@ final class FacadeTests: XCTestCase {
         let r = await s.register(placement: "onboarding_end")
         XCTAssertEqual(r, .noConfig)
         XCTAssertNil(s.getPaywall(placement: "onboarding_end").resolution)
+    }
+}
+
+/// 0.2.1: the Google Play legal text is read and kept, and never drawn on iOS.
+final class StoreLegalTextTests: XCTestCase {
+    func testGooglePlayLegalTextIsKeptButIOSShowsText() throws {
+        let json = #"""
+        {"schema":"sansora.paywall/1","name":"n","locale":"en","theme":"light",
+         "palette":{"background":"#FFFFFF","surface":"#FFFFFF","text":"#000000","muted":"#888888","accent":"#3451D1","hero":"#222222"},
+         "products":[{"id":"m","storeProductId":"com.example.m","label":"Monthly","period":"month","trialDays":0,"previewPrice":null,"currency":"USD"}],
+         "blocks":[{"type":"legal","termsUrl":"","privacyUrl":"","restore":true,"text":"Cancel in Settings.","textGooglePlay":"Cancel in Google Play."}]}
+        """#
+        let def = try JSONDecoder().decode(PaywallDefinition.self, from: Data(json.utf8))
+        XCTAssertEqual(def.blocks, [.legal(termsUrl: "", privacyUrl: "", restore: true, text: "Cancel in Settings.", textGooglePlay: "Cancel in Google Play.")])
+        XCTAssertEqual(try JSONValue.from(def)["blocks"], try JSONValue.parse(Data(json.utf8))["blocks"])
+        XCTAssertEqual(Render.model(def, prices: [:]).blocks, [.legal(text: "Cancel in Settings.", termsUrl: nil, privacyUrl: nil, restore: true)])
+        // Without it nothing is written back.
+        let plain = PaywallDefinition.Block.legal(termsUrl: "", privacyUrl: "", restore: false, text: "t")
+        XCTAssertNil(try JSONValue.from(plain)["textGooglePlay"])
+    }
+}
+
+/// 0.2.1: the paywall is drawn before the store answers (CONTRACT §8).
+@MainActor
+final class PriceLoadingTests: XCTestCase {
+    static let config = #"""
+    {"schema":"sansora.config/1","appId":"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa","generatedAt":1,
+     "paywalls":[{"versionId":"cccccccc-cccc-4ccc-8ccc-ccccccccccc1","paywallId":"bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1","version":1,"variant":"A",
+       "definition":{"schema":"sansora.paywall/1","name":"n","locale":"en","theme":"light",
+         "palette":{"background":"#FFFFFF","surface":"#FFFFFF","text":"#000000","muted":"#888888","accent":"#3451D1","hero":"#222222"},
+         "products":[{"id":"m","storeProductId":"com.example.m","label":"Monthly","period":"month","trialDays":0,"previewPrice":null,"currency":"USD"}],
+         "blocks":[{"type":"plans","productIds":["m"],"selected":"m","badge":null,"showPerMonth":false},{"type":"cta","label":"Continue"}]}}],
+     "campaigns":[{"id":"11111111-1111-4111-8111-111111111111","placement":"onboarding_end","audience":{"match":"all","rules":[],"groups":[]},
+       "frequency":"every_time","priority":1,"holdoutBps":0,"paywallVersionId":"cccccccc-cccc-4ccc-8ccc-ccccccccccc1","experiment":null}]}
+    """#
+    nonisolated static let monthly = StorePrice(priceMicros: 9_990_000, currency: "USD", displayPrice: "$9.99", trialDays: 0)
+
+    private var dir: URL!
+
+    override func setUp() async throws {
+        dir = tempURL("prices")
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+    }
+
+    override func tearDown() async throws {
+        try? FileManager.default.removeItem(at: dir)
+    }
+
+    private func sdk(_ loader: @escaping @Sendable ([String]) async throws -> [String: StorePrice]) throws -> (Sansora, () -> [String]) {
+        let s = Sansora(state: LocalState(fileURL: dir.appendingPathComponent("state.json")), storageDirectory: dir)
+        final class Box { var events: [SdkEvent] = [] }
+        let box = Box()
+        s.onEvent = { box.events.append($0) }
+        s.priceLoader = loader
+        s.priceWaitNanoseconds = 100_000_000
+        s.priceLimitNanoseconds = 600_000_000
+        try s.configure(publicKey: "pk_test_abcdefghijklmnopqrstuvwx",
+                        options: .init(baseURL: URL(string: "http://127.0.0.1:9")!, bundledConfig: .data(Data(Self.config.utf8)), logLevel: .none))
+        return (s, { box.events.map { $0.event + ($0.reason.map { ":\($0)" } ?? "") } })
+    }
+
+    private func until(_ what: String, timeout: Double = 3, _ condition: () -> Bool) async throws {
+        let end = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > end { return XCTFail("timed out waiting for \(what)") }
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+    }
+
+    private func priceLine(_ vm: PaywallViewModel) -> String? {
+        for b in vm.model.blocks { if case let .plans(plans) = b { return plans.first?.priceLine } }
+        return nil
+    }
+
+    func testDrawnAtOnceThenTheLateAnswerFillsThePrices() async throws {
+        let (s, events) = try sdk { _ in
+            try await Task.sleep(nanoseconds: 300_000_000)
+            return ["com.example.m": PriceLoadingTests.monthly]
+        }
+        var shown: PaywallViewModel?
+        let result = Task { await s.run(placement: "onboarding_end", present: { shown = $0 }, dismiss: {}) }
+        try await until("the paywall") { shown != nil }
+        let vm = try XCTUnwrap(shown)
+        // On screen before the store answered: a placeholder and the button off. paywall_shown
+        // waits for the answer, at most until the wait ends.
+        XCTAssertTrue(vm.pricesLoading)
+        XCTAssertNil(priceLine(vm))
+        XCTAssertFalse(vm.model.purchasable)
+        XCTAssertEqual(events(), ["placement_fired"])
+        // After the wait the placeholder becomes “Price unavailable”; the answer still counts when it comes.
+        try await until("the end of the wait") { !vm.pricesLoading }
+        XCTAssertNil(priceLine(vm))
+        XCTAssertEqual(events(), ["placement_fired", "paywall_shown"])
+        try await until("the prices") { priceLine(vm) != nil }
+        XCTAssertEqual(priceLine(vm), "$9.99/month")
+        XCTAssertTrue(vm.model.purchasable)
+        XCTAssertEqual(events(), ["placement_fired", "paywall_shown"])
+        vm.close()
+        let closed = await result.value
+        XCTAssertEqual(closed, .closed)
+        XCTAssertEqual(events(), ["placement_fired", "paywall_shown", "paywall_closed:closed"])
+    }
+
+    func testAStoreErrorWithinTheWaitKeepsTheEventOrder() async throws {
+        struct Down: Error {}
+        let (s, events) = try sdk { _ in throw Down() }
+        var shown: PaywallViewModel?
+        let result = Task { await s.run(placement: "onboarding_end", present: { shown = $0 }, dismiss: {}) }
+        try await until("the paywall") { shown != nil }
+        let vm = try XCTUnwrap(shown)
+        try await until("the failure") { events().count == 3 }
+        // As before 0.2.1 (sessions.json): the failure, then paywall_shown.
+        XCTAssertEqual(events(), ["placement_fired", "prices_load_failed:store_error", "paywall_shown"])
+        XCTAssertFalse(vm.pricesLoading)
+        XCTAssertFalse(vm.model.purchasable)
+        vm.close()
+        _ = await result.value
+    }
+
+    func testNoAnswerWithinTheLimitIsATimeout() async throws {
+        let (s, events) = try sdk { _ in
+            try? await Task.sleep(nanoseconds: 5_000_000_000)
+            return ["com.example.m": PriceLoadingTests.monthly]
+        }
+        var shown: PaywallViewModel?
+        let result = Task { await s.run(placement: "onboarding_end", present: { shown = $0 }, dismiss: {}) }
+        try await until("the paywall") { shown != nil }
+        let vm = try XCTUnwrap(shown)
+        try await until("the timeout") { events().count == 3 }
+        XCTAssertEqual(events(), ["placement_fired", "paywall_shown", "prices_load_failed:timeout"])
+        XCTAssertNil(priceLine(vm))
+        vm.close()
+        _ = await result.value
+    }
+
+    func testClosedBeforeTheAnswerSendsNoFailure() async throws {
+        let (s, events) = try sdk { _ in
+            try await Task.sleep(nanoseconds: 200_000_000)
+            return [:]
+        }
+        var shown: PaywallViewModel?
+        let result = Task { await s.run(placement: "onboarding_end", present: { shown = $0 }, dismiss: {}) }
+        try await until("the paywall") { shown != nil }
+        shown?.close()
+        let closed = await result.value
+        XCTAssertEqual(closed, .closed)
+        try await Task.sleep(nanoseconds: 400_000_000)
+        XCTAssertEqual(events(), ["placement_fired", "paywall_shown", "paywall_closed:closed"])
+    }
+
+    func testALateAnswerNeverReachesTheNextPaywall() throws {
+        var events: [String] = []
+        let config = try JSONDecoder().decode(SdkConfig.self, from: Data(Self.config.utf8))
+        let session = PaywallSession(context: EventContext(platform: "ios", sdkVersion: "0.2.1", osVersion: "18", device: "x", storefront: nil, store: "app_store"),
+                                     appUserId: "u", config: config, clock: { 1 }, makeEventId: { UUID().uuidString.lowercased() })
+        session.onEvent = { events.append($0.event) }
+        guard case .resolved(let r)? = session.fire(placement: "onboarding_end", attributes: [:], custom: [:]) else { return XCTFail() }
+        XCTAssertTrue(session.present(placement: "onboarding_end", resolution: r, prices: [:], pricesError: nil, awaitingPrices: true))
+        let first = try XCTUnwrap(session.presented?.id)
+        XCTAssertEqual(events, ["placement_fired"])
+        // Closing before the answer: paywall_shown first.
+        session.close()
+        guard case .resolved(let r2)? = session.fire(placement: "onboarding_end", attributes: [:], custom: [:]) else { return XCTFail() }
+        XCTAssertTrue(session.present(placement: "onboarding_end", resolution: r2, prices: [:], pricesError: nil, awaitingPrices: true))
+        XCTAssertFalse(session.pricesLoaded(["com.example.m": Self.monthly], pricesError: "late", presentation: first))
+        XCTAssertEqual(session.renderModel?.purchasable, false)
+        let second = try XCTUnwrap(session.presented?.id)
+        XCTAssertTrue(session.pricesLoaded(["com.example.m": Self.monthly], pricesError: nil, presentation: second))
+        XCTAssertFalse(session.pricesLoaded([:], pricesError: "again", presentation: second))
+        XCTAssertEqual(session.renderModel?.purchasable, true)
+        XCTAssertEqual(events, ["placement_fired", "paywall_shown", "paywall_closed", "placement_fired", "paywall_shown"])
     }
 }

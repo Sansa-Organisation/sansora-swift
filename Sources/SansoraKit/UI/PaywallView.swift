@@ -13,6 +13,11 @@ public final class PaywallViewModel: ObservableObject, Identifiable {
     @Published public internal(set) var restoring = false
     /// A private preview: purchases and restores are off and nothing is recorded.
     @Published public internal(set) var isPreview = false
+    /// The store's prices are on their way (at most about 3 s): price lines show a placeholder
+    /// instead of “Price unavailable” (CONTRACT §8). The purchase button stays off until a price is known.
+    @Published public internal(set) var pricesLoading = false
+    /// The store's answer (or the time limit) has been applied.
+    var pricesSettled = false
 
     var onSelect: (String) -> Void = { _ in }
     var onPurchase: () -> Void = {}
@@ -199,7 +204,7 @@ public struct SansoraPaywallView: View {
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 0) {
                             Text(plan.title).sf(14, .bold)
-                            Text(plan.priceLine ?? m.labels?.unavailablePrice ?? RenderModel.unavailablePrice).sf(12).foregroundColor(muted)
+                            priceLineView(plan.priceLine)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         if let badge = plan.badge {
@@ -221,6 +226,22 @@ public struct SansoraPaywallView: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityAddTraits(plan.selected ? [.isButton, .isSelected] : .isButton)
             }
+        }
+    }
+
+    @ViewBuilder
+    private func priceLineView(_ line: String?) -> some View {
+        if let line {
+            Text(line).sf(12).foregroundColor(muted)
+        } else if vm.pricesLoading {
+            // A bar in the price line's place until the store answers (CONTRACT §8): 96 wide,
+            // as tall as the line less 2 above and below.
+            Text(verbatim: " ").sf(12).hidden()
+                .frame(width: 96, alignment: .leading)
+                .overlay(RoundedRectangle(cornerRadius: 4, style: .continuous).fill(muted.opacity(0.2)).padding(.vertical, 2))
+                .accessibilityHidden(true)
+        } else {
+            Text(m.labels?.unavailablePrice ?? RenderModel.unavailablePrice).sf(12).foregroundColor(muted)
         }
     }
 

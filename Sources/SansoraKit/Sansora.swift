@@ -100,6 +100,14 @@ public final class Sansora {
     private var finishPresentation: ((String) -> Void)?
     private var observers: [NSObjectProtocol] = []
 
+    /// How long a paywall shows placeholders for prices the store hasn't sent yet; after that
+    /// they read “Price unavailable” until the answer comes (CONTRACT §8).
+    var priceWaitNanoseconds: UInt64 = 3_000_000_000
+    /// How long the store's answer is awaited at all; then `prices_load_failed` with `timeout`.
+    var priceLimitNanoseconds: UInt64 = 15_000_000_000
+    /// Store prices by store product ID: StoreKit, unless a test replaces it.
+    var priceLoader: (@Sendable ([String]) async throws -> [String: StorePrice])?
+
     private let storageDirectory: URL?
 
     init(state: LocalState = .shared, storageDirectory: URL? = nil) {
@@ -323,16 +331,25 @@ public final class Sansora {
         case .success(let def): definition = def
         case .failure(let reason): return .noCampaign(reason: reason.rawValue)
         }
-        var prices: [String: StorePrice] = [:]
-        #if canImport(StoreKit)
-        prices = (try? await store.prices(for: definition.products.map(\.storeProductId))) ?? [:]
-        #endif
-        let locale = Render.deviceLocale
-        let vm = PaywallViewModel(model: Render.model(definition, prices: prices, locale: locale))
-        vm.isPreview = true
-        vm.onSelect = { [weak vm] id in vm?.update(Render.model(definition, prices: prices, selectedProductId: id, locale: locale)) }
         #if canImport(UIKit) && !os(watchOS)
         guard let top = Self.topViewController() else { return .noCampaign(reason: "no_window") }
+        // Drawn at once; the store's prices replace the placeholders when they come (CONTRACT §8).
+        let locale = Render.deviceLocale
+        let preview = PreviewState(definition: definition, locale: locale)
+        let vm = PaywallViewModel(model: preview.model)
+        vm.isPreview = true
+        vm.onSelect = { [weak vm] id in
+            preview.selected = id
+            vm?.update(preview.model)
+        }
+        if !Self.storeProductIds(definition).isEmpty {
+            vm.pricesLoading = true
+            loadPrices(for: definition, into: vm) { [weak vm] answer in
+                preview.prices = answer.prices
+                vm?.update(preview.model)
+                return true
+            }
+        }
         let vc = PaywallHostingController(rootView: SansoraPaywallView(model: vm))
         vc.dark = vm.model.theme == .dark
         vc.modalPresentationStyle = .fullScreen
@@ -388,31 +405,99 @@ public final class Sansora {
             if case .noCampaign(let reason) = resolution { return .noCampaign(reason: reason.rawValue) }
             return .noConfig
         }
-        var prices: [String: StorePrice] = [:]
-        var pricesError: String?
-        #if canImport(StoreKit)
-        do {
-            prices = try await store.prices(for: def.products.map(\.storeProductId))
-            pricesError = Render.missingPricesReason(def, prices: prices)
-        } catch {
-            pricesError = StoreKitStore.errorReason(error)
-        }
-        #endif
         guard canPresent() else {
             SansoraLog.error("No view controller to present the paywall on.")
             session.paywallLoadFailed(placement: placement, reason: "no_window")
             return .noCampaign(reason: "no_window")
         }
-        guard session.present(placement: placement, resolution: resolution, prices: prices, pricesError: pricesError),
-              let model = session.renderModel else { return .noConfig }
+        // Drawn at once with placeholders for the prices and the purchase button off; the
+        // store's answer fills them in (CONTRACT §8). Before 0.2.1 nothing showed until it came.
+        let awaiting = !Self.storeProductIds(def).isEmpty
+        guard session.present(placement: placement, resolution: resolution, prices: [:], pricesError: nil, awaitingPrices: awaiting),
+              let model = session.renderModel, let presentation = session.presented?.id else { return .noConfig }
         let vm = PaywallViewModel(model: model)
         wire(vm, session: session)
+        if awaiting {
+            vm.pricesLoading = true
+            loadPrices(for: def, into: vm, waitEnded: { session.priceWaitEnded(presentation: presentation) }) { [weak vm] answer in
+                guard session.pricesLoaded(answer.prices, pricesError: answer.error, presentation: presentation) else { return false }
+                if let m = session.renderModel { vm?.update(m) }
+                return true
+            }
+        }
         return await withCheckedContinuation { (cont: CheckedContinuation<SansoraResult, Never>) in
             finishPresentation = { reason in
                 dismiss()
                 cont.resume(returning: reason == "purchased" ? .purchased : reason == "restored" ? .restored : .closed)
             }
             present(vm)
+        }
+    }
+
+    /// The store's answer for a paywall's products: prices, and the `prices_load_failed` reason
+    /// (the store error, `products_not_found`, or `timeout`).
+    struct PriceAnswer: Sendable {
+        var prices: [String: StorePrice]
+        var error: String?
+    }
+
+    static func storeProductIds(_ def: PaywallDefinition) -> [String] {
+        Array(Set(def.products.map(\.storeProductId).filter { !$0.isEmpty })).sorted()
+    }
+
+    private nonisolated static func priceAnswer(_ load: @Sendable ([String]) async throws -> [String: StorePrice],
+                                                ids: [String], definition: PaywallDefinition) async -> PriceAnswer {
+        do {
+            let prices = try await load(ids)
+            return PriceAnswer(prices: prices, error: Render.missingPricesReason(definition, prices: prices))
+        } catch {
+            #if canImport(StoreKit)
+            return PriceAnswer(prices: [:], error: StoreKitStore.errorReason(error))
+            #else
+            return PriceAnswer(prices: [:], error: "store_error")
+            #endif
+        }
+    }
+
+    /// Asks the store for `definition`'s prices while the paywall is on screen. The view shows
+    /// placeholders for `priceWaitNanoseconds` (3 s), then “Price unavailable” for what is still
+    /// missing (`waitEnded` runs then); the answer is applied whenever it comes within
+    /// `priceLimitNanoseconds` (15 s), else `apply` gets `timeout`. `apply` returns false when
+    /// the paywall has gone.
+    private func loadPrices(for definition: PaywallDefinition, into vm: PaywallViewModel, waitEnded: @escaping @MainActor () -> Void = {},
+                            apply: @escaping @MainActor (PriceAnswer) -> Bool) {
+        let ids = Self.storeProductIds(definition)
+        let load: @Sendable ([String]) async throws -> [String: StorePrice]
+        if let priceLoader {
+            load = priceLoader
+        } else {
+            #if canImport(StoreKit)
+            let store = self.store
+            load = { ids in try await store.prices(for: ids) }
+            #else
+            load = { _ in [:] }
+            #endif
+        }
+        let wait = priceWaitNanoseconds, limit = max(priceLimitNanoseconds, priceWaitNanoseconds)
+        let settle: @MainActor (PriceAnswer) -> Void = { [weak vm] answer in
+            guard let vm, !vm.pricesSettled else { return }
+            guard apply(answer) else { return }
+            vm.pricesSettled = true
+            vm.pricesLoading = false
+        }
+        let timer = Task { @MainActor [weak vm] in
+            try? await Task.sleep(nanoseconds: wait)
+            guard !Task.isCancelled else { return }
+            vm?.pricesLoading = false
+            waitEnded()
+            try? await Task.sleep(nanoseconds: limit - wait)
+            guard !Task.isCancelled else { return }
+            settle(PriceAnswer(prices: [:], error: "timeout"))
+        }
+        Task { @MainActor in
+            let answer = await Self.priceAnswer(load, ids: ids, definition: definition)
+            timer.cancel()
+            settle(answer)
         }
     }
 
@@ -500,6 +585,17 @@ public final class Sansora {
         }
     }
     #endif
+}
+
+/// What a private preview draws: its definition, the store's prices once they come, and the plan picked.
+@MainActor
+final class PreviewState {
+    let definition: PaywallDefinition
+    let locale: String?
+    var prices: [String: StorePrice] = [:]
+    var selected: String?
+    init(definition: PaywallDefinition, locale: String?) { self.definition = definition; self.locale = locale }
+    var model: RenderModel { Render.model(definition, prices: prices, selectedProductId: selected, locale: locale) }
 }
 
 #if canImport(UIKit) && !os(watchOS)

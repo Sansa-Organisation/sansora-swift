@@ -1,21 +1,23 @@
 # SansoraKit (iOS)
 
-The Sansora iOS SDK, version `0.2.0`: downloads `sansora.config/1`, resolves
+The Sansora iOS SDK, version `0.2.1`: downloads `sansora.config/1`, resolves
 placements, draws paywalls natively (SwiftUI), buys with StoreKit 2 and delivers
 `sansora.event/1` events. It implements [`CONTRACT.md`](CONTRACT.md) and
 replays every shared fixture in `conformance-fixtures/`.
 
 iOS 15+, Swift 5.9+, no third-party dependencies, no resources (the ISO country
-table is compiled in as Swift source).
+table is compiled in as Swift source). It also compiles in the Swift 6 language mode
+with complete concurrency checking, which CocoaPods uses when the app's target is Swift 6
+(the podspec allows 5.9 and 6.0); Swift Package Manager builds it in Swift 5 mode.
 
 ## Install
 
 - **Swift Package Manager:**
-  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.2.0")`
+  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.2.1")`
   and the product `.product(name: "SansoraKit", package: "sansora-swift")`. In Xcode:
   File › Add Package Dependencies, then paste the URL.
 - **CocoaPods** (Flutter and React Native apps, whose plugins depend on the pod): add
-  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.2.0'`
+  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.2.1'`
   to the Podfile. SansoraKit is not on CocoaPods trunk, which becomes read-only in
   December 2026.
 
@@ -50,7 +52,7 @@ Button("Go Pro") { showPaywall = true }
 | `func identify(_ appUserId: String) throws` | 1–128 visible ASCII. |
 | `func reset()` | New anonymous ID, custom attributes cleared. |
 | `func setAttributes(_: [String: AttributeValue]) throws` / `setAttributes(any: [String: Any]) throws` | Keys `^[a-z][a-z0-9_]{0,39}$`, ≤ 20, String ≤ 200 / finite number / Bool. |
-| `func register(placement: String) async -> SansoraResult` | Presents full screen over the key window's top view controller. |
+| `func register(placement: String) async -> SansoraResult` | Presents full screen over the key window's top view controller, at once: prices show a placeholder until StoreKit answers (at most 3 s, then “Price unavailable” for what is missing), and the button stays off until the selected plan has a price. |
 | `func getPaywall(placement: String) -> SansoraPaywallInfo` | `resolution` + `definition`, no events, no presentation. |
 | `func closePaywall()` | Closes the open paywall (reason `closed`). |
 | `func restorePurchases() async -> RestoreOutcome` | `.restored`, `.nothing`, `.failed`; emits restore events. |
@@ -65,9 +67,14 @@ Button("Go Pro") { showPaywall = true }
 `.noCampaign(reason: "no_window" | "invalid_placement")` is an iOS addition.
 When the store answers without a product of the definition that has a store
 product ID, `prices_load_failed` is emitted with reason `products_not_found`
-(`Render.missingPricesReason(_:prices:)`); store errors keep their reason. The
+(`Render.missingPricesReason(_:prices:)`); store errors keep their reason, and no
+answer within 15 s is `timeout`. `paywall_shown` follows StoreKit's answer, or the end of
+the 3-second wait, or the person's first action, whichever comes first (CONTRACT §5). The
 last known storefront is persisted (`LocalState.storefront`) and used for
 attributes and events until StoreKit answers.
+
+A definition's legal footer may carry `textGooglePlay` (0.2.1) for Android; SansoraKit reads
+and keeps it (`PaywallDefinition.Block.legal(…, textGooglePlay:)`) and always draws `text`.
 
 ## Building blocks for the Flutter and React Native bridges
 
@@ -139,7 +146,7 @@ public final class ConfigStore: @unchecked Sendable {
 
 ```swift
 public enum DeviceInfo {
-    public static let sdkVersion: String                      // "0.2.0"
+    public static let sdkVersion: String                      // "0.2.1"
     public static var modelIdentifier: String { get }         // utsname / SIMULATOR_MODEL_IDENTIFIER
     public static var osVersion: String { get }
     @MainActor public static var deviceKind: String { get }   // iphone | ipad
@@ -167,8 +174,11 @@ public final class LocalState {   // install date, sessions, history, declines, 
 `Assignment.bucket(_:)`, `Assignment.resolvePlacement(_:placement:appUserId:user:history:now:)`,
 `AudienceEvaluator.ruleMatches(_:_:)` / `matches(_:_:)`, `Render.model(_:prices:selectedProductId:)`,
 `Render.formatLike(_:minor:currency:)`, `Render.missingPricesReason(_:prices:)`, `Render.perMonthMinor(priceMicros:num:den:digits:)`,
-`PaywallSession` (headless event emission with injected clock and IDs), `RenderModel.json`,
-`Resolution.json`, `SdkEvent.json`. UI: `SansoraPaywallView(model: PaywallViewModel)`.
+`PaywallSession` (headless event emission with injected clock and IDs; `present(…, awaitingPrices: true)`,
+`pricesLoaded(_:pricesError:presentation:)` and `priceWaitEnded(presentation:)` for a paywall drawn before
+the prices), `RenderModel.json`,
+`Resolution.json`, `SdkEvent.json`. UI: `SansoraPaywallView(model: PaywallViewModel)`
+(`PaywallViewModel.pricesLoading` draws the price placeholders).
 
 ## Test
 
@@ -186,6 +196,25 @@ sessions (events and step results as JSON objects) and delivery.
 
 
 ## Changes
+
+### 0.2.1 (2026-11-12)
+
+- **No blank screen while prices load.** `register`, `.sansoraPaywall` and `openPreview` draw
+  the paywall at once. Price lines show a placeholder until StoreKit answers; after 3 seconds
+  what is still missing reads “Price unavailable” (translated as before), and prices that arrive
+  later (up to 15 s) still fill in. The purchase button stays off until the selected plan has a
+  price. Events are unchanged when StoreKit answers within the 3 seconds; otherwise
+  `paywall_shown` is sent when the wait ends and a later failure follows it. No answer within
+  15 s is `prices_load_failed` with `timeout`. Before, nothing showed until StoreKit answered
+  (about 5 s in the Simulator).
+- **Swift 6.** Compiles in the Swift 6 language mode with complete concurrency checking.
+  CocoaPods builds the pod in Swift 6 when the app's target is Swift 6 (an Expo 58 app, for
+  example), and 0.2.0 failed there on `Render.asIs`, a non-`Sendable` static closure; it is a
+  function now.
+- **Store-specific legal text.** The definition's `legal.textGooglePlay` is read and kept
+  (`PaywallDefinition.Block.legal` has a fifth value, `textGooglePlay`, defaulting to `nil`; a
+  `switch` that binds four values needs a fifth). iOS always shows `text`.
+- Events report `sdkVersion` `0.2.1`.
 
 ### 0.2.0 (2026-11-12)
 

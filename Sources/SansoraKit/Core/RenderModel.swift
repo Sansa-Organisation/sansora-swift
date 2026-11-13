@@ -205,7 +205,9 @@ public enum Render {
     }
 
     typealias Translate = (String) -> String
-    static let asIs: Translate = { $0 }
+    /// No translation. A function, not a stored closure: a static stored closure is shared
+    /// mutable state to Swift 6's concurrency checking (the podspec allows Swift 6).
+    static func asIs(_ source: String) -> String { source }
 
     public static func priceMain(_ p: PaywallDefinition.Product, _ price: StorePrice?) -> String? { priceMain(p, price, asIs) }
 
@@ -304,7 +306,8 @@ public enum Render {
             case let .cta(label):
                 let saysFree = label.range(of: "free", options: .caseInsensitive) != nil
                 return .cta(label: t(saysFree && trial(selected) == 0 ? "Continue" : label), enabled: purchasable)
-            case let .legal(terms, privacy, restore, text):
+            // iOS and macOS always show `text`; `textGooglePlay` is for Android (CONTRACT §8).
+            case let .legal(terms, privacy, restore, text, _):
                 return .legal(text: t(text), termsUrl: terms.isEmpty ? nil : terms, privacyUrl: privacy.isEmpty ? nil : privacy, restore: restore)
             case .unknown: return nil
             }

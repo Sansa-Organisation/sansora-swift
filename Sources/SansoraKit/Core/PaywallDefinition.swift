@@ -99,12 +99,13 @@ public struct PaywallDefinition: Codable, Equatable, Sendable {
         case faq(items: [Question])
         case comparison(rows: [ComparisonRow])
         case cta(label: String)
-        case legal(termsUrl: String, privacyUrl: String, restore: Bool, text: String)
+        /// `textGooglePlay` (0.2.1): the Google Play version of `text`, for Android. iOS and macOS always show `text`.
+        case legal(termsUrl: String, privacyUrl: String, restore: Bool, text: String, textGooglePlay: String? = nil)
         case unknown(type: String)
 
         enum K: String, CodingKey {
             case type, position, delaySeconds, height, imageUrl, text, subtext, items, productIds, selected, badge, showPerMonth
-            case reminderDay, rows, label, termsUrl, privacyUrl, restore
+            case reminderDay, rows, label, termsUrl, privacyUrl, restore, textGooglePlay
         }
 
         public var type: String {
@@ -142,7 +143,8 @@ public struct PaywallDefinition: Codable, Equatable, Sendable {
             case "cta": self = .cta(label: try c.decode(String.self, forKey: .label))
             case "legal":
                 self = .legal(termsUrl: try c.decode(String.self, forKey: .termsUrl), privacyUrl: try c.decode(String.self, forKey: .privacyUrl),
-                              restore: try c.decode(Bool.self, forKey: .restore), text: try c.decode(String.self, forKey: .text))
+                              restore: try c.decode(Bool.self, forKey: .restore), text: try c.decode(String.self, forKey: .text),
+                              textGooglePlay: try c.decodeIfPresent(String.self, forKey: .textGooglePlay))
             default: self = .unknown(type: type)
             }
         }
@@ -163,9 +165,10 @@ public struct PaywallDefinition: Codable, Equatable, Sendable {
             case let .faq(items): try c.encode(items, forKey: .items)
             case let .comparison(rows): try c.encode(rows, forKey: .rows)
             case let .cta(label): try c.encode(label, forKey: .label)
-            case let .legal(terms, privacy, restore, text):
+            case let .legal(terms, privacy, restore, text, textGooglePlay):
                 try c.encode(terms, forKey: .termsUrl); try c.encode(privacy, forKey: .privacyUrl)
                 try c.encode(restore, forKey: .restore); try c.encode(text, forKey: .text)
+                try c.encodeIfPresent(textGooglePlay, forKey: .textGooglePlay)
             case .unknown: break
             }
         }

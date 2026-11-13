@@ -149,15 +149,22 @@ final class RenderConformanceTests: XCTestCase {
 
     struct PageCase: Decodable {
         let definition: PaywallDefinition; let prices: [String: StorePrice]; let selectedProductId: String?; let locale: String?
+        /// `app_store` or `google_play` for a case drawn for one store only (store-specific legal text).
+        let store: String?
         let expected: JSONValue
     }
 
     func testRenderPagesAndLanguages() throws {
         let cases = try Fixtures.decode([PageCase].self, "render-pages.json")
         XCTAssertGreaterThanOrEqual(cases.count, 7)
-        for c in cases {
+        // iOS and macOS draw the App Store view: Google Play cases are Android's.
+        XCTAssertGreaterThanOrEqual(cases.filter { $0.store == "app_store" }.count, 2)
+        let raw = try XCTUnwrap(Fixtures.json("render-pages.json").arrayValue)
+        for (i, c) in cases.enumerated() where c.store == nil || c.store == "app_store" {
             let m = Render.model(c.definition, prices: c.prices, selectedProductId: c.selectedProductId, locale: c.locale)
-            assertJSONEqual(m.json, c.expected, "\(c.definition.name) / \(c.locale ?? "source")")
+            assertJSONEqual(m.json, c.expected, "\(c.definition.name) / \(c.store ?? "any store") / \(c.locale ?? "source")")
+            // Definitions round-trip, the Google Play legal text included.
+            assertJSONEqual(try JSONValue.from(c.definition), try XCTUnwrap(raw[i]["definition"]), "definition \(c.definition.name)")
         }
     }
 

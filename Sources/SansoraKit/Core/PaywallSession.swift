@@ -30,6 +30,12 @@ public final class PaywallSession {
         public var selected: String?
         public var prices: [String: StorePrice]
         public var definition: PaywallDefinition
+        /// Counts presentations, so a late store answer can't reach a later paywall.
+        public var id: Int = 0
+        /// Drawn before the store answered (0.2.1): `pricesLoaded` brings the prices.
+        public var awaitingPrices = false
+        /// `paywall_shown` has been sent.
+        public var shownSent = true
     }
 
     public enum FireResult: Equatable {
@@ -44,6 +50,7 @@ public final class PaywallSession {
     /// The device's language, for choosing a translation.
     public var locale: String?
     public private(set) var presented: Presented?
+    private var presentations = 0
     private let clock: () -> Int64
     private let makeEventId: () -> String
     /// Every emitted event, in order.
@@ -86,20 +93,55 @@ public final class PaywallSession {
         return .resolved(Assignment.resolvePlacement(config, placement: placement, appUserId: appUserId, user: attributes, history: history, now: clock()))
     }
 
-    /// Shows the paywall a `.paywall` resolution chose, once the store prices are
-    /// known (`pricesError` when they failed: the paywall still shows).
+    /// Shows the paywall a `.paywall` resolution chose with the store prices
+    /// (`pricesError` when they failed: the paywall still shows, after `prices_load_failed`).
+    ///
+    /// With `awaitingPrices` it is drawn before the store answered, with no prices (0.2.1,
+    /// CONTRACT §8). `paywall_shown` then waits for `pricesLoaded`, so the events are the same
+    /// as when the prices came first, but no longer than `priceWaitEnded` or the person's first
+    /// action. `paywall_closed.durationMs` counts from now, when it is drawn.
     @discardableResult
-    public func present(placement: String, resolution: Resolution, prices: [String: StorePrice], pricesError: String?) -> Bool {
+    public func present(placement: String, resolution: Resolution, prices: [String: StorePrice], pricesError: String?, awaitingPrices: Bool = false) -> Bool {
         guard presented == nil, case let .paywall(campaignId, versionId, paywallId, variant, _, _) = resolution,
               let def = config?.paywall(versionId: versionId)?.definition else { return false }
-        let now = clock()
+        presentations += 1
         presented = Presented(placement: placement, paywallId: paywallId, variant: variant, campaignId: campaignId, versionId: versionId,
-                              shownAt: now, selected: nil, prices: prices, definition: def)
+                              shownAt: clock(), selected: nil, prices: prices, definition: def, id: presentations,
+                              awaitingPrices: awaitingPrices, shownSent: false)
+        if awaitingPrices { return true }
         if let pricesError { emit("prices_load_failed", reason: pricesError) }
-        emit("paywall_shown")
-        history.record(campaignId: campaignId, at: now)
-        onHistoryChange(history)
+        sendShown()
         return true
+    }
+
+    /// `paywall_shown` and the display history, once per presentation.
+    private func sendShown() {
+        guard let p = presented, !p.shownSent else { return }
+        presented?.shownSent = true
+        emit("paywall_shown")
+        history.record(campaignId: p.campaignId, at: p.shownAt)
+        onHistoryChange(history)
+    }
+
+    /// The store's answer for a paywall drawn with `awaitingPrices`: its prices, then
+    /// `prices_load_failed` when they failed (the store error, `products_not_found` or
+    /// `timeout`) and `paywall_shown` if it hasn't been sent. False, with nothing emitted,
+    /// when that paywall (`presentation`, its `Presented.id`) is gone or already has its answer.
+    @discardableResult
+    public func pricesLoaded(_ prices: [String: StorePrice], pricesError: String?, presentation: Int) -> Bool {
+        guard let p = presented, p.id == presentation, p.awaitingPrices else { return false }
+        presented?.prices = prices
+        presented?.awaitingPrices = false
+        if let pricesError { emit("prices_load_failed", reason: pricesError) }
+        sendShown()
+        return true
+    }
+
+    /// The wait for prices (3 s) ended before the store answered: the paywall counts as
+    /// shown from now on; a failure that comes later follows `paywall_shown`.
+    public func priceWaitEnded(presentation: Int) {
+        guard presented?.id == presentation else { return }
+        sendShown()
     }
 
     /// A resolved paywall could not be shown (e.g. no window to present on).
@@ -119,6 +161,7 @@ public final class PaywallSession {
     @discardableResult
     public func select(productId: String) -> Bool {
         guard presented != nil, let p = product(productId) else { return false }
+        sendShown()
         presented?.selected = p.id
         emit("plan_selected", productId: p.storeProductId)
         return true
@@ -128,6 +171,7 @@ public final class PaywallSession {
     /// product, or nil when nothing is purchasable.
     public func beginPurchase() -> PaywallDefinition.Product? {
         guard presented != nil, let m = renderModel, m.purchasable, let id = m.selectedProductId, let p = product(id) else { return nil }
+        sendShown()
         emit("purchase_started", productId: p.storeProductId)
         return p
     }
@@ -144,7 +188,10 @@ public final class PaywallSession {
         }
     }
 
-    public func restoreStarted() { emit("restore_started") }
+    public func restoreStarted() {
+        sendShown()
+        emit("restore_started")
+    }
 
     public func restoreFinished(_ outcome: RestoreOutcome) {
         emit("restore_completed", reason: outcome == .nothing ? "nothing_to_restore" : outcome.rawValue)
@@ -156,6 +203,7 @@ public final class PaywallSession {
 
     private func dismiss(_ reason: String) {
         guard let p = presented else { return }
+        sendShown()
         emit("paywall_closed", durationMs: min(600_000, max(0, clock() - p.shownAt)), reason: reason)
         presented = nil
         onDismiss(reason)
