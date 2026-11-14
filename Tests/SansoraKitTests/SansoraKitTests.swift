@@ -58,7 +58,7 @@ final class JSTests: XCTestCase {
 }
 
 final class EventTests: XCTestCase {
-    let ctx = EventContext(platform: "ios", sdkVersion: "0.2.1", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
+    let ctx = EventContext(platform: "ios", sdkVersion: "0.3.0", osVersion: "18.2", device: "iPhone16,1", storefront: nil, store: "app_store")
 
     func testAbsentOptionalsAreOmitted() throws {
         let e = SdkEvent(eventId: "00000000-0000-4000-8000-000000000001", appUserId: "u", event: "restore_started", occurredAt: 1, context: ctx)
@@ -95,7 +95,8 @@ final class RenderTests: XCTestCase {
         """#
         let def = try JSONDecoder().decode(PaywallDefinition.self, from: Data(json.utf8))
         let m = Render.model(def, prices: [:])
-        XCTAssertEqual(m.blocks, [.cta(label: "Continue", enabled: false)])
+        // A purchase button that ends the page is pinned (0.3.0).
+        XCTAssertEqual(m.blocks, [.cta(label: "Continue", enabled: false, placement: .init(pinned: true))])
         XCTAssertNil(m.selectedProductId)
         XCTAssertFalse(m.purchasable)
     }
@@ -547,10 +548,87 @@ final class StoreLegalTextTests: XCTestCase {
         let def = try JSONDecoder().decode(PaywallDefinition.self, from: Data(json.utf8))
         XCTAssertEqual(def.blocks, [.legal(termsUrl: "", privacyUrl: "", restore: true, text: "Cancel in Settings.", textGooglePlay: "Cancel in Google Play.")])
         XCTAssertEqual(try JSONValue.from(def)["blocks"], try JSONValue.parse(Data(json.utf8))["blocks"])
-        XCTAssertEqual(Render.model(def, prices: [:]).blocks, [.legal(text: "Cancel in Settings.", termsUrl: nil, privacyUrl: nil, restore: true)])
+        XCTAssertEqual(Render.model(def, prices: [:]).blocks, [.legal(text: "Cancel in Settings.", termsUrl: nil, privacyUrl: nil, restore: true, placement: .init(pinned: true))])
         // Without it nothing is written back.
         let plain = PaywallDefinition.Block.legal(termsUrl: "", privacyUrl: "", restore: false, text: "t")
         XCTAssertNil(try JSONValue.from(plain)["textGooglePlay"])
+    }
+}
+
+/// 0.3.0 layout (CONTRACT §8). The shared fixtures (render-layout.json) cover the model; these cover what they don't.
+final class LayoutTests: XCTestCase {
+    private func definition(_ blocks: String, extra: String = "") throws -> PaywallDefinition {
+        let json = """
+        {"schema":"sansora.paywall/1","name":"n","locale":"en","theme":"light",\(extra)
+         "palette":{"background":"#FFFFFF","surface":"#FFFFFF","text":"#000000","muted":"#888888","accent":"#3451D1","hero":"#222222"},
+         "products":[{"id":"m","storeProductId":"com.example.m","label":"Monthly","period":"month","trialDays":0,"previewPrice":null,"currency":"USD"}],
+         "blocks":[\(blocks)]}
+        """
+        return try JSONDecoder().decode(PaywallDefinition.self, from: Data(json.utf8))
+    }
+
+    /// A value from a newer editor reads as left out: the paywall still shows, with the defaults.
+    func testUnknownLayoutValuesFallBackToTheDefaults() throws {
+        let def = try definition(#"""
+        {"type":"close","position":"left","delaySeconds":0,"style":"sheet","bar":{"center":{"kind":"avatar"}}},
+        {"type":"headline","text":"Hi","subtext":"","pin":"middle","spaceBefore":12},
+        {"type":"cta","label":"Continue"}
+        """#, extra: #""align":"stretch","#)
+        XCTAssertNil(def.align)
+        XCTAssertEqual(def.blocks[0], .close(position: .left, delaySeconds: 0, style: nil, label: nil, bar: .init(center: .unknown(kind: "avatar"))))
+        XCTAssertEqual(def.blocks[1].placement, .init(pin: nil, spaceBefore: 12))
+        let m = Render.model(def, prices: [:])
+        XCTAssertEqual(m.align, .top)
+        XCTAssertEqual(m.blocks, [
+            .close(position: .left, delaySeconds: 0, style: .overlay, label: nil, bar: nil),
+            .headline(text: "Hi", subtext: nil, placement: .init(pinned: false, spaceBefore: 12)),
+            .cta(label: "Continue", enabled: false, placement: .init(pinned: true)),
+        ])
+    }
+
+    /// Closes don't count when finding the purchase button and legal footer that end a page; another block does.
+    func testAutomaticPinning() throws {
+        let def = try definition(#"""
+        {"type":"cta","label":"Continue"},{"type":"headline","text":"Hi","subtext":""},
+        {"type":"cta","label":"Continue"},{"type":"legal","termsUrl":"","privacyUrl":"","restore":false,"text":""},
+        {"type":"close","position":"right","delaySeconds":0,"style":"row","label":"  "}
+        """#)
+        let pinned = Render.model(def, prices: [:]).blocks.map { $0.placement?.pinned }
+        XCTAssertEqual(pinned, [false, false, true, true, nil])
+        // A label of spaces is no label.
+        XCTAssertEqual(Render.model(def, prices: [:]).blocks.last, .close(position: .right, delaySeconds: 0, style: .row, label: nil, bar: nil))
+    }
+
+    func testPlaceholdersAreFilledInOnePass() {
+        XCTAssertEqual(Render.fill("Page {n} of {count}", ["n": "2", "count": "3"]), "Page 2 of 3")
+        XCTAssertEqual(Render.fill("{n} {x} {} {n", ["n": "{x}"]), "{x} {x} {} {n")
+    }
+
+    /// How SansoraPaywallView splits a page into its regions.
+    func testPageRegions() {
+        let hero = RenderModel.Block.hero(height: 120, imageUrl: "https://example.com/hero.png")
+        let headline = RenderModel.Block.headline(text: "Hi", subtext: nil, placement: .init(spaceBefore: 24))
+        let benefits = RenderModel.Block.benefits(items: ["One"], placement: .init(pinned: true))
+        let bar = RenderModel.Block.close(position: .right, delaySeconds: 2, style: .bar, label: "Skip", bar: .init(center: .text("Pro")))
+        let page = PaywallPageLayout(blocks: [bar, hero, headline, benefits], nextLabel: "Continue", align: .center)
+        XCTAssertEqual(page.close, PaywallClose(position: .right, delaySeconds: 2, style: .bar, label: "Skip", bar: .init(center: .text("Pro"))))
+        XCTAssertTrue(page.hasTopBar)
+        XCTAssertNil(page.floatingClose)
+        XCTAssertEqual(page.content, [hero, headline])
+        XCTAssertEqual(page.pinned, [benefits])
+        XCTAssertTrue(page.hasPinnedArea)
+
+        // A row stays where it is in the content; a second close on the page is not drawn.
+        let row = RenderModel.Block.close(position: .left, delaySeconds: 0, style: .row)
+        let rowPage = PaywallPageLayout(blocks: [headline, row, .close(position: .right, delaySeconds: 0)], nextLabel: nil, align: .top)
+        XCTAssertEqual(rowPage.content, [headline, row])
+        XCTAssertFalse(rowPage.hasTopBar)
+        XCTAssertNil(rowPage.floatingClose)
+        XCTAssertFalse(rowPage.hasPinnedArea)
+
+        let overlay = PaywallPageLayout(blocks: [.close(position: .left, delaySeconds: 0), headline], nextLabel: nil, align: .bottom)
+        XCTAssertEqual(overlay.floatingClose?.position, .left)
+        XCTAssertEqual(overlay.content, [headline])
     }
 }
 
@@ -602,7 +680,7 @@ final class PriceLoadingTests: XCTestCase {
     }
 
     private func priceLine(_ vm: PaywallViewModel) -> String? {
-        for b in vm.model.blocks { if case let .plans(plans) = b { return plans.first?.priceLine } }
+        for b in vm.model.blocks { if case let .plans(plans, _) = b { return plans.first?.priceLine } }
         return nil
     }
 
@@ -685,7 +763,7 @@ final class PriceLoadingTests: XCTestCase {
     func testALateAnswerNeverReachesTheNextPaywall() throws {
         var events: [String] = []
         let config = try JSONDecoder().decode(SdkConfig.self, from: Data(Self.config.utf8))
-        let session = PaywallSession(context: EventContext(platform: "ios", sdkVersion: "0.2.1", osVersion: "18", device: "x", storefront: nil, store: "app_store"),
+        let session = PaywallSession(context: EventContext(platform: "ios", sdkVersion: "0.3.0", osVersion: "18", device: "x", storefront: nil, store: "app_store"),
                                      appUserId: "u", config: config, clock: { 1 }, makeEventId: { UUID().uuidString.lowercased() })
         session.onEvent = { events.append($0.event) }
         guard case .resolved(let r)? = session.fire(placement: "onboarding_end", attributes: [:], custom: [:]) else { return XCTFail() }

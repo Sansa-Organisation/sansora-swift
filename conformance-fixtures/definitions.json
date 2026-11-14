@@ -179,11 +179,6 @@
     "delaySeconds": 0
    },
    {
-    "type": "hero",
-    "height": 70,
-    "imageUrl": ""
-   },
-   {
     "type": "headline",
     "text": "Unlock Fixture Pro",
     "subtext": ""
@@ -266,11 +261,6 @@
     "delaySeconds": 0
    },
    {
-    "type": "hero",
-    "height": 40,
-    "imageUrl": ""
-   },
-   {
     "type": "headline",
     "text": "How your free trial works",
     "subtext": "We remind you before it ends."
@@ -340,11 +330,6 @@
     "type": "close",
     "position": "right",
     "delaySeconds": 0
-   },
-   {
-    "type": "hero",
-    "height": 56,
-    "imageUrl": ""
    },
    {
     "type": "headline",
@@ -506,11 +491,6 @@
     "delaySeconds": 0
    },
    {
-    "type": "hero",
-    "height": 50,
-    "imageUrl": ""
-   },
-   {
     "type": "headline",
     "text": "Pay once, keep it forever",
     "subtext": "Or choose yearly."
@@ -576,11 +556,6 @@
     "type": "close",
     "position": "right",
     "delaySeconds": 0
-   },
-   {
-    "type": "hero",
-    "height": 46,
-    "imageUrl": ""
    },
    {
     "type": "headline",
@@ -657,11 +632,6 @@
     "type": "close",
     "position": "right",
     "delaySeconds": 0
-   },
-   {
-    "type": "hero",
-    "height": 60,
-    "imageUrl": ""
    },
    {
     "type": "headline",

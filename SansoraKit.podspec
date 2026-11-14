@@ -1,11 +1,11 @@
 # Sansora iOS SDK. Not on CocoaPods trunk (read-only from December 2026): apps take it
 # from the sansora-swift repository, which sdks/ios/Scripts/export-package.sh writes
 # (docs/SDK-RELEASING.md). Paths are relative to this folder, so it works from both:
-#   pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.2.1'
+#   pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.3.0'
 #   pod 'SansoraKit', :path => '<checkout>/sdks/ios'
 Pod::Spec.new do |s|
   s.name             = 'SansoraKit'
-  s.version          = '0.2.1'
+  s.version          = '0.3.0'
   s.summary          = 'Native remote paywalls, placements and events for Sansora.'
   s.description      = 'Downloads sansora.config/1, resolves placements, draws paywalls natively with SwiftUI, buys with StoreKit 2 and delivers sansora.event/1 events.'
   s.homepage         = 'https://sansora.my'

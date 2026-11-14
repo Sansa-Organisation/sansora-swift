@@ -195,11 +195,6 @@
        "delaySeconds": 0
       },
       {
-       "type": "hero",
-       "height": 40,
-       "imageUrl": ""
-      },
-      {
        "type": "headline",
        "text": "How your free trial works",
        "subtext": "We remind you before it ends."

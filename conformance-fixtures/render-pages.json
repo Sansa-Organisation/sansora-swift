@@ -40,11 +40,6 @@
      "delaySeconds": 0
     },
     {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
-    },
-    {
      "type": "headline",
      "text": "Welcome to Fixture",
      "subtext": ""
@@ -106,7 +101,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -262,17 +257,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "Welcome to Fixture",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -280,12 +275,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -294,12 +294,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -322,7 +327,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -339,40 +346,48 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "Welcome to Fixture",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -380,18 +395,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -400,18 +421,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -434,7 +461,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -451,19 +480,25 @@
          "label": "Day 7",
          "text": "$59.99/year unless you cancel"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "Start free trial",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -509,11 +544,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -577,7 +607,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -733,17 +763,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "مرحبا بك",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -751,12 +781,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -765,12 +800,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -793,7 +833,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -810,40 +852,48 @@
        "label": "اليوم 7",
        "text": "$59.99/سنة unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "ابدأ التجربة المجانية",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "مرحبا بك",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -851,18 +901,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -871,18 +927,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -905,7 +967,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -922,19 +986,25 @@
          "label": "اليوم 7",
          "text": "$59.99/سنة unless you cancel"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "ابدأ التجربة المجانية",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -988,11 +1058,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -1056,7 +1121,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -1212,17 +1277,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "مرحبا بك",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -1230,12 +1295,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -1244,12 +1314,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -1272,40 +1347,48 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "متابعة",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "مرحبا بك",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -1313,18 +1396,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -1333,18 +1422,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -1367,19 +1462,25 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "متابعة",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -1433,11 +1534,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -1501,7 +1597,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -1657,17 +1753,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "Willkommen",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -1675,12 +1771,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -1689,12 +1790,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -1717,7 +1823,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -1734,40 +1842,48 @@
        "label": "Day 7",
        "text": "$59.99/year, sofern du nicht kündigst"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "Weiter",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "Willkommen",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -1775,18 +1891,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "Weiter",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -1795,18 +1917,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -1829,7 +1957,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -1846,19 +1976,25 @@
          "label": "Day 7",
          "text": "$59.99/year, sofern du nicht kündigst"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "Start free trial",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -1911,11 +2047,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -1979,7 +2110,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -2135,17 +2266,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "Willkommen",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -2153,12 +2284,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -2167,12 +2303,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -2195,7 +2336,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -2212,40 +2355,48 @@
        "label": "Day 7",
        "text": "59,99 €/year, sofern du nicht kündigst"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "Weiter",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "Willkommen",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -2253,18 +2404,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "Weiter",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -2273,18 +2430,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -2307,7 +2470,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -2324,19 +2489,25 @@
          "label": "Day 7",
          "text": "59,99 €/year, sofern du nicht kündigst"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "Start free trial",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -2389,11 +2560,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -2457,7 +2623,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -2613,17 +2779,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "Welcome to Fixture",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -2631,12 +2797,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -2645,12 +2816,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -2673,7 +2849,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -2690,40 +2868,48 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "Welcome to Fixture",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -2731,18 +2917,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -2751,18 +2943,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -2785,7 +2983,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -2802,19 +3002,25 @@
          "label": "Day 7",
          "text": "$59.99/year unless you cancel"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "Start free trial",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -2860,11 +3066,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -2928,7 +3129,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -3084,17 +3285,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "Welcome to Fixture",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -3102,12 +3303,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -3116,12 +3322,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -3144,7 +3355,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -3161,40 +3374,48 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "Welcome to Fixture",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -3202,18 +3423,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "Continue",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -3222,18 +3449,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -3256,7 +3489,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -3273,19 +3508,25 @@
          "label": "Day 7",
          "text": "$59.99/year unless you cancel"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "Start free trial",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }
@@ -3504,17 +3745,24 @@
     {
      "type": "close",
      "position": "left",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "hero",
      "height": 120,
-     "imageUrl": "https://example.com/hero.png"
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "headline",
      "text": "Fixture Pro",
-     "subtext": "Everything in one place."
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -3522,7 +3770,9 @@
       "Unlimited projects",
       "No ads",
       "Sync across devices"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "plans",
@@ -3563,7 +3813,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -3580,7 +3832,9 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "testimonials",
@@ -3589,7 +3843,9 @@
        "quote": "“A sample quote for tests.”",
        "author": "— Test reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "faq",
@@ -3598,7 +3854,9 @@
        "question": "Can I cancel any time?",
        "answer": "Yes, in your store account settings."
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "comparison",
@@ -3617,21 +3875,28 @@
        "free": false,
        "pro": true
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
-   ]
+   ],
+   "align": "top"
   }
  },
  {
@@ -3846,17 +4111,24 @@
     {
      "type": "close",
      "position": "left",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "hero",
      "height": 120,
-     "imageUrl": "https://example.com/hero.png"
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "headline",
      "text": "Fixture Pro",
-     "subtext": "Everything in one place."
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -3864,7 +4136,9 @@
       "Unlimited projects",
       "No ads",
       "Sync across devices"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "plans",
@@ -3905,7 +4179,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -3922,7 +4198,9 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "testimonials",
@@ -3931,7 +4209,9 @@
        "quote": "“A sample quote for tests.”",
        "author": "— Test reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "faq",
@@ -3940,7 +4220,9 @@
        "question": "Can I cancel any time?",
        "answer": "Yes, in your store account settings."
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "comparison",
@@ -3959,21 +4241,28 @@
        "free": false,
        "pro": true
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Google Play renews the subscription unless you cancel at least 24 hours before the end of the period. Manage or cancel it in Google Play › Payments & subscriptions.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
-   ]
+   ],
+   "align": "top"
   }
  },
  {
@@ -4188,17 +4477,24 @@
     {
      "type": "close",
      "position": "left",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "hero",
      "height": 120,
-     "imageUrl": "https://example.com/hero.png"
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "headline",
      "text": "Fixture Pro",
-     "subtext": "Everything in one place."
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -4206,7 +4502,9 @@
       "Unlimited projects",
       "No ads",
       "Sync across devices"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "plans",
@@ -4247,7 +4545,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -4264,7 +4564,9 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "testimonials",
@@ -4273,7 +4575,9 @@
        "quote": "“A sample quote for tests.”",
        "author": "— Test reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "faq",
@@ -4282,7 +4586,9 @@
        "question": "Can I cancel any time?",
        "answer": "Yes, in your store account settings."
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "comparison",
@@ -4301,21 +4607,28 @@
        "free": false,
        "pro": true
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Verlängert sich automatisch, sofern nicht spätestens 24 Stunden vor Ende des Zeitraums gekündigt.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "labels": {
     "terms": "Terms",
     "privacy": "Privacy",
@@ -4537,17 +4850,24 @@
     {
      "type": "close",
      "position": "left",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "hero",
      "height": 120,
-     "imageUrl": "https://example.com/hero.png"
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "headline",
      "text": "Fixture Pro",
-     "subtext": "Everything in one place."
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -4555,7 +4875,9 @@
       "Unlimited projects",
       "No ads",
       "Sync across devices"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "plans",
@@ -4596,7 +4918,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -4613,7 +4937,9 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "testimonials",
@@ -4622,7 +4948,9 @@
        "quote": "“A sample quote for tests.”",
        "author": "— Test reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "faq",
@@ -4631,7 +4959,9 @@
        "question": "Can I cancel any time?",
        "answer": "Yes, in your store account settings."
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "comparison",
@@ -4650,21 +4980,28 @@
        "free": false,
        "pro": true
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Verlängert sich automatisch. Verwalten oder kündigen unter Google Play › Zahlungen und Abos.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "labels": {
     "terms": "Terms",
     "privacy": "Privacy",
@@ -4864,17 +5201,24 @@
     {
      "type": "close",
      "position": "left",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "hero",
      "height": 120,
-     "imageUrl": "https://example.com/hero.png"
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "headline",
      "text": "Fixture Pro",
-     "subtext": "Everything in one place."
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -4882,7 +5226,9 @@
       "Unlimited projects",
       "No ads",
       "Sync across devices"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "plans",
@@ -4923,7 +5269,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -4940,7 +5288,9 @@
        "label": "Day 7",
        "text": "$59.99/year unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "testimonials",
@@ -4949,7 +5299,9 @@
        "quote": "“A sample quote for tests.”",
        "author": "— Test reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "faq",
@@ -4958,7 +5310,9 @@
        "question": "Can I cancel any time?",
        "answer": "Yes, in your store account settings."
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "comparison",
@@ -4977,21 +5331,28 @@
        "free": false,
        "pro": true
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "Start free trial",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
-   ]
+   ],
+   "align": "top"
   }
  },
  {
@@ -5033,11 +5394,6 @@
      "type": "close",
      "position": "right",
      "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": ""
     },
     {
      "type": "headline",
@@ -5101,7 +5457,7 @@
     {
      "id": "value",
      "name": "Value",
-     "blockCount": 4,
+     "blockCount": 3,
      "nextLabel": "Continue"
     },
     {
@@ -5258,17 +5614,17 @@
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
-    },
-    {
-     "type": "hero",
-     "height": 60,
-     "imageUrl": null
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "headline",
      "text": "مرحبا بك",
-     "subtext": null
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "benefits",
@@ -5276,12 +5632,17 @@
       "Feature one",
       "Feature two",
       "Feature three"
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "testimonials",
@@ -5290,12 +5651,17 @@
        "quote": "“Add a real review here.”",
        "author": "— A real reviewer"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "close",
      "position": "right",
-     "delaySeconds": 0
+     "delaySeconds": 0,
+     "style": "overlay",
+     "label": null,
+     "bar": null
     },
     {
      "type": "plans",
@@ -5318,7 +5684,9 @@
        "badge": null,
        "selected": false
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "trial_timeline",
@@ -5335,40 +5703,48 @@
        "label": "اليوم 7",
        "text": "$59.99/سنة unless you cancel"
       }
-     ]
+     ],
+     "pinned": false,
+     "spaceBefore": 0
     },
     {
      "type": "cta",
      "label": "ابدأ التجربة المجانية",
-     "enabled": true
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
     },
     {
      "type": "legal",
      "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
      "termsUrl": "https://example.com/terms",
      "privacyUrl": "https://example.com/privacy",
-     "restore": true
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
     }
    ],
+   "align": "top",
    "pages": [
     {
      "id": "value",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
-      },
-      {
-       "type": "hero",
-       "height": 60,
-       "imageUrl": null
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "headline",
        "text": "مرحبا بك",
-       "subtext": null
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "benefits",
@@ -5376,18 +5752,24 @@
         "Feature one",
         "Feature two",
         "Feature three"
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "reviews",
      "nextLabel": "متابعة",
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "testimonials",
@@ -5396,18 +5778,24 @@
          "quote": "“Add a real review here.”",
          "author": "— A real reviewer"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       }
      ]
     },
     {
      "id": "plans",
      "nextLabel": null,
+     "align": "top",
      "blocks": [
       {
        "type": "close",
        "position": "right",
-       "delaySeconds": 0
+       "delaySeconds": 0,
+       "style": "overlay",
+       "label": null,
+       "bar": null
       },
       {
        "type": "plans",
@@ -5430,7 +5818,9 @@
          "badge": null,
          "selected": false
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "trial_timeline",
@@ -5447,19 +5837,25 @@
          "label": "اليوم 7",
          "text": "$59.99/سنة unless you cancel"
         }
-       ]
+       ],
+       "pinned": false,
+       "spaceBefore": 0
       },
       {
        "type": "cta",
        "label": "ابدأ التجربة المجانية",
-       "enabled": true
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
       },
       {
        "type": "legal",
        "text": "Payment is charged to your store account. Fixture renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
        "termsUrl": "https://example.com/terms",
        "privacyUrl": "https://example.com/privacy",
-       "restore": true
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
       }
      ]
     }

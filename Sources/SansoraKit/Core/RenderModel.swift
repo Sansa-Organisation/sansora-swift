@@ -15,6 +15,8 @@ public struct StorePrice: Codable, Equatable, Sendable {
 /// `sansora.render/1` (packages/core/src/sdk-render.ts): what the native views draw.
 public struct RenderModel: Equatable, Sendable {
     public static let schemaId = "sansora.render/1"
+    public typealias Align = PaywallDefinition.Align
+    public typealias CloseStyle = PaywallDefinition.CloseStyle
     public var name: String
     public var locale: String
     public var theme: PaywallDefinition.Theme
@@ -23,6 +25,8 @@ public struct RenderModel: Equatable, Sendable {
     /// The selected plan has a store price, so the purchase button works.
     public var purchasable: Bool
     public var blocks: [Block]
+    /// Where the content sits when it is shorter than the screen (0.3.0); with `pages`, each page has its own.
+    public var align: Align = .top
     /// Only for a paged definition. Each page holds its share of `blocks`.
     public var pages: [Page]?
     /// `rtl` only for a translated right-to-left view.
@@ -34,6 +38,8 @@ public struct RenderModel: Equatable, Sendable {
         public var id: String
         /// nil on the last page.
         public var nextLabel: String?
+        /// This page's `align`, else the paywall's (0.3.0).
+        public var align: Align = .top
         public var blocks: [Block]
     }
 
@@ -57,48 +63,105 @@ public struct RenderModel: Equatable, Sendable {
 
     public struct Step: Equatable, Sendable { public var label: String; public var text: String }
 
+    /// Layout of a block other than close (0.3.0): `pinned` blocks are drawn in the area pinned to the bottom of the
+    /// screen, in order; `spaceBefore` is extra space above the block in points.
+    public struct Placement: Equatable, Sendable {
+        public var pinned: Bool
+        public var spaceBefore: Int
+        public init(pinned: Bool = false, spaceBefore: Int = 0) { self.pinned = pinned; self.spaceBefore = spaceBefore }
+    }
+
+    /// A top bar item resolved for its page: words translated, back left out on the first page and page dots on a
+    /// paywall with one page.
+    public enum BarItem: Equatable, Sendable {
+        case back(label: String)
+        case restore(label: String)
+        case text(String)
+        /// `index` is 0-based.
+        case progress(index: Int, count: Int, label: String)
+        case image(imageUrl: String, height: Int)
+    }
+
+    /// The top bar's other slots; nil is empty.
+    public struct Bar: Equatable, Sendable {
+        public var leading: BarItem?
+        public var center: BarItem?
+        public var trailing: BarItem?
+        public init(leading: BarItem? = nil, center: BarItem? = nil, trailing: BarItem? = nil) {
+            self.leading = leading; self.center = center; self.trailing = trailing
+        }
+    }
+
     public enum Block: Equatable, Sendable {
-        case close(position: PaywallDefinition.Position, delaySeconds: Int)
-        case hero(height: Int, imageUrl: String?)
-        case headline(text: String, subtext: String?)
-        case benefits(items: [String])
-        case plans([Plan])
-        case trialTimeline(steps: [Step])
-        case testimonials(items: [PaywallDefinition.Quote])
-        case faq(items: [PaywallDefinition.Question])
-        case comparison(columns: [String], rows: [PaywallDefinition.ComparisonRow])
-        case cta(label: String, enabled: Bool)
-        case legal(text: String, termsUrl: String?, privacyUrl: String?, restore: Bool)
+        /// `label`: text instead of the ✕ (bar and row only, else nil). `bar`: only for `style` `bar`.
+        case close(position: PaywallDefinition.Position, delaySeconds: Int, style: CloseStyle = .overlay, label: String? = nil, bar: Bar? = nil)
+        /// Only with an image (0.3.0).
+        case hero(height: Int, imageUrl: String, placement: Placement = .init())
+        case headline(text: String, subtext: String?, placement: Placement = .init())
+        case benefits(items: [String], placement: Placement = .init())
+        case plans([Plan], placement: Placement = .init())
+        case trialTimeline(steps: [Step], placement: Placement = .init())
+        case testimonials(items: [PaywallDefinition.Quote], placement: Placement = .init())
+        case faq(items: [PaywallDefinition.Question], placement: Placement = .init())
+        case comparison(columns: [String], rows: [PaywallDefinition.ComparisonRow], placement: Placement = .init())
+        case cta(label: String, enabled: Bool, placement: Placement = .init())
+        case legal(text: String, termsUrl: String?, privacyUrl: String?, restore: Bool, placement: Placement = .init())
+
+        /// `pinned` and `spaceBefore`; nil for close.
+        public var placement: Placement? {
+            switch self {
+            case .close: return nil
+            case let .hero(_, _, p), let .headline(_, _, p), let .benefits(_, p), let .plans(_, p), let .trialTimeline(_, p),
+                 let .testimonials(_, p), let .faq(_, p), let .comparison(_, _, p), let .cta(_, _, p), let .legal(_, _, _, _, p):
+                return p
+            }
+        }
     }
 
     public static let unavailablePrice = "Price unavailable"
 
     public var json: JSONValue {
         let s: (String?) -> JSONValue = { $0.map(JSONValue.string) ?? .null }
+        let n: (Int) -> JSONValue = { .number(Double($0)) }
+        let item: (BarItem?) -> JSONValue = { i in
+            switch i {
+            case nil: return .null
+            case let .back(label)?: return .object(["kind": "back", "label": .string(label)])
+            case let .restore(label)?: return .object(["kind": "restore", "label": .string(label)])
+            case let .text(text)?: return .object(["kind": "text", "text": .string(text)])
+            case let .progress(index, count, label)?: return .object(["kind": "progress", "index": n(index), "count": n(count), "label": .string(label)])
+            case let .image(url, height)?: return .object(["kind": "image", "imageUrl": .string(url), "height": n(height)])
+            }
+        }
         let encode: (Block) -> JSONValue = { b in
+            var o: [String: JSONValue]
             switch b {
-            case let .close(p, d): return .object(["type": "close", "position": .string(p.rawValue), "delaySeconds": .number(Double(d))])
-            case let .hero(h, u): return .object(["type": "hero", "height": .number(Double(h)), "imageUrl": s(u)])
-            case let .headline(t, sub): return .object(["type": "headline", "text": .string(t), "subtext": s(sub)])
-            case let .benefits(items): return .object(["type": "benefits", "items": .array(items.map(JSONValue.string))])
-            case let .plans(plans):
-                return .object(["type": "plans", "plans": .array(plans.map { p in
+            case let .close(p, d, style, label, bar):
+                o = ["type": "close", "position": .string(p.rawValue), "delaySeconds": n(d), "style": .string(style.rawValue), "label": s(label),
+                     "bar": bar.map { .object(["leading": item($0.leading), "center": item($0.center), "trailing": item($0.trailing)]) } ?? .null]
+            case let .hero(h, u, _): o = ["type": "hero", "height": n(h), "imageUrl": .string(u)]
+            case let .headline(t, sub, _): o = ["type": "headline", "text": .string(t), "subtext": s(sub)]
+            case let .benefits(items, _): o = ["type": "benefits", "items": .array(items.map(JSONValue.string))]
+            case let .plans(plans, _):
+                o = ["type": "plans", "plans": .array(plans.map { p in
                     .object(["productId": .string(p.productId), "storeProductId": .string(p.storeProductId), "period": .string(p.period.rawValue),
                              "title": .string(p.title), "priceLine": s(p.priceLine), "badge": s(p.badge), "selected": .bool(p.selected)])
-                })])
-            case let .trialTimeline(steps):
-                return .object(["type": "trial_timeline", "steps": .array(steps.map { .object(["label": .string($0.label), "text": .string($0.text)]) })])
-            case let .testimonials(items):
-                return .object(["type": "testimonials", "items": .array(items.map { .object(["quote": .string($0.quote), "author": .string($0.author)]) })])
-            case let .faq(items):
-                return .object(["type": "faq", "items": .array(items.map { .object(["question": .string($0.question), "answer": .string($0.answer)]) })])
-            case let .comparison(cols, rows):
-                return .object(["type": "comparison", "columns": .array(cols.map(JSONValue.string)),
-                                "rows": .array(rows.map { .object(["feature": .string($0.feature), "free": .bool($0.free), "pro": .bool($0.pro)]) })])
-            case let .cta(label, enabled): return .object(["type": "cta", "label": .string(label), "enabled": .bool(enabled)])
-            case let .legal(text, terms, privacy, restore):
-                return .object(["type": "legal", "text": .string(text), "termsUrl": s(terms), "privacyUrl": s(privacy), "restore": .bool(restore)])
+                })]
+            case let .trialTimeline(steps, _):
+                o = ["type": "trial_timeline", "steps": .array(steps.map { .object(["label": .string($0.label), "text": .string($0.text)]) })]
+            case let .testimonials(items, _):
+                o = ["type": "testimonials", "items": .array(items.map { .object(["quote": .string($0.quote), "author": .string($0.author)]) })]
+            case let .faq(items, _):
+                o = ["type": "faq", "items": .array(items.map { .object(["question": .string($0.question), "answer": .string($0.answer)]) })]
+            case let .comparison(cols, rows, _):
+                o = ["type": "comparison", "columns": .array(cols.map(JSONValue.string)),
+                     "rows": .array(rows.map { .object(["feature": .string($0.feature), "free": .bool($0.free), "pro": .bool($0.pro)]) })]
+            case let .cta(label, enabled, _): o = ["type": "cta", "label": .string(label), "enabled": .bool(enabled)]
+            case let .legal(text, terms, privacy, restore, _):
+                o = ["type": "legal", "text": .string(text), "termsUrl": s(terms), "privacyUrl": s(privacy), "restore": .bool(restore)]
             }
+            if let p = b.placement { o["pinned"] = .bool(p.pinned); o["spaceBefore"] = n(p.spaceBefore) }
+            return .object(o)
         }
         let p = palette
         var out: [String: JSONValue] = [
@@ -106,9 +169,12 @@ public struct RenderModel: Equatable, Sendable {
             "palette": .object(["background": .string(p.background), "surface": .string(p.surface), "text": .string(p.text),
                                 "muted": .string(p.muted), "accent": .string(p.accent), "hero": .string(p.hero)]),
             "selectedProductId": s(selectedProductId), "purchasable": .bool(purchasable), "blocks": .array(blocks.map(encode)),
+            "align": .string(align.rawValue),
         ]
         if let pages {
-            out["pages"] = .array(pages.map { .object(["id": .string($0.id), "nextLabel": s($0.nextLabel), "blocks": .array($0.blocks.map(encode))]) })
+            out["pages"] = .array(pages.map {
+                .object(["id": .string($0.id), "nextLabel": s($0.nextLabel), "align": .string($0.align.rawValue), "blocks": .array($0.blocks.map(encode))])
+            })
         }
         if let direction { out["direction"] = .string(direction) }
         if let l = labels {
@@ -249,18 +315,61 @@ public enum Render {
         locale.range(of: "^(ar|he|iw|fa|ur)(-|$)", options: .regularExpression) != nil ? "rtl" : nil
     }
 
+    /// `fillPaywallText`: each `{word}` with a value is replaced in one pass; others stay as written.
     static func fill(_ template: String, _ values: [String: String]) -> String {
-        values.reduce(template) { $0.replacingOccurrences(of: "{\($1.key)}", with: $1.value) }
+        let chars = Array(template)
+        var out = "", i = 0
+        while i < chars.count {
+            if chars[i] == "{", let close = chars[(i + 1)...].firstIndex(where: { !($0.isASCII && ($0.isLetter || $0.isNumber || $0 == "_")) }),
+               close > i + 1, chars[close] == "}", let value = values[String(chars[(i + 1)..<close])] {
+                out += value; i = close + 1
+            } else {
+                out.append(chars[i]); i += 1
+            }
+        }
+        return out
     }
 
     /// The device's preferred language, for choosing a translation.
     public static var deviceLocale: String? { Locale.preferredLanguages.first }
 
+    /// The blocks of each page as `start..<end` ranges of `def.blocks` (`paywallPageRanges`); one page without `pages`.
+    static func pageRanges(_ def: PaywallDefinition) -> [Range<Int>] {
+        guard let pages = def.pages, !pages.isEmpty else { return [0..<def.blocks.count] }
+        var start = 0
+        return pages.map { page in
+            let end = min(start + page.blockCount, def.blocks.count), r = min(start, end)..<end
+            start = end
+            return r
+        }
+    }
+
+    /// `paywallPinnedBlocks`: pin `bottom`, and when pin is left out a purchase button and legal footer that end a page
+    /// (close buttons don't count).
+    static func pinnedBlocks(_ def: PaywallDefinition) -> Set<Int> {
+        var pinned = Set(def.blocks.indices.filter { def.blocks[$0].placement?.pin == .bottom })
+        for r in pageRanges(def) {
+            for i in r.reversed() {
+                let b = def.blocks[i], autoPinned: Bool
+                switch b {
+                case .close: continue
+                case let .cta(_, p), let .legal(_, _, _, _, _, p): autoPinned = p.pin == nil
+                default: autoPinned = false
+                }
+                guard autoPinned else { break }
+                pinned.insert(i)
+            }
+        }
+        return pinned
+    }
+
+    private static func trimmed(_ s: String) -> String { s.trimmingCharacters(in: .whitespacesAndNewlines) }
+
     /// Exactly `renderModel` in sdk-render.ts. `prices` are keyed by store product ID.
     /// `locale` is the device's language; text with no translation stays in the source language.
     public static func model(_ def: PaywallDefinition, prices: [String: StorePrice], selectedProductId: String? = nil, locale: String? = nil) -> RenderModel {
         var plansBlock: (ids: [String], selected: String)? = nil
-        for b in def.blocks { if case let .plans(ids, sel, _, _) = b { plansBlock = (ids, sel); break } }
+        for b in def.blocks { if case let .plans(ids, sel, _, _, _) = b { plansBlock = (ids, sel); break } }
         let product: (String) -> PaywallDefinition.Product? = { id in def.products.first { $0.id == id } }
         let shown = (plansBlock?.ids ?? []).compactMap(product)
         let selected = shown.first { $0.id == selectedProductId } ?? shown.first { $0.id == plansBlock?.selected } ?? shown.first
@@ -276,50 +385,71 @@ public enum Render {
             : [:]
         let t: Translate = { map[$0] ?? $0 }
         let free: (Int) -> String = { n in n == 1 ? t("1 day free") : fill(t("{n} days free"), ["n": String(n)]) }
-        let byIndex: [RenderModel.Block?] = def.blocks.map { b in
+        let ranges = pageRanges(def)
+        let pageOf: (Int) -> Int = { i in max(0, ranges.firstIndex { $0.contains(i) } ?? 0) }
+        let pinned = pinnedBlocks(def)
+        let place: (PaywallDefinition.Placement, Int) -> RenderModel.Placement = { p, i in .init(pinned: pinned.contains(i), spaceBefore: p.spaceBefore ?? 0) }
+        let barItem: (PaywallDefinition.BarItem?, Int) -> RenderModel.BarItem? = { item, page in
+            switch item {
+            case nil, .unknown?: return nil
+            case .back?: return page > 0 ? .back(label: t("Back")) : nil
+            case .restore?: return .restore(label: t("Restore"))
+            case let .text(text)?: return trimmed(text).isEmpty ? nil : .text(t(text))
+            case .progress?:
+                return ranges.count > 1
+                    ? .progress(index: page, count: ranges.count, label: fill(t("Page {n} of {count}"), ["n": String(page + 1), "count": String(ranges.count)]))
+                    : nil
+            case let .image(url, height)?: return url.isEmpty ? nil : .image(imageUrl: url, height: height)
+            }
+        }
+        let byIndex: [RenderModel.Block?] = def.blocks.enumerated().map { i, b in
             switch b {
-            case let .close(position, delay): return .close(position: position, delaySeconds: delay)
-            case let .hero(height, url): return .hero(height: height, imageUrl: url.isEmpty ? nil : url)
-            case let .headline(text, sub): return .headline(text: t(text), subtext: sub.isEmpty ? nil : t(sub))
-            case let .benefits(items): return .benefits(items: items.map(t))
-            case let .plans(ids, _, badge, perMonth):
+            case let .close(position, delay, style, label, bar):
+                let style = style ?? .overlay, page = pageOf(i)
+                let text = style != .overlay && !trimmed(label ?? "").isEmpty ? label.map(t) : nil
+                return .close(position: position, delaySeconds: delay, style: style, label: text,
+                              bar: style == .bar ? .init(leading: barItem(bar?.leading, page), center: barItem(bar?.center, page), trailing: barItem(bar?.trailing, page)) : nil)
+            // Without an image there is nothing to show (0.3.0; older SDKs drew a gradient).
+            case let .hero(height, url, p): return url.isEmpty ? nil : .hero(height: height, imageUrl: url, placement: place(p, i))
+            case let .headline(text, sub, p): return .headline(text: t(text), subtext: sub.isEmpty ? nil : t(sub), placement: place(p, i))
+            case let .benefits(items, p): return .benefits(items: items.map(t), placement: place(p, i))
+            case let .plans(ids, _, badge, perMonth, p):
                 return .plans(ids.compactMap(product).map { p in
                     let days = trial(p)
                     return RenderModel.Plan(productId: p.id, storeProductId: p.storeProductId, period: p.period,
                                             title: t(p.label) + (days > 0 ? " · \(free(days))" : ""),
                                             priceLine: priceLine(p, price(p), showPerMonth: perMonth, t),
                                             badge: badge?.productId == p.id ? t(badge!.text) : nil, selected: p.id == selected?.id)
-                })
-            case let .trialTimeline(reminderDay):
+                }, placement: place(p, i))
+            case let .trialTimeline(reminderDay, p):
                 let n = trial(selected)
                 guard let selected, n > 0 else { return nil }
                 return .trialTimeline(steps: [
                     .init(label: t("Today"), text: t("full access")),
                     .init(label: fill(t("Day {n}"), ["n": String(min(reminderDay, n))]), text: t("we remind you")),
                     .init(label: fill(t("Day {n}"), ["n": String(n)]), text: fill(t("{price} unless you cancel"), ["price": priceMain(selected, price(selected), t) ?? t("the store price")])),
-                ])
-            case let .testimonials(items):
-                return .testimonials(items: items.map { .init(quote: "“\(t($0.quote))”", author: "— \($0.author)") })
-            case let .faq(items): return .faq(items: items.map { .init(question: t($0.question), answer: t($0.answer)) })
-            case let .comparison(rows):
-                return .comparison(columns: [t("Free"), t("Pro")], rows: rows.map { .init(feature: t($0.feature), free: $0.free, pro: $0.pro) })
-            case let .cta(label):
+                ], placement: place(p, i))
+            case let .testimonials(items, p):
+                return .testimonials(items: items.map { .init(quote: "“\(t($0.quote))”", author: "— \($0.author)") }, placement: place(p, i))
+            case let .faq(items, p): return .faq(items: items.map { .init(question: t($0.question), answer: t($0.answer)) }, placement: place(p, i))
+            case let .comparison(rows, p):
+                return .comparison(columns: [t("Free"), t("Pro")], rows: rows.map { .init(feature: t($0.feature), free: $0.free, pro: $0.pro) }, placement: place(p, i))
+            case let .cta(label, p):
                 let saysFree = label.range(of: "free", options: .caseInsensitive) != nil
-                return .cta(label: t(saysFree && trial(selected) == 0 ? "Continue" : label), enabled: purchasable)
+                return .cta(label: t(saysFree && trial(selected) == 0 ? "Continue" : label), enabled: purchasable, placement: place(p, i))
             // iOS and macOS always show `text`; `textGooglePlay` is for Android (CONTRACT §8).
-            case let .legal(terms, privacy, restore, text, _):
-                return .legal(text: t(text), termsUrl: terms.isEmpty ? nil : terms, privacyUrl: privacy.isEmpty ? nil : privacy, restore: restore)
+            case let .legal(terms, privacy, restore, text, _, p):
+                return .legal(text: t(text), termsUrl: terms.isEmpty ? nil : terms, privacyUrl: privacy.isEmpty ? nil : privacy, restore: restore, placement: place(p, i))
             case .unknown: return nil
             }
         }
+        let align = def.align ?? .top
         var model = RenderModel(name: def.name, locale: active, theme: def.theme, palette: def.palette, selectedProductId: selected?.id,
-                                purchasable: purchasable, blocks: byIndex.compactMap { $0 })
-        if let pages = def.pages, pages.count > 1 {
-            var start = 0
-            model.pages = pages.enumerated().map { i, page in
-                let end = min(start + page.blockCount, byIndex.count)
-                defer { start = end }
-                return RenderModel.Page(id: page.id, nextLabel: i < pages.count - 1 ? t(page.nextLabel) : nil, blocks: byIndex[start..<end].compactMap { $0 })
+                                purchasable: purchasable, blocks: byIndex.compactMap { $0 }, align: align)
+        if ranges.count > 1, let pages = def.pages {
+            model.pages = ranges.enumerated().map { i, r in
+                RenderModel.Page(id: pages[i].id, nextLabel: i < ranges.count - 1 ? t(pages[i].nextLabel) : nil, align: pages[i].align ?? align,
+                                 blocks: byIndex[r].compactMap { $0 })
             }
         }
         if translated {

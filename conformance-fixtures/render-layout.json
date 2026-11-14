@@ -1,0 +1,1679 @@
+[
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Layout: top bar and pages",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "weekly",
+     "storeProductId": "com.example.pro.weekly",
+     "label": "Weekly",
+     "period": "week",
+     "trialDays": 3,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "lifetime",
+     "storeProductId": "com.example.pro.lifetime",
+     "label": "Lifetime",
+     "period": "lifetime",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": "Skip",
+     "bar": {
+      "leading": {
+       "kind": "back"
+      },
+      "center": {
+       "kind": "progress"
+      }
+     }
+    },
+    {
+     "type": "hero",
+     "height": 120,
+     "imageUrl": "https://example.com/hero.png"
+    },
+    {
+     "type": "headline",
+     "text": "Everything in Fixture Pro",
+     "subtext": "",
+     "spaceBefore": 24
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Unlimited projects",
+      "Sync on every device"
+     ],
+     "pin": "bottom"
+    },
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 0,
+     "style": "bar",
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "text",
+       "text": "Fixture Pro"
+      },
+      "trailing": {
+       "kind": "restore"
+      }
+     }
+    },
+    {
+     "type": "hero",
+     "height": 80,
+     "imageUrl": ""
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly",
+      "weekly",
+      "lifetime"
+     ],
+     "selected": "yearly",
+     "badge": {
+      "productId": "yearly",
+      "text": "Best value"
+     },
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "bar": {
+      "leading": {
+       "kind": "back"
+      },
+      "center": {
+       "kind": "image",
+       "imageUrl": "https://example.com/logo.png",
+       "height": 24
+      }
+     }
+    },
+    {
+     "type": "headline",
+     "text": "Thanks for trying Fixture",
+     "subtext": "Nothing is charged today."
+    }
+   ],
+   "align": "center",
+   "pages": [
+    {
+     "id": "intro",
+     "name": "Intro",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 6,
+     "nextLabel": "Continue",
+     "align": "top"
+    },
+    {
+     "id": "after",
+     "name": "After",
+     "blockCount": 2,
+     "nextLabel": "Done",
+     "align": "bottom"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Skip",
+       "text": "Überspringen",
+       "origin": "person"
+      },
+      {
+       "source": "Back",
+       "text": "Zurück",
+       "origin": "person"
+      },
+      {
+       "source": "Restore",
+       "text": "Wiederherstellen",
+       "origin": "person"
+      },
+      {
+       "source": "Page {n} of {count}",
+       "text": "Seite {n} von {count}",
+       "origin": "person"
+      },
+      {
+       "source": "Fixture Pro",
+       "text": "Fixture Pro",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "person"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": null,
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Layout: top bar and pages",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": "Skip",
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "progress",
+       "index": 0,
+       "count": 3,
+       "label": "Page 1 of 3"
+      },
+      "trailing": null
+     }
+    },
+    {
+     "type": "hero",
+     "height": 120,
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "headline",
+     "text": "Everything in Fixture Pro",
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 24
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Unlimited projects",
+      "Sync on every device"
+     ],
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": null,
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "text",
+       "text": "Fixture Pro"
+      },
+      "trailing": {
+       "kind": "restore",
+       "label": "Restore"
+      }
+     }
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": "Best value",
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "weekly",
+       "storeProductId": "com.example.pro.weekly",
+       "period": "week",
+       "title": "Weekly · 3 days free",
+       "priceLine": "$2.99/week · $12.96/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "lifetime",
+       "storeProductId": "com.example.pro.lifetime",
+       "period": "lifetime",
+       "title": "Lifetime",
+       "priceLine": "$149.99 once",
+       "badge": null,
+       "selected": false
+      }
+     ],
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year unless you cancel"
+      }
+     ],
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "legal",
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": null,
+     "bar": {
+      "leading": {
+       "kind": "back",
+       "label": "Back"
+      },
+      "center": {
+       "kind": "image",
+       "imageUrl": "https://example.com/logo.png",
+       "height": 24
+      },
+      "trailing": null
+     }
+    },
+    {
+     "type": "headline",
+     "text": "Thanks for trying Fixture",
+     "subtext": "Nothing is charged today.",
+     "pinned": false,
+     "spaceBefore": 0
+    }
+   ],
+   "align": "center",
+   "pages": [
+    {
+     "id": "intro",
+     "nextLabel": "Continue",
+     "align": "center",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": "Skip",
+       "bar": {
+        "leading": null,
+        "center": {
+         "kind": "progress",
+         "index": 0,
+         "count": 3,
+         "label": "Page 1 of 3"
+        },
+        "trailing": null
+       }
+      },
+      {
+       "type": "hero",
+       "height": 120,
+       "imageUrl": "https://example.com/hero.png",
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "headline",
+       "text": "Everything in Fixture Pro",
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 24
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Unlimited projects",
+        "Sync on every device"
+       ],
+       "pinned": true,
+       "spaceBefore": 0
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": "Continue",
+     "align": "top",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "left",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": null,
+       "bar": {
+        "leading": null,
+        "center": {
+         "kind": "text",
+         "text": "Fixture Pro"
+        },
+        "trailing": {
+         "kind": "restore",
+         "label": "Restore"
+        }
+       }
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": "Best value",
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        },
+        {
+         "productId": "weekly",
+         "storeProductId": "com.example.pro.weekly",
+         "period": "week",
+         "title": "Weekly · 3 days free",
+         "priceLine": "$2.99/week · $12.96/month",
+         "badge": null,
+         "selected": false
+        },
+        {
+         "productId": "lifetime",
+         "storeProductId": "com.example.pro.lifetime",
+         "period": "lifetime",
+         "title": "Lifetime",
+         "priceLine": "$149.99 once",
+         "badge": null,
+         "selected": false
+        }
+       ],
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year unless you cancel"
+        }
+       ],
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
+      },
+      {
+       "type": "legal",
+       "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
+      }
+     ]
+    },
+    {
+     "id": "after",
+     "nextLabel": null,
+     "align": "bottom",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": null,
+       "bar": {
+        "leading": {
+         "kind": "back",
+         "label": "Back"
+        },
+        "center": {
+         "kind": "image",
+         "imageUrl": "https://example.com/logo.png",
+         "height": 24
+        },
+        "trailing": null
+       }
+      },
+      {
+       "type": "headline",
+       "text": "Thanks for trying Fixture",
+       "subtext": "Nothing is charged today.",
+       "pinned": false,
+       "spaceBefore": 0
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Layout: top bar and pages",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "weekly",
+     "storeProductId": "com.example.pro.weekly",
+     "label": "Weekly",
+     "period": "week",
+     "trialDays": 3,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "lifetime",
+     "storeProductId": "com.example.pro.lifetime",
+     "label": "Lifetime",
+     "period": "lifetime",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": "Skip",
+     "bar": {
+      "leading": {
+       "kind": "back"
+      },
+      "center": {
+       "kind": "progress"
+      }
+     }
+    },
+    {
+     "type": "hero",
+     "height": 120,
+     "imageUrl": "https://example.com/hero.png"
+    },
+    {
+     "type": "headline",
+     "text": "Everything in Fixture Pro",
+     "subtext": "",
+     "spaceBefore": 24
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Unlimited projects",
+      "Sync on every device"
+     ],
+     "pin": "bottom"
+    },
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 0,
+     "style": "bar",
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "text",
+       "text": "Fixture Pro"
+      },
+      "trailing": {
+       "kind": "restore"
+      }
+     }
+    },
+    {
+     "type": "hero",
+     "height": 80,
+     "imageUrl": ""
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly",
+      "weekly",
+      "lifetime"
+     ],
+     "selected": "yearly",
+     "badge": {
+      "productId": "yearly",
+      "text": "Best value"
+     },
+     "showPerMonth": true
+    },
+    {
+     "type": "trial_timeline",
+     "reminderDay": 5
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "bar": {
+      "leading": {
+       "kind": "back"
+      },
+      "center": {
+       "kind": "image",
+       "imageUrl": "https://example.com/logo.png",
+       "height": 24
+      }
+     }
+    },
+    {
+     "type": "headline",
+     "text": "Thanks for trying Fixture",
+     "subtext": "Nothing is charged today."
+    }
+   ],
+   "align": "center",
+   "pages": [
+    {
+     "id": "intro",
+     "name": "Intro",
+     "blockCount": 4,
+     "nextLabel": "Continue"
+    },
+    {
+     "id": "plans",
+     "name": "Plans",
+     "blockCount": 6,
+     "nextLabel": "Continue",
+     "align": "top"
+    },
+    {
+     "id": "after",
+     "name": "After",
+     "blockCount": 2,
+     "nextLabel": "Done",
+     "align": "bottom"
+    }
+   ],
+   "translations": [
+    {
+     "locale": "de",
+     "strings": [
+      {
+       "source": "Skip",
+       "text": "Überspringen",
+       "origin": "person"
+      },
+      {
+       "source": "Back",
+       "text": "Zurück",
+       "origin": "person"
+      },
+      {
+       "source": "Restore",
+       "text": "Wiederherstellen",
+       "origin": "person"
+      },
+      {
+       "source": "Page {n} of {count}",
+       "text": "Seite {n} von {count}",
+       "origin": "person"
+      },
+      {
+       "source": "Fixture Pro",
+       "text": "Fixture Pro",
+       "origin": "person"
+      },
+      {
+       "source": "Continue",
+       "text": "Weiter",
+       "origin": "person"
+      }
+     ]
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": "de",
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Layout: top bar and pages",
+   "locale": "de",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": "Überspringen",
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "progress",
+       "index": 0,
+       "count": 3,
+       "label": "Seite 1 von 3"
+      },
+      "trailing": null
+     }
+    },
+    {
+     "type": "hero",
+     "height": 120,
+     "imageUrl": "https://example.com/hero.png",
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "headline",
+     "text": "Everything in Fixture Pro",
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 24
+    },
+    {
+     "type": "benefits",
+     "items": [
+      "Unlimited projects",
+      "Sync on every device"
+     ],
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": null,
+     "bar": {
+      "leading": null,
+      "center": {
+       "kind": "text",
+       "text": "Fixture Pro"
+      },
+      "trailing": {
+       "kind": "restore",
+       "label": "Wiederherstellen"
+      }
+     }
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": "Best value",
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "weekly",
+       "storeProductId": "com.example.pro.weekly",
+       "period": "week",
+       "title": "Weekly · 3 days free",
+       "priceLine": "$2.99/week · $12.96/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "lifetime",
+       "storeProductId": "com.example.pro.lifetime",
+       "period": "lifetime",
+       "title": "Lifetime",
+       "priceLine": "$149.99 once",
+       "badge": null,
+       "selected": false
+      }
+     ],
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "trial_timeline",
+     "steps": [
+      {
+       "label": "Today",
+       "text": "full access"
+      },
+      {
+       "label": "Day 5",
+       "text": "we remind you"
+      },
+      {
+       "label": "Day 7",
+       "text": "$59.99/year unless you cancel"
+      }
+     ],
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true,
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "legal",
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
+    },
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "bar",
+     "label": null,
+     "bar": {
+      "leading": {
+       "kind": "back",
+       "label": "Zurück"
+      },
+      "center": {
+       "kind": "image",
+       "imageUrl": "https://example.com/logo.png",
+       "height": 24
+      },
+      "trailing": null
+     }
+    },
+    {
+     "type": "headline",
+     "text": "Thanks for trying Fixture",
+     "subtext": "Nothing is charged today.",
+     "pinned": false,
+     "spaceBefore": 0
+    }
+   ],
+   "align": "center",
+   "pages": [
+    {
+     "id": "intro",
+     "nextLabel": "Weiter",
+     "align": "center",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": "Überspringen",
+       "bar": {
+        "leading": null,
+        "center": {
+         "kind": "progress",
+         "index": 0,
+         "count": 3,
+         "label": "Seite 1 von 3"
+        },
+        "trailing": null
+       }
+      },
+      {
+       "type": "hero",
+       "height": 120,
+       "imageUrl": "https://example.com/hero.png",
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "headline",
+       "text": "Everything in Fixture Pro",
+       "subtext": null,
+       "pinned": false,
+       "spaceBefore": 24
+      },
+      {
+       "type": "benefits",
+       "items": [
+        "Unlimited projects",
+        "Sync on every device"
+       ],
+       "pinned": true,
+       "spaceBefore": 0
+      }
+     ]
+    },
+    {
+     "id": "plans",
+     "nextLabel": "Weiter",
+     "align": "top",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "left",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": null,
+       "bar": {
+        "leading": null,
+        "center": {
+         "kind": "text",
+         "text": "Fixture Pro"
+        },
+        "trailing": {
+         "kind": "restore",
+         "label": "Wiederherstellen"
+        }
+       }
+      },
+      {
+       "type": "plans",
+       "plans": [
+        {
+         "productId": "yearly",
+         "storeProductId": "com.example.pro.yearly",
+         "period": "year",
+         "title": "Yearly · 7 days free",
+         "priceLine": "$59.99/year · $5.00/month",
+         "badge": "Best value",
+         "selected": true
+        },
+        {
+         "productId": "monthly",
+         "storeProductId": "com.example.pro.monthly",
+         "period": "month",
+         "title": "Monthly",
+         "priceLine": "$9.99/month",
+         "badge": null,
+         "selected": false
+        },
+        {
+         "productId": "weekly",
+         "storeProductId": "com.example.pro.weekly",
+         "period": "week",
+         "title": "Weekly · 3 days free",
+         "priceLine": "$2.99/week · $12.96/month",
+         "badge": null,
+         "selected": false
+        },
+        {
+         "productId": "lifetime",
+         "storeProductId": "com.example.pro.lifetime",
+         "period": "lifetime",
+         "title": "Lifetime",
+         "priceLine": "$149.99 once",
+         "badge": null,
+         "selected": false
+        }
+       ],
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "trial_timeline",
+       "steps": [
+        {
+         "label": "Today",
+         "text": "full access"
+        },
+        {
+         "label": "Day 5",
+         "text": "we remind you"
+        },
+        {
+         "label": "Day 7",
+         "text": "$59.99/year unless you cancel"
+        }
+       ],
+       "pinned": false,
+       "spaceBefore": 0
+      },
+      {
+       "type": "cta",
+       "label": "Start free trial",
+       "enabled": true,
+       "pinned": true,
+       "spaceBefore": 0
+      },
+      {
+       "type": "legal",
+       "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+       "termsUrl": "https://example.com/terms",
+       "privacyUrl": "https://example.com/privacy",
+       "restore": true,
+       "pinned": true,
+       "spaceBefore": 0
+      }
+     ]
+    },
+    {
+     "id": "after",
+     "nextLabel": null,
+     "align": "bottom",
+     "blocks": [
+      {
+       "type": "close",
+       "position": "right",
+       "delaySeconds": 0,
+       "style": "bar",
+       "label": null,
+       "bar": {
+        "leading": {
+         "kind": "back",
+         "label": "Zurück"
+        },
+        "center": {
+         "kind": "image",
+         "imageUrl": "https://example.com/logo.png",
+         "height": 24
+        },
+        "trailing": null
+       }
+      },
+      {
+       "type": "headline",
+       "text": "Thanks for trying Fixture",
+       "subtext": "Nothing is charged today.",
+       "pinned": false,
+       "spaceBefore": 0
+      }
+     ]
+    }
+   ],
+   "labels": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "restore": "Restore purchases",
+    "close": "Close",
+    "unavailablePrice": "Price unavailable"
+   }
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Layout: floating close",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "weekly",
+     "storeProductId": "com.example.pro.weekly",
+     "label": "Weekly",
+     "period": "week",
+     "trialDays": 3,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "lifetime",
+     "storeProductId": "com.example.pro.lifetime",
+     "label": "Lifetime",
+     "period": "lifetime",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 2
+    },
+    {
+     "type": "hero",
+     "height": 0,
+     "imageUrl": ""
+    },
+    {
+     "type": "headline",
+     "text": "Fixture Pro",
+     "subtext": ""
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly",
+      "weekly",
+      "lifetime"
+     ],
+     "selected": "yearly",
+     "badge": {
+      "productId": "yearly",
+      "text": "Best value"
+     },
+     "showPerMonth": true
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "pin": "none"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings."
+    }
+   ],
+   "align": "bottom"
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": null,
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Layout: floating close",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "left",
+     "delaySeconds": 2,
+     "style": "overlay",
+     "label": null,
+     "bar": null
+    },
+    {
+     "type": "headline",
+     "text": "Fixture Pro",
+     "subtext": null,
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": "Best value",
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "weekly",
+       "storeProductId": "com.example.pro.weekly",
+       "period": "week",
+       "title": "Weekly · 3 days free",
+       "priceLine": "$2.99/week · $12.96/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "lifetime",
+       "storeProductId": "com.example.pro.lifetime",
+       "period": "lifetime",
+       "title": "Lifetime",
+       "priceLine": "$149.99 once",
+       "badge": null,
+       "selected": false
+      }
+     ],
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true,
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "legal",
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "pinned": true,
+     "spaceBefore": 0
+    }
+   ],
+   "align": "bottom"
+  }
+ },
+ {
+  "definition": {
+   "schema": "sansora.paywall/1",
+   "name": "Layout: close in a row",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "products": [
+    {
+     "id": "yearly",
+     "storeProductId": "com.example.pro.yearly",
+     "label": "Yearly",
+     "period": "year",
+     "trialDays": 7,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "monthly",
+     "storeProductId": "com.example.pro.monthly",
+     "label": "Monthly",
+     "period": "month",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "weekly",
+     "storeProductId": "com.example.pro.weekly",
+     "label": "Weekly",
+     "period": "week",
+     "trialDays": 3,
+     "previewPrice": null,
+     "currency": "USD"
+    },
+    {
+     "id": "lifetime",
+     "storeProductId": "com.example.pro.lifetime",
+     "label": "Lifetime",
+     "period": "lifetime",
+     "trialDays": 0,
+     "previewPrice": null,
+     "currency": "USD"
+    }
+   ],
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "row",
+     "label": "Not now"
+    },
+    {
+     "type": "headline",
+     "text": "Fixture Pro",
+     "subtext": "Everything in one place."
+    },
+    {
+     "type": "plans",
+     "productIds": [
+      "yearly",
+      "monthly",
+      "weekly",
+      "lifetime"
+     ],
+     "selected": "yearly",
+     "badge": {
+      "productId": "yearly",
+      "text": "Best value"
+     },
+     "showPerMonth": true,
+     "pin": "bottom",
+     "spaceBefore": 8
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial"
+    },
+    {
+     "type": "legal",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "pin": "none"
+    }
+   ]
+  },
+  "prices": {
+   "com.example.pro.yearly": {
+    "displayPrice": "$59.99",
+    "priceMicros": 59990000,
+    "currency": "USD",
+    "trialDays": 7
+   },
+   "com.example.pro.monthly": {
+    "displayPrice": "$9.99",
+    "priceMicros": 9990000,
+    "currency": "USD",
+    "trialDays": 0
+   },
+   "com.example.pro.weekly": {
+    "displayPrice": "$2.99",
+    "priceMicros": 2990000,
+    "currency": "USD",
+    "trialDays": 3
+   },
+   "com.example.pro.lifetime": {
+    "displayPrice": "$149.99",
+    "priceMicros": 149990000,
+    "currency": "USD",
+    "trialDays": 0
+   }
+  },
+  "selectedProductId": null,
+  "locale": null,
+  "expected": {
+   "schema": "sansora.render/1",
+   "name": "Layout: close in a row",
+   "locale": "en",
+   "theme": "light",
+   "palette": {
+    "background": "#FBFBFD",
+    "surface": "#FFFFFF",
+    "text": "#111318",
+    "muted": "#5B6170",
+    "accent": "#3451D1",
+    "hero": "#C9D3F5"
+   },
+   "selectedProductId": "yearly",
+   "purchasable": true,
+   "blocks": [
+    {
+     "type": "close",
+     "position": "right",
+     "delaySeconds": 0,
+     "style": "row",
+     "label": "Not now",
+     "bar": null
+    },
+    {
+     "type": "headline",
+     "text": "Fixture Pro",
+     "subtext": "Everything in one place.",
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "plans",
+     "plans": [
+      {
+       "productId": "yearly",
+       "storeProductId": "com.example.pro.yearly",
+       "period": "year",
+       "title": "Yearly · 7 days free",
+       "priceLine": "$59.99/year · $5.00/month",
+       "badge": "Best value",
+       "selected": true
+      },
+      {
+       "productId": "monthly",
+       "storeProductId": "com.example.pro.monthly",
+       "period": "month",
+       "title": "Monthly",
+       "priceLine": "$9.99/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "weekly",
+       "storeProductId": "com.example.pro.weekly",
+       "period": "week",
+       "title": "Weekly · 3 days free",
+       "priceLine": "$2.99/week · $12.96/month",
+       "badge": null,
+       "selected": false
+      },
+      {
+       "productId": "lifetime",
+       "storeProductId": "com.example.pro.lifetime",
+       "period": "lifetime",
+       "title": "Lifetime",
+       "priceLine": "$149.99 once",
+       "badge": null,
+       "selected": false
+      }
+     ],
+     "pinned": true,
+     "spaceBefore": 8
+    },
+    {
+     "type": "cta",
+     "label": "Start free trial",
+     "enabled": true,
+     "pinned": false,
+     "spaceBefore": 0
+    },
+    {
+     "type": "legal",
+     "text": "Renews automatically unless cancelled at least 24 hours before the end of the period. Cancel any time in your account settings.",
+     "termsUrl": "https://example.com/terms",
+     "privacyUrl": "https://example.com/privacy",
+     "restore": true,
+     "pinned": false,
+     "spaceBefore": 0
+    }
+   ],
+   "align": "top"
+  }
+ }
+]

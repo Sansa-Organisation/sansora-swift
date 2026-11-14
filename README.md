@@ -1,6 +1,6 @@
 # SansoraKit (iOS)
 
-The Sansora iOS SDK, version `0.2.1`: downloads `sansora.config/1`, resolves
+The Sansora iOS SDK, version `0.3.0`: downloads `sansora.config/1`, resolves
 placements, draws paywalls natively (SwiftUI), buys with StoreKit 2 and delivers
 `sansora.event/1` events. It implements [`CONTRACT.md`](CONTRACT.md) and
 replays every shared fixture in `conformance-fixtures/`.
@@ -13,11 +13,11 @@ with complete concurrency checking, which CocoaPods uses when the app's target i
 ## Install
 
 - **Swift Package Manager:**
-  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.2.1")`
+  `.package(url: "https://github.com/Sansa-Organisation/sansora-swift.git", from: "0.3.0")`
   and the product `.product(name: "SansoraKit", package: "sansora-swift")`. In Xcode:
   File › Add Package Dependencies, then paste the URL.
 - **CocoaPods** (Flutter and React Native apps, whose plugins depend on the pod): add
-  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.2.1'`
+  `pod 'SansoraKit', :git => 'https://github.com/Sansa-Organisation/sansora-swift.git', :tag => '0.3.0'`
   to the Podfile. SansoraKit is not on CocoaPods trunk, which becomes read-only in
   December 2026.
 
@@ -75,6 +75,14 @@ attributes and events until StoreKit answers.
 
 A definition's legal footer may carry `textGooglePlay` (0.2.1) for Android; SansoraKit reads
 and keeps it (`PaywallDefinition.Block.legal(…, textGooglePlay:)`) and always draws `text`.
+
+Layout (CONTRACT 0.3.0): the close block's `style` (`overlay`, the default; `bar`; `row`), `label`
+and `bar`, `pin` and `spaceBefore` on the other blocks, and `align` on the definition and its pages.
+`Render.model` resolves them into the render model (`RenderModel.Block.close(…, style:label:bar:)`,
+a `placement` with `pinned` and `spaceBefore` on every other block, `RenderModel.align` and
+`Page.align`; a hero without an image is left out), and `SansoraPaywallView` draws the top bar,
+the scrolling content, the pinned area and the floating close. A layout value from a newer editor
+reads as left out, so the defaults apply.
 
 ## Building blocks for the Flutter and React Native bridges
 
@@ -146,7 +154,7 @@ public final class ConfigStore: @unchecked Sendable {
 
 ```swift
 public enum DeviceInfo {
-    public static let sdkVersion: String                      // "0.2.1"
+    public static let sdkVersion: String                      // "0.3.0"
     public static var modelIdentifier: String { get }         // utsname / SIMULATOR_MODEL_IDENTIFIER
     public static var osVersion: String { get }
     @MainActor public static var deviceKind: String { get }   // iphone | ipad
@@ -191,11 +199,28 @@ xcodebuild test -scheme SansoraKit \
 
 `SansoraConformanceTests` loads the shared fixtures via `#filePath`
 (`conformance-fixtures/`): hash,
-audience, resolution, definitions (round trip), countries, render, price-format,
-sessions (events and step results as JSON objects) and delivery.
+audience, resolution, definitions (round trip), countries, render, render-pages, render-layout,
+price-format, sessions (events and step results as JSON objects) and delivery.
 
 
 ## Changes
+
+### 0.3.0 (2026-11-14)
+
+- **Layout.** The close button floats in the top corner by default (fixed while the content
+  scrolls; the first block other than a hero keeps clear of it), or sits in a top bar with back,
+  restore, text, page dots or a logo beside it, or in its own row; it can be text instead of ✕.
+  A purchase button and legal footer that end a page stay pinned to the bottom with the next
+  button, and any block can be pinned or given extra space above it. Content shorter than the
+  screen sits at the top, center or bottom. A hero without an image is no longer drawn.
+- **API.** `PaywallDefinition.Block` and `RenderModel.Block` cases have a further value
+  (`placement`; for close `style`, `label`, `bar`), defaulting to left out, so existing
+  constructions compile and a `switch` that binds every value needs one more.
+  `RenderModel.Block.hero`'s `imageUrl` is no longer optional.
+- **Newer values.** A close style, bar item, `align` or `pin` value from a newer editor reads as
+  left out, so the defaults apply instead of the paywall failing to load.
+- Events report `sdkVersion` `0.3.0`. Upgrade with `from: "0.3.0"` (Swift Package Manager) or
+  `:tag => '0.3.0'` (CocoaPods).
 
 ### 0.2.1 (2026-11-12)
 

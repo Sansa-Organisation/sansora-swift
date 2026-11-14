@@ -168,6 +168,28 @@ final class RenderConformanceTests: XCTestCase {
         }
     }
 
+    struct LayoutCase: Decodable {
+        let definition: PaywallDefinition; let prices: [String: StorePrice]; let selectedProductId: String?; let locale: String?
+        let expected: JSONValue
+    }
+
+    /// 0.3.0 layout (CONTRACT §8): close styles and the top bar, pinned blocks, `spaceBefore`, `align`, and a hero
+    /// without an image left out.
+    func testRenderLayout() throws {
+        let cases = try Fixtures.decode([LayoutCase].self, "render-layout.json")
+        XCTAssertGreaterThanOrEqual(cases.count, 4)
+        let raw = try XCTUnwrap(Fixtures.json("render-layout.json").arrayValue)
+        var styles: Set<String> = []
+        for (i, c) in cases.enumerated() {
+            let m = Render.model(c.definition, prices: c.prices, selectedProductId: c.selectedProductId, locale: c.locale)
+            assertJSONEqual(m.json, c.expected, "\(c.definition.name) / \(c.locale ?? "source")")
+            // Definitions round-trip, layout fields included (a bar slot written as null stays null, one left out stays out).
+            assertJSONEqual(try JSONValue.from(c.definition), try XCTUnwrap(raw[i]["definition"]), "definition \(c.definition.name)")
+            for b in m.pages?.flatMap(\.blocks) ?? m.blocks { if case let .close(_, _, style, _, _) = b { styles.insert(style.rawValue) } }
+        }
+        XCTAssertEqual(styles, ["overlay", "bar", "row"])
+    }
+
     func testPreviewCodes() {
         XCTAssertEqual(Preview.normalize("abcd-efgh-jkmn"), "ABCDEFGHJKMN")
         XCTAssertEqual(Preview.normalize(" 0o1i l234 5678 "), "001112345678")
